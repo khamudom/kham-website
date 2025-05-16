@@ -1,0 +1,239 @@
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { useTheme } from "../design-system/ThemeProvider";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Box,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  useScrollTrigger,
+  Slide,
+  useTheme as useMuiTheme,
+  alpha,
+} from "@mui/material";
+import { Button } from "../design-system/components/Button";
+
+interface HideOnScrollProps {
+  children: React.ReactElement;
+}
+
+function HideOnScroll(props: HideOnScrollProps) {
+  const { children } = props;
+  const trigger = useScrollTrigger();
+
+  return (
+    <Slide appear={false} direction="down" in={!trigger}>
+      {children}
+    </Slide>
+  );
+}
+
+const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
+  const { mode, toggleTheme } = useTheme();
+  const isDark = mode === "dark";
+  const muiTheme = useMuiTheme();
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const navItems = [
+    { path: "/", label: "Home" },
+    { path: "/about", label: "About" },
+    { path: "/work", label: "Work" },
+    { path: "/contact", label: "Contact" },
+  ];
+
+  return (
+    <HideOnScroll>
+      <AppBar
+        position="fixed"
+        elevation={isScrolled ? 2 : 0}
+        sx={{
+          background: isScrolled
+            ? muiTheme.palette.background.default
+            : alpha(muiTheme.palette.background.default, 0.8),
+          backdropFilter: "blur(10px)",
+          borderBottom: isScrolled ? 1 : 0,
+          borderColor: "divider",
+          transition: "all 0.3s ease",
+          "& *": {
+            color: muiTheme.palette.text.primary,
+          },
+        }}
+      >
+        <Toolbar sx={{ justifyContent: "space-between", px: { xs: 2, sm: 4 } }}>
+          <Typography
+            variant="h6"
+            component={Link}
+            to="/"
+            sx={{
+              fontFamily: "'Orbitron', sans-serif",
+              fontWeight: 600,
+              textDecoration: "none",
+              letterSpacing: "0.05em",
+              textTransform: "uppercase",
+              transition: "color 0.3s ease",
+              "&:hover": {
+                color: muiTheme.palette.primary.main,
+                textShadow: "0 0 8px rgba(0, 102, 204, 0.3)",
+              },
+            }}
+          >
+            KU
+          </Typography>
+
+          {/* Desktop Navigation */}
+          <Box
+            sx={{
+              display: { xs: "none", md: "flex" },
+              alignItems: "center",
+              gap: 3,
+            }}
+          >
+            {navItems.map((item) => (
+              <Button
+                key={item.path}
+                component={Link}
+                to={item.path}
+                variant="text"
+                sx={{
+                  color:
+                    location.pathname === item.path
+                      ? muiTheme.palette.primary.main
+                      : muiTheme.palette.text.primary,
+                  fontWeight: location.pathname === item.path ? 600 : 400,
+                }}
+              >
+                {item.label}
+              </Button>
+            ))}
+            <IconButton
+              onClick={toggleTheme}
+              sx={{
+                "&:hover": { color: muiTheme.palette.primary.main },
+              }}
+              aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
+            >
+              {isDark ? (
+                <Sun size={20} aria-hidden="true" />
+              ) : (
+                <Moon size={20} aria-hidden="true" />
+              )}
+            </IconButton>
+          </Box>
+
+          {/* Mobile Navigation */}
+          <Box
+            sx={{
+              display: { xs: "flex", md: "none" },
+              alignItems: "center",
+              gap: 1,
+            }}
+          >
+            <IconButton
+              onClick={toggleTheme}
+              sx={{
+                "&:hover": { color: muiTheme.palette.primary.main },
+              }}
+              aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
+            >
+              {isDark ? (
+                <Sun size={20} aria-hidden="true" />
+              ) : (
+                <Moon size={20} aria-hidden="true" />
+              )}
+            </IconButton>
+            <IconButton
+              onClick={() => setIsOpen(true)}
+              sx={{
+                "&:hover": { color: muiTheme.palette.primary.main },
+              }}
+              aria-label="Open menu"
+            >
+              <Menu size={24} />
+            </IconButton>
+          </Box>
+
+          {/* Mobile Menu Drawer */}
+          <Drawer
+            anchor="right"
+            open={isOpen}
+            onClose={() => setIsOpen(false)}
+            PaperProps={{
+              sx: {
+                width: 250,
+                backgroundColor: muiTheme.palette.background.default,
+              },
+            }}
+          >
+            <Box sx={{ display: "flex", justifyContent: "flex-end", p: 1 }}>
+              <IconButton
+                onClick={() => setIsOpen(false)}
+                aria-label="Close menu"
+              >
+                <X size={24} />
+              </IconButton>
+            </Box>
+            <List>
+              {navItems.map((item) => (
+                <ListItem key={item.path} disablePadding>
+                  <ListItemButton
+                    component={Link}
+                    to={item.path}
+                    selected={location.pathname === item.path}
+                    onClick={() => setIsOpen(false)}
+                    sx={{
+                      py: 2,
+                      "&.Mui-selected": {
+                        backgroundColor: alpha(
+                          muiTheme.palette.primary.main,
+                          0.08
+                        ),
+                        color: muiTheme.palette.primary.main,
+                        "&:hover": {
+                          backgroundColor: alpha(
+                            muiTheme.palette.primary.main,
+                            0.12
+                          ),
+                        },
+                      },
+                    }}
+                  >
+                    <ListItemText
+                      primary={item.label}
+                      primaryTypographyProps={{
+                        fontWeight: location.pathname === item.path ? 600 : 400,
+                      }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+          </Drawer>
+        </Toolbar>
+      </AppBar>
+    </HideOnScroll>
+  );
+};
+
+export default Header;

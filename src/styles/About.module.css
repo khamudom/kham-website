@@ -1,0 +1,139 @@
+.section {
+  padding: 5rem 1.5rem;
+}
+
+.hero {
+  background-color: var(--color-background);
+}
+
+.content {
+  max-width: 48rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.title {
+  font-size: 48px;
+  font-weight: 600;
+  letter-spacing: -0.003em;
+  line-height: 1.08349;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(
+    to right,
+    var(--color-primary),
+    var(--color-primary-hover)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.description {
+  font-size: 21px;
+  line-height: 1.381;
+  letter-spacing: 0.011em;
+  color: var(--color-text-secondary);
+  margin-bottom: 2rem;
+}
+
+.resumeButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 12px 22px;
+  background-color: var(--color-primary);
+  color: #fff;
+  border-radius: 4px;
+  font-size: 17px;
+  line-height: 1.17648;
+  font-weight: 400;
+  letter-spacing: -0.022em;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.28, 0.11, 0.32, 1);
+  margin-block-start: 2rem;
+}
+
+.resumeButton:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.skillsSection {
+  background-color: var(--color-background);
+  padding: 5rem 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  color: var(--color-text);
+}
+
+.experienceSection {
+  background-color: var(--color-background);
+  padding: 5rem 1.5rem;
+}
+
+.timeline {
+  max-width: 48rem;
+  margin: 0 auto;
+  position: relative;
+}
+
+.timelineItem {
+  position: relative;
+  padding-left: 2rem;
+  padding-bottom: 3rem;
+  border-left: 2px solid var(--color-border);
+}
+
+.timelineItem:last-child {
+  padding-bottom: 0;
+}
+
+.timelineDot {
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  left: -0.5rem;
+  top: 0.5rem;
+}
+
+.timelineTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--color-text);
+  letter-spacing: -0.003em;
+}
+
+.timelineCompany {
+  font-size: 1.125rem;
+  color: var(--color-primary);
+  margin-bottom: 0.25rem;
+}
+
+.timelineDate {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 1rem;
+}
+
+.timelineList {
+  list-style-type: disc;
+  padding-left: 1.25rem;
+  color: var(--color-text-secondary);
+  font-size: 17px;
+  line-height: 1.47059;
+}
+
+.timelineList li {
+  margin-bottom: 0.5rem;
+}
+
+.timelineList li:last-child {
+  margin-bottom: 0;
+}
