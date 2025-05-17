@@ -1,13 +1,15 @@
+"use client";
+
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import { getProjects } from "../data/api";
-import type { Project } from "../data/types";
-import { getImagePath } from "../utils/imageLoader";
-import styles from "../styles/Work.module.css";
+import { getProjects } from "@/data/api";
+import type { Project } from "@/data/types";
+import { getImagePath } from "@/utils/imageLoader";
+import styles from "@/styles/Work.module.css";
 import {
   Typography,
   Container,
@@ -19,14 +21,14 @@ import {
   ButtonGroup,
   CardActionArea,
 } from "@mui/material";
-import { Button } from "../design-system/components/Button";
+import { Button } from "@/design-system/components/Button";
 
 // Register ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
 type Category = "all" | "enterprise" | "open-source" | "personal";
 
-const Work = () => {
+export default function Work() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [activeCategory, setActiveCategory] = useState<Category>("all");
   const [loading, setLoading] = useState(true);
@@ -88,7 +90,7 @@ const Work = () => {
   const filteredProjects =
     activeCategory === "all"
       ? projects
-      : projects.filter((project) => project.category === activeCategory);
+      : projects.filter((project) => project.category.includes(activeCategory));
 
   if (loading) {
     return <div>Loading...</div>;
@@ -157,38 +159,40 @@ const Work = () => {
                     },
                   }}
                 >
-                  <Link href={`/project/${project.slug}`} passHref>
-                    <CardActionArea sx={{ flexShrink: 0 }}>
-                      <Box
+                  <CardActionArea
+                    component={Link}
+                    href={`/projects/${project.slug}`}
+                    sx={{ flexShrink: 0 }}
+                  >
+                    <Box
+                      sx={{
+                        position: "relative",
+                        paddingTop: "56.25%" /* 16:9 aspect ratio */,
+                      }}
+                    >
+                      <CardMedia
+                        component="img"
+                        image={getImagePath(project.coverImage, "medium")}
+                        alt={project.title}
                         sx={{
-                          position: "relative",
-                          paddingTop: "56.25%" /* 16:9 aspect ratio */,
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
                         }}
-                      >
-                        <CardMedia
-                          component="img"
-                          image={getImagePath(project.coverImage, "medium")}
-                          alt={project.title}
-                          sx={{
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                          }}
-                          onError={(
-                            e: React.SyntheticEvent<HTMLImageElement>
-                          ) => {
-                            e.currentTarget.src = getImagePath(
-                              "/images/placeholder.jpg",
-                              "medium"
-                            );
-                          }}
-                        />
-                      </Box>
-                    </CardActionArea>
-                  </Link>
+                        onError={(
+                          e: React.SyntheticEvent<HTMLImageElement>
+                        ) => {
+                          e.currentTarget.src = getImagePath(
+                            "/images/placeholder.jpg",
+                            "medium"
+                          );
+                        }}
+                      />
+                    </Box>
+                  </CardActionArea>
                   <CardContent
                     sx={{
                       p: 3,
@@ -197,59 +201,26 @@ const Work = () => {
                       flexDirection: "column",
                     }}
                   >
-                    <Typography
-                      variant="h5"
-                      gutterBottom
-                      sx={{
-                        fontWeight: 600,
-                        fontSize: { xs: "1.25rem", sm: "1.5rem" },
-                      }}
-                    >
+                    <Typography variant="h3" gutterBottom>
                       {project.title}
                     </Typography>
-                    {/* <Typography
+                    <Typography
                       variant="body2"
                       color="text.secondary"
-                      paragraph
-                      sx={{ mb: "auto" }}
+                      sx={{ mb: 2 }}
                     >
                       {project.summary}
-                    </Typography> */}
-                    <Box
-                      sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 2 }}
-                    >
-                      {project.technologies.map((techId) => (
-                        <Box
-                          key={techId}
-                          sx={{
-                            px: 1.5,
-                            py: 0.5,
-                            bgcolor: "rgba(0, 102, 204, 0.1)",
-                            borderRadius: 1,
-                            fontSize: "0.875rem",
-                            color: "primary.main",
-                          }}
-                        >
-                          {techId}
-                        </Box>
-                      ))}
+                    </Typography>
+                    <Box sx={{ mt: "auto" }}>
+                      <Button
+                        component={Link}
+                        href={`/projects/${project.slug}`}
+                        variant="text"
+                        endIcon={<ArrowRight size={20} />}
+                      >
+                        View Project
+                      </Button>
                     </Box>
-                    <Button
-                      component={Link}
-                      to={`/project/${project.slug}`}
-                      variant="text"
-                      endIcon={<ArrowRight size={16} />}
-                      sx={{
-                        p: 0,
-                        mt: "auto",
-                        "&:hover .MuiSvgIcon-root, &:hover svg": {
-                          transform: "translateX(4px)",
-                          transition: "transform 0.3s ease",
-                        },
-                      }}
-                    >
-                      View Project Details
-                    </Button>
                   </CardContent>
                 </Card>
               </Grid>
@@ -259,6 +230,4 @@ const Work = () => {
       </Box>
     </div>
   );
-};
-
-export default Work;
+}

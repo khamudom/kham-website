@@ -1,5 +1,7 @@
+"use client";
+
 import React, { useRef } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import {
   ArrowRight,
   FileDown,
@@ -8,16 +10,16 @@ import {
   Globe2,
   Gauge,
 } from "lucide-react";
-import { useApi } from "../hooks/useApi";
-import { getFeaturedProjects, getProfile, getSkills } from "../data/api";
-// import MorphingSVG from "../components/MorphingSVG";
-import LoadingSpinner from "../components/LoadingSpinner";
-import RotatingTitle from "../components/RotatingTitle";
-import { getImagePath } from "../utils/imageLoader";
+import { useApi } from "@/hooks/useApi";
+import { getFeaturedProjects, getProfile, getSkills } from "@/data/api";
+import type { Profile, Skill, Project } from "@/data/api";
+import LoadingSpinner from "@/components/LoadingSpinner";
+import RotatingTitle from "@/components/RotatingTitle";
+import { getImagePath } from "@/utils/imageLoader";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import styles from "../styles/Home.module.css";
+import styles from "@/styles/Home.module.css";
 import {
   Typography,
   Container,
@@ -28,12 +30,12 @@ import {
   Box,
   CardActionArea,
 } from "@mui/material";
-import { Button } from "../design-system/components/Button";
+import { Button } from "@/design-system/components/Button";
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
-const Home = () => {
+export default function Page() {
   const { data: projects, loading: projectsLoading } =
     useApi(getFeaturedProjects);
   const { data: profile, loading: profileLoading } = useApi(getProfile);
@@ -77,7 +79,7 @@ const Home = () => {
       const contentElements = aboutContentRef.current.children;
 
       gsap.fromTo(
-        [...contentElements],
+        Array.from(contentElements),
         {
           opacity: 0,
           y: 50,
@@ -152,17 +154,16 @@ const Home = () => {
         }}
       >
         <div className={styles.heroOverlay}></div>
-        {/* <MorphingSVG /> */}
         <div className={styles.heroContent}>
           <Typography variant="h1" className={styles.heroTitle}>
             <RotatingTitle titles={rotatingTitles} interval={2500} />
           </Typography>
           <Typography variant="body1" className={styles.heroText}>
-            {profile.summary}
+            {profile.bio[0]}
           </Typography>
           <Button
             component={Link}
-            to="/work"
+            href="/work"
             variant="contained"
             endIcon={<ArrowRight size={20} />}
           >
@@ -200,7 +201,7 @@ const Home = () => {
                 <div className={styles.aboutButtons}>
                   <Button
                     component={Link}
-                    to="/about"
+                    href="/about"
                     variant="outlined"
                     endIcon={<ArrowRight size={20} />}
                   >
@@ -222,7 +223,7 @@ const Home = () => {
               <div ref={aboutImageRef} className={styles.aboutImage}>
                 <Box
                   component="img"
-                  src={getImagePath("/images/about/workspace.jpg", "medium")}
+                  src={getImagePath("/images/placeholder.jpg", "medium")}
                   alt="Developer workspace with laptop and code"
                   sx={{
                     width: "100%",
@@ -279,7 +280,7 @@ const Home = () => {
                 >
                   <CardActionArea
                     component={Link}
-                    to={`/project/${project.slug}`}
+                    href={`/project/${project.slug}`}
                   >
                     <CardMedia
                       component="img"
@@ -307,30 +308,27 @@ const Home = () => {
                       color="text.secondary"
                       paragraph
                     >
-                      {project.summary}
+                      {project.description}
                     </Typography>
                     <Box
                       sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 2 }}
                     >
-                      {project.technologies.map((techId) => (
-                        <Box
-                          key={techId}
-                          sx={{
-                            px: 1.5,
-                            py: 0.5,
-                            bgcolor: "rgba(0, 102, 204, 0.1)",
-                            borderRadius: 1,
-                            fontSize: "0.875rem",
-                            color: "primary.main",
-                          }}
-                        >
-                          {techId}
-                        </Box>
-                      ))}
+                      <Box
+                        sx={{
+                          px: 1.5,
+                          py: 0.5,
+                          bgcolor: "rgba(0, 102, 204, 0.1)",
+                          borderRadius: 1,
+                          fontSize: "0.875rem",
+                          color: "primary.main",
+                        }}
+                      >
+                        {project.category}
+                      </Box>
                     </Box>
                     <Button
                       component={Link}
-                      to={`/project/${project.slug}`}
+                      href={`/project/${project.slug}`}
                       variant="text"
                       endIcon={<ArrowRight size={16} />}
                       sx={{
@@ -352,7 +350,7 @@ const Home = () => {
           <Box className={styles.viewAllWrapper} sx={{ mt: 6 }}>
             <Button
               component={Link}
-              to="/work"
+              href="/work"
               variant="outlined"
               endIcon={<ArrowRight size={20} />}
             >
@@ -363,6 +361,4 @@ const Home = () => {
       </Box>
     </div>
   );
-};
-
-export default Home;
+}

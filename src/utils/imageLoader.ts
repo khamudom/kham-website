@@ -18,7 +18,10 @@ type ImageSize = keyof typeof imageSizes;
  * @param size - Optional size key for responsive imag es
  * @returns Full path to the image
  */
-export function getImagePath(path: string, size?: ImageSize): string {
+export function getImagePath(path?: string, size?: ImageSize): string {
+  if (!path || typeof path !== "string") {
+    return "";
+  }
   // Remove leading slash if present
   const cleanPath = path.startsWith("/") ? path.slice(1) : path;
 

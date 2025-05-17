@@ -1,3 +1,5 @@
+"use client";
+
 import React, {
   createContext,
   useContext,
@@ -234,38 +236,43 @@ interface ThemeProviderProps {
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   // Initialize theme from localStorage or default to 'dark'
-  const [mode, setMode] = useState<ThemeMode>(() => {
-    const savedTheme = localStorage.getItem("theme");
-    return (savedTheme as ThemeMode) || "dark";
-  });
+  const [mode, setMode] = useState<ThemeMode>("dark");
+  const [mounted, setMounted] = useState(false);
+
+  // Only run on client-side
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") as ThemeMode;
+    if (savedTheme) {
+      setMode(savedTheme);
+    }
+    setMounted(true);
+  }, []);
 
   // Derived state
   const isDark = mode === "dark";
 
   // Update the HTML data-theme attribute when the theme changes
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", mode);
-    localStorage.setItem("theme", mode);
-
-    // Apply CSS variables to :root
-    const root = document.documentElement;
-
-    if (mode === "light") {
-      root.style.setProperty("--color-background", "#ffffff");
-      root.style.setProperty("--color-text", "#1d1d1f");
-    } else {
-      root.style.setProperty("--color-background", "#000000");
-      root.style.setProperty("--color-text", "#f5f5f7");
+    if (mounted) {
+      document.documentElement.setAttribute("data-theme", mode);
+      localStorage.setItem("theme", mode);
     }
-  }, [mode]);
+  }, [mode, mounted]);
 
-  // Toggle between light and dark themes
   const toggleTheme = () => {
     setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
   };
 
-  // Create the theme based on current mode
-  const theme = createTheme(createThemeOptions(mode));
+  // Create theme instance
+  const theme = React.useMemo(
+    () => createTheme(createThemeOptions(mode)),
+    [mode]
+  );
+
+  // Prevent flash of wrong theme
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <ThemeContext.Provider value={{ mode, toggleTheme, isDark }}>

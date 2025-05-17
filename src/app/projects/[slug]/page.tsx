@@ -1,6 +1,8 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   ArrowLeft,
   Code2,
@@ -13,11 +15,11 @@ import {
   Cpu,
   Server,
 } from "lucide-react";
-import { getProjectWithRelations } from "../data/api";
-import type { Project, Technology, Skill } from "../data/types";
-import ImageGallery from "../components/ImageGallery";
-import { getImagePath } from "../utils/imageLoader";
-import styles from "../styles/ProjectDetail.module.css";
+import { getProjectWithRelations } from "@/data/api";
+import type { Project, Technology, Skill } from "@/data/types";
+import ImageGallery from "@/components/ImageGallery";
+import { getImagePath } from "@/utils/imageLoader";
+import styles from "@/styles/ProjectDetail.module.css";
 import {
   Typography,
   Button,
@@ -34,21 +36,24 @@ type ProjectWithRelations = Project & {
   skillDetails: Skill[];
 };
 
-const ProjectDetail = () => {
+export default function ProjectDetail({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const router = useRouter();
-  const { slug } = router.query;
   const [project, setProject] = useState<ProjectWithRelations | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadProject() {
-      if (!slug || typeof slug !== "string") {
+      if (!params.slug) {
         router.push("/work");
         return;
       }
 
       try {
-        const data = await getProjectWithRelations(slug);
+        const data = await getProjectWithRelations(params.slug);
         if (!data) {
           router.push("/work");
           return;
@@ -63,7 +68,7 @@ const ProjectDetail = () => {
     }
 
     loadProject();
-  }, [slug, router]);
+  }, [params.slug, router]);
 
   if (loading || !project) {
     return <div>Loading...</div>;
@@ -94,11 +99,14 @@ const ProjectDetail = () => {
     <div className="pt-20">
       <Box component="section" className={styles.section}>
         <Container>
-          <Link href="/work" passHref>
-            <Button startIcon={<ArrowLeft size={20} />} sx={{ mb: 4 }}>
-              Back to Projects
-            </Button>
-          </Link>
+          <Button
+            component={Link}
+            href="/work"
+            startIcon={<ArrowLeft size={20} />}
+            sx={{ mb: 4 }}
+          >
+            Back to Projects
+          </Button>
 
           <Box className={styles.content}>
             <Typography variant="h1" className={styles.title}>
@@ -200,54 +208,6 @@ const ProjectDetail = () => {
           </Container>
         </Box>
       )}
-
-      <Box component="section" className={styles.detailsSection}>
-        <Container>
-          <Grid container spacing={4} className={styles.detailsGrid}>
-            <Grid item xs={12} md={6}>
-              <Paper className={styles.detailsCard}>
-                <Typography variant="h5" className={styles.detailsTitle}>
-                  Technologies Used
-                </Typography>
-                <Divider sx={{ mb: 3 }} />
-                <Box className={styles.techGrid}>
-                  {project.technologyDetails.map((tech) => (
-                    <Box key={tech.id} className={styles.techItem}>
-                      <Box className={styles.techIcon}>{getTechIcon(tech)}</Box>
-                      <Typography variant="body2" className={styles.techName}>
-                        {tech.name}
-                      </Typography>
-                    </Box>
-                  ))}
-                </Box>
-              </Paper>
-            </Grid>
-
-            <Grid item xs={12} md={6}>
-              <Paper className={styles.detailsCard}>
-                <Typography variant="h5" className={styles.detailsTitle}>
-                  Skills Applied
-                </Typography>
-                <Divider sx={{ mb: 3 }} />
-                <Box className={styles.techGrid}>
-                  {project.skillDetails.map((skill) => (
-                    <Box key={skill.id} className={styles.techItem}>
-                      <Box className={styles.techIcon}>
-                        <Code2 size={24} />
-                      </Box>
-                      <Typography variant="body2" className={styles.techName}>
-                        {skill.name}
-                      </Typography>
-                    </Box>
-                  ))}
-                </Box>
-              </Paper>
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
     </div>
   );
-};
-
-export default ProjectDetail;
+}

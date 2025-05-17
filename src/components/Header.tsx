@@ -1,5 +1,8 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "../design-system/ThemeProvider";
 import {
@@ -17,6 +20,7 @@ import {
   Slide,
   useTheme as useMuiTheme,
   alpha,
+  useMediaQuery,
 } from "@mui/material";
 import { Button } from "../design-system/components/Button";
 
@@ -38,14 +42,15 @@ function HideOnScroll(props: HideOnScrollProps) {
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const location = useLocation();
+  const pathname = usePathname();
   const { mode, toggleTheme } = useTheme();
   const isDark = mode === "dark";
   const muiTheme = useMuiTheme();
+  const isMobile = useMediaQuery(muiTheme.breakpoints.down("md"));
 
   useEffect(() => {
     setIsOpen(false);
-  }, [location.pathname]);
+  }, [pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -76,6 +81,7 @@ const Header = () => {
           borderBottom: isScrolled ? 1 : 0,
           borderColor: "divider",
           transition: "all 0.3s ease",
+          borderRadius: 0,
           "& *": {
             color: muiTheme.palette.text.primary,
           },
@@ -85,7 +91,7 @@ const Header = () => {
           <Typography
             variant="h6"
             component={Link}
-            to="/"
+            href="/"
             sx={{
               fontFamily: "'Orbitron', sans-serif",
               fontWeight: 600,
@@ -103,78 +109,73 @@ const Header = () => {
           </Typography>
 
           {/* Desktop Navigation */}
-          <Box
-            sx={{
-              display: { xs: "none", md: "flex" },
-              alignItems: "center",
-              gap: 3,
-            }}
-          >
-            {navItems.map((item) => (
-              <Button
-                key={item.path}
-                component={Link}
-                to={item.path}
-                variant="text"
-                sx={{
-                  color:
-                    location.pathname === item.path
-                      ? muiTheme.palette.primary.main
-                      : muiTheme.palette.text.primary,
-                  fontWeight: location.pathname === item.path ? 600 : 400,
-                }}
-              >
-                {item.label}
-              </Button>
-            ))}
-            <IconButton
-              onClick={toggleTheme}
+          {!isMobile && (
+            <Box
               sx={{
-                "&:hover": { color: muiTheme.palette.primary.main },
+                display: "flex",
+                alignItems: "center",
+                gap: 3,
               }}
-              aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
             >
-              {isDark ? (
-                <Sun size={20} aria-hidden="true" />
-              ) : (
-                <Moon size={20} aria-hidden="true" />
-              )}
-            </IconButton>
-          </Box>
+              {navItems.map((item) => (
+                <Button
+                  key={item.path}
+                  component={Link}
+                  href={item.path}
+                  variant="text"
+                  sx={{
+                    color:
+                      pathname === item.path
+                        ? muiTheme.palette.primary.main
+                        : muiTheme.palette.text.primary,
+                    fontWeight: pathname === item.path ? 600 : 400,
+                  }}
+                >
+                  {item.label}
+                </Button>
+              ))}
+              <IconButton
+                onClick={toggleTheme}
+                sx={{
+                  "&:hover": { color: muiTheme.palette.primary.main },
+                }}
+                aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
+              >
+                {isDark ? (
+                  <Sun size={20} aria-hidden="true" />
+                ) : (
+                  <Moon size={20} aria-hidden="true" />
+                )}
+              </IconButton>
+            </Box>
+          )}
 
           {/* Mobile Navigation */}
-          <Box
-            sx={{
-              display: { xs: "flex", md: "none" },
-              alignItems: "center",
-              gap: 1,
-            }}
-          >
-            <IconButton
-              onClick={toggleTheme}
-              sx={{
-                "&:hover": { color: muiTheme.palette.primary.main },
-              }}
-              aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
-            >
-              {isDark ? (
-                <Sun size={20} aria-hidden="true" />
-              ) : (
-                <Moon size={20} aria-hidden="true" />
-              )}
-            </IconButton>
-            <IconButton
-              onClick={() => setIsOpen(true)}
-              sx={{
-                "&:hover": { color: muiTheme.palette.primary.main },
-              }}
-              aria-label="Open menu"
-            >
-              <Menu size={24} />
-            </IconButton>
-          </Box>
+          {isMobile && (
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <IconButton
+                onClick={toggleTheme}
+                sx={{
+                  mr: 1,
+                  "&:hover": { color: muiTheme.palette.primary.main },
+                }}
+                aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
+              >
+                {isDark ? (
+                  <Sun size={20} aria-hidden="true" />
+                ) : (
+                  <Moon size={20} aria-hidden="true" />
+                )}
+              </IconButton>
+              <IconButton
+                onClick={() => setIsOpen(true)}
+                aria-label="Open menu"
+              >
+                <Menu size={24} />
+              </IconButton>
+            </Box>
+          )}
 
-          {/* Mobile Menu Drawer */}
           <Drawer
             anchor="right"
             open={isOpen}
@@ -199,8 +200,8 @@ const Header = () => {
                 <ListItem key={item.path} disablePadding>
                   <ListItemButton
                     component={Link}
-                    to={item.path}
-                    selected={location.pathname === item.path}
+                    href={item.path}
+                    selected={pathname === item.path}
                     onClick={() => setIsOpen(false)}
                     sx={{
                       py: 2,
@@ -222,7 +223,7 @@ const Header = () => {
                     <ListItemText
                       primary={item.label}
                       primaryTypographyProps={{
-                        fontWeight: location.pathname === item.path ? 600 : 400,
+                        fontWeight: pathname === item.path ? 600 : 400,
                       }}
                     />
                   </ListItemButton>

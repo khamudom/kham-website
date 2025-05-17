@@ -10,9 +10,10 @@ A modern, responsive portfolio website showcasing the work and skills of Kham Ud
 - **Dark/Light Mode**: Toggle between dark and light themes
 - **Project Showcase**: Detailed project pages with galleries and tech details
 - **Lazy Loading**: Images load as they enter the viewport for better performance
-- **Animations**: Subtle animations enhance the user experience
+- **Animations**: Smooth animations powered by GSAP
 - **Accessibility**: Built with a11y best practices in mind
 - **Performance Optimized**: Fast loading times and smooth interactions
+- **Server-Side Rendering**: Built with Next.js for optimal performance
 
 ## 📋 Pages
 
@@ -24,61 +25,65 @@ A modern, responsive portfolio website showcasing the work and skills of Kham Ud
 
 ## 🛠️ Technologies
 
-- **React**: UI library for building the interface
+- **Next.js 14**: React framework for production
 - **TypeScript**: Type-safe JavaScript
-- **React Router**: For navigation between pages
-- **CSS Modules**: For component-scoped styling
-- **GSAP**: For advanced animations
-- **Material UI**: For form components
-- **Lucide Icons**: For beautiful, consistent iconography
+- **Material UI**: Component library and theming
+- **GSAP**: Advanced animations
+- **Lucide Icons**: Beautiful, consistent iconography
 - **React Intersection Observer**: For lazy loading and scroll animations
+- **Emotion**: CSS-in-JS styling solution
 
 ## 🏗️ Project Structure
 
 ```
 src/
-├── components/       # Reusable UI components
-├── data/            # Data models and mock API
-│   ├── api/         # API service layer
-│   ├── db/          # Mock database
-│   └── types/       # TypeScript interfaces
-├── hooks/           # Custom React hooks
-├── pages/           # Page components
-├── styles/          # CSS modules
-└── utils/           # Utility functions
+├── app/            # Next.js app directory
+├── components/     # Reusable UI components
+├── context/       # React context providers
+├── data/          # Data models and mock API
+├── design-system/ # Design system components
+├── hooks/         # Custom React hooks
+├── pages/         # Page components
+├── styles/        # Global styles
+├── theme/         # Theme configuration
+├── types/         # TypeScript interfaces
+└── utils/         # Utility functions
 ```
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js (v16 or higher)
+- Node.js (v18 or higher)
 - npm or yarn
 
 ### Installation
 
 1. Clone the repository
+
    ```bash
    git clone https://github.com/yourusername/portfolio-website.git
    ```
 
 2. Install dependencies
+
    ```bash
    npm install
    ```
 
 3. Start the development server
+
    ```bash
    npm run dev
    ```
 
-4. Open your browser and navigate to `http://localhost:5173`
+4. Open your browser and navigate to `http://localhost:3000`
 
 ## 🔧 Available Scripts
 
 - `npm run dev` - Start the development server
 - `npm run build` - Build for production
-- `npm run preview` - Preview the production build locally
+- `npm run start` - Start the production server
 - `npm run lint` - Run ESLint to check for code issues
 
 ## 📱 Responsive Design
@@ -92,30 +97,32 @@ The website is designed to work on all screen sizes:
 
 ## 🎨 Design System
 
-The project uses a consistent design system with:
+The project uses Material UI with a custom theme:
 
 - Typography scale
 - Color palette with light/dark mode variants
 - Spacing system
 - Component patterns
+- Custom theme configuration
 
 ## 🔍 SEO
 
-Basic SEO considerations have been implemented:
+SEO optimization includes:
 
-- Semantic HTML
+- Next.js built-in SEO features
 - Meta tags
 - Descriptive page titles
 - Alt text for images
+- Server-side rendering for better indexing
 
 ## 🌐 Deployment
 
-The site can be deployed to any static hosting service:
+The site is configured for deployment on Vercel:
 
-- Netlify
-- Vercel
-- GitHub Pages
-- AWS S3 + CloudFront
+- Automatic deployments from main branch
+- Preview deployments for pull requests
+- Environment variable management
+- Edge network for optimal performance
 
 ## 📄 License
 
@@ -125,3 +132,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 - Images from [Unsplash](https://unsplash.com)
 - Icons from [Lucide](https://lucide.dev)
+- Design inspiration from Material UI

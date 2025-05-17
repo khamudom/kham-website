@@ -31,7 +31,7 @@ export interface Project extends BaseEntity {
   description: string[];
   coverImage: string;
   gallery?: Image[];
-  category: "enterprise" | "open-source" | "personal";
+  category: "all" | "enterprise" | "open-source" | "personal";
   featured: boolean;
   technologies: string[]; // Technology IDs
   skills: string[]; // Skill IDs

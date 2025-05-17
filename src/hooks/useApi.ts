@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+"use client";
+
+import { useState, useEffect } from "react";
 
 interface ApiResponse<T> {
   data: T | null;
@@ -27,7 +29,7 @@ export function useApi<T>(
         }
       } catch (err) {
         if (mounted) {
-          setError(err instanceof Error ? err : new Error('An error occurred'));
+          setError(err instanceof Error ? err : new Error("An error occurred"));
           setData(null);
         }
       } finally {
