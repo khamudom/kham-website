@@ -12,7 +12,7 @@ import {
   Alert,
 } from "@mui/material";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
-import styles from "@/styles/Contact.module.css";
+import styles from "@/styles/pages/Contact.module.css";
 import { getImagePath } from "@/utils/imageUtils";
 
 export default function Contact() {

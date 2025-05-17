@@ -11,15 +11,19 @@ import {
   Gauge,
 } from "lucide-react";
 import { useApi } from "@/hooks/useApi";
-import { getFeaturedProjects, getProfile, getSkills } from "@/data/api";
-import type { Profile, Skill, Project } from "@/data/api";
-import LoadingSpinner from "@/components/LoadingSpinner";
-import RotatingTitle from "@/components/RotatingTitle";
+import {
+  getFeaturedProjects,
+  getProfile,
+  getSkills,
+} from "@/data/portfolioServices";
+import type { Profile, Skill, Project } from "@/data";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import RotatingTitle from "@/components/animations/RotatingTitle";
 import { getImagePath } from "@/utils/imageLoader";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import styles from "@/styles/Home.module.css";
+import styles from "@/styles/pages/Home.module.css";
 import {
   Typography,
   Container,
@@ -163,7 +167,7 @@ export default function Page() {
           </Typography>
           <Button
             component={Link}
-            href="/work"
+            href="/portfolio"
             variant="contained"
             endIcon={<ArrowRight size={20} />}
           >
@@ -280,7 +284,7 @@ export default function Page() {
                 >
                   <CardActionArea
                     component={Link}
-                    href={`/project/${project.slug}`}
+                    href={`/portfolio/${project.slug}`}
                   >
                     <CardMedia
                       component="img"
@@ -328,7 +332,7 @@ export default function Page() {
                     </Box>
                     <Button
                       component={Link}
-                      href={`/project/${project.slug}`}
+                      href={`/portfolio/${project.slug}`}
                       variant="text"
                       endIcon={<ArrowRight size={16} />}
                       sx={{
@@ -350,7 +354,7 @@ export default function Page() {
           <Box className={styles.viewAllWrapper} sx={{ mt: 6 }}>
             <Button
               component={Link}
-              href="/work"
+              href="/portfolio"
               variant="outlined"
               endIcon={<ArrowRight size={20} />}
             >

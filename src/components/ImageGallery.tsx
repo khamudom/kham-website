@@ -1,8 +1,10 @@
+"use client";
+
 import React, { useState, useRef, useEffect } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import type { Image } from "../data/types";
 import { getImagePath } from "../utils/imageLoader";
-import styles from "../styles/ImageGallery.module.css";
+import styles from "./ui/styles/ImageGallery.module.css";
 
 interface ImageGalleryProps {
   images: Image[];

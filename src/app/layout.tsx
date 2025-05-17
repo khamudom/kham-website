@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { ThemeProvider } from "@/design-system/ThemeProvider";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 import "@/styles/global.css";
 
 export const metadata: Metadata = {
@@ -34,9 +34,9 @@ export default function RootLayout({
     <html lang="en">
       <body suppressHydrationWarning>
         <ThemeProvider>
-          <div className="appContainer">
+          <div className="app-container">
             <Header />
-            <main className="mainContent">{children}</main>
+            <main className="main-content">{children}</main>
             <Footer />
           </div>
         </ThemeProvider>

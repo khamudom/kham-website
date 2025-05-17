@@ -2,8 +2,8 @@
 
 import React from "react";
 import { useApi } from "@/hooks/useApi";
-import { getProfile, getSkills, getExperience } from "../../data/api";
-import LoadingSpinner from "@/components/LoadingSpinner";
+import { getProfile, getSkills, getExperience } from "@/data/portfolioServices";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import { Typography, Container, Grid, Box, Paper } from "@mui/material";
 import {
   Timeline,
@@ -14,7 +14,7 @@ import {
   TimelineDot,
 } from "@mui/lab";
 import { Briefcase, GraduationCap } from "lucide-react";
-import styles from "@/styles/About.module.css";
+import styles from "@/styles/pages/About.module.css";
 
 export default function About() {
   const { data: profile, loading: profileLoading } = useApi(getProfile);

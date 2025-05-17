@@ -12,55 +12,52 @@ export interface Image extends BaseEntity {
 }
 
 export interface Technology extends BaseEntity {
+  id: string;
   name: string;
-  category: "language" | "framework" | "tool" | "platform";
-  icon: string;
+  description: string;
 }
 
 export interface Skill extends BaseEntity {
+  id: string;
   name: string;
   description: string;
   iconName: string;
-  category: "technical" | "soft" | "domain";
+  category: string;
 }
 
-export interface Project extends BaseEntity {
+export interface Project {
+  id: string;
   title: string;
   slug: string;
   summary: string;
   description: string[];
   coverImage: string;
-  gallery?: Image[];
-  category: "all" | "enterprise" | "open-source" | "personal";
-  featured: boolean;
-  technologies: string[]; // Technology IDs
-  skills: string[]; // Skill IDs
-  links: {
-    github?: string;
+  technologies: string[];
+  skills: string[];
+  category: string[];
+  links?: {
     live?: string;
-    documentation?: string;
+    github?: string;
   };
-  metrics?: {
-    users?: number;
-    stars?: number;
-    downloads?: number;
-  };
+  gallery?: {
+    id: string;
+    url: string;
+    alt: string;
+    caption: string;
+    createdAt: string;
+    updatedAt: string;
+  }[];
+  featured?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
-export interface Profile extends BaseEntity {
+export interface Profile {
+  id: string;
   name: string;
   title: string;
-  summary: string;
   bio: string[];
-  location: string;
-  email: string;
-  socialLinks: {
-    github: string;
-    linkedin: string;
-    twitter?: string;
-  };
-  skills: string[]; // Skill IDs
-  experience: WorkExperience[];
+  coverImage: string;
 }
 
 export interface WorkExperience extends BaseEntity {
@@ -72,4 +69,24 @@ export interface WorkExperience extends BaseEntity {
   description: string[];
   technologies: string[]; // Technology IDs
   achievements: string[];
+}
+
+export interface Experience {
+  id: string;
+  title: string;
+  company: string;
+  period: string;
+  description: string;
+  type: "work" | "education";
+}
+
+export interface ContactInfo {
+  email: string;
+  phone?: string;
+  location: string;
+  socialLinks: {
+    github?: string;
+    linkedin?: string;
+    twitter?: string;
+  };
 }
