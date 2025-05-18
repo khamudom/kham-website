@@ -1,0 +1,29 @@
+{
+  "data": [
+    {
+      "id": "project-1",
+      "slug": "portfolio-website",
+      "title": "Portfolio Website",
+      "summary": "A modern portfolio website built with Next.js and TypeScript",
+      "description": [
+        "A modern portfolio website built with Next.js and TypeScript",
+        "Features a responsive design and smooth animations"
+      ],
+      "coverImage": "/images/placeholder.jpg",
+      "technologies": ["Next.js", "TypeScript", "Tailwind CSS"],
+      "skills": ["Web Development", "UI/UX Design", "Frontend Development"],
+      "category": ["Web Development", "Personal Project"],
+      "links": {
+        "live": "https://your-portfolio.com",
+        "github": "https://github.com/yourusername/portfolio"
+      },
+      "createdAt": "2024-01-01",
+      "updatedAt": "2024-03-20"
+    }
+  ],
+  "metadata": {
+    "total": 1,
+    "page": 1,
+    "limit": 10
+  }
+}

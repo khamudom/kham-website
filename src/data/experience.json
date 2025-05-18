@@ -1,0 +1,24 @@
+{
+  "data": [
+    {
+      "id": "exp-1",
+      "slug": "example-company-software-engineer",
+      "company": "Example Company",
+      "position": "Software Engineer",
+      "startDate": "2022-01",
+      "endDate": "2023-12",
+      "description": [
+        "Developed and maintained web applications using React and TypeScript",
+        "Collaborated with cross-functional teams to deliver high-quality software"
+      ],
+      "technologies": ["React", "TypeScript", "Node.js"],
+      "location": "Remote",
+      "type": "Full-time"
+    }
+  ],
+  "metadata": {
+    "total": 1,
+    "page": 1,
+    "limit": 10
+  }
+}

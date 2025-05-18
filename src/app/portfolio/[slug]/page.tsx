@@ -12,8 +12,7 @@ import {
   Cpu,
   Server,
 } from "lucide-react";
-import { getProjectWithRelations } from "@/data/portfolioServices";
-import type { Project, Technology, Skill } from "@/data/types";
+import type { Project, Technology, Skill, Image } from "@/types/portfolio";
 import ImageGallery from "@/components/ImageGallery";
 import ProjectImage from "@/components/ProjectImage";
 import styles from "@/styles/pages/ProjectDetail.module.css";
@@ -27,13 +26,15 @@ import {
   Chip,
   Divider,
 } from "@mui/material";
+import projectsData from "@/data/projects.json";
 
 type ProjectWithRelations = Project & {
   technologyDetails: Technology[];
   skillDetails: Skill[];
+  gallery?: Image[];
 };
 
-export default async function ProjectDetail({
+export default function ProjectDetail({
   params,
 }: {
   params: { slug: string };
@@ -44,144 +45,177 @@ export default async function ProjectDetail({
     return <div>Project not found</div>;
   }
 
-  try {
-    const project = await getProjectWithRelations(slug);
+  const project = projectsData.data.find((p) => p.slug === slug);
 
-    if (!project) {
-      return <div>Project not found</div>;
-    }
+  if (!project) {
+    return <div>Project not found</div>;
+  }
 
-    // Map of technology names to their corresponding icons
-    const techIcons: { [key: string]: React.ElementType } = {
-      FAST: Blocks,
-      TypeScript: Braces,
-      JavaScript: Code2,
-      React: Code2,
-      "Web Component": Globe2,
-      Chromium: Chrome,
-      Gerrit: GitBranch,
-      HTML: Code2,
-      CSS: Code2,
-      SQL: Database,
-      "Node.js": Server,
-      API: Cpu,
-    };
+  // In a real application, you would fetch these from your database
+  // For now, we'll use mock data
+  const technologyDetails: Technology[] = project.technologies.map(
+    (tech, index) => ({
+      id: `tech-${index}`,
+      name: tech,
+      description: `${tech} technology`,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    })
+  );
 
-    const getTechIcon = (tech: Technology) => {
-      const Icon = techIcons[tech.name] || Code2;
-      return <Icon size={24} />;
-    };
+  const skillDetails: Skill[] = project.technologies.map((tech, index) => ({
+    id: `skill-${index}`,
+    name: tech,
+    description: `Experience with ${tech}`,
+    iconName: "code",
+    category: "development",
+    proficiency: 80,
+    yearsOfExperience: 2,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  }));
 
-    return (
-      <div className="pt-20">
-        <Box component="section" className={styles.section}>
-          <Container>
-            <Link href="/portfolio" passHref>
-              <Button startIcon={<ArrowLeft size={20} />} sx={{ mb: 4 }}>
-                Back to Projects
-              </Button>
-            </Link>
+  const projectWithRelations: ProjectWithRelations = {
+    ...project,
+    technologyDetails,
+    skillDetails,
+  };
 
-            <Box className={styles.content}>
-              <Typography variant="h1" className={styles.title}>
-                {project.title}
-              </Typography>
-              <Box className={styles.tags} sx={{ mb: 4 }}>
-                {project.technologies.map((techId) => (
-                  <Chip
-                    key={techId}
-                    label={techId}
-                    color="primary"
-                    variant="outlined"
-                    size="small"
-                    sx={{ mr: 1, mb: 1 }}
-                  />
-                ))}
-              </Box>
+  // Map of technology names to their corresponding icons
+  const techIcons: { [key: string]: React.ElementType } = {
+    FAST: Blocks,
+    TypeScript: Braces,
+    JavaScript: Code2,
+    React: Code2,
+    "Web Component": Globe2,
+    Chromium: Chrome,
+    Gerrit: GitBranch,
+    HTML: Code2,
+    CSS: Code2,
+    SQL: Database,
+    "Node.js": Server,
+    API: Cpu,
+  };
 
-              <Grid container spacing={4} className={styles.grid}>
-                <Grid item xs={12} md={6}>
-                  <ProjectImage
-                    imagePath={project.coverImage}
-                    title={project.title}
-                    className={styles.imageWrapper}
-                    width={800}
-                    height={450}
-                  />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <Box className={styles.details}>
-                    <Box className={styles.description}>
-                      <Typography variant="body1" paragraph>
-                        {project.summary}
-                      </Typography>
-                      <Box className={styles.longDescription}>
-                        {project.description.map((paragraph, index) => (
+  const getTechIcon = (tech: Technology) => {
+    const Icon = techIcons[tech.name] || Code2;
+    return <Icon size={24} />;
+  };
+
+  return (
+    <div className="pt-20">
+      <Box component="section" className={styles.section}>
+        <Container>
+          <Link href="/portfolio" passHref>
+            <Button startIcon={<ArrowLeft size={20} />} sx={{ mb: 4 }}>
+              Back to Projects
+            </Button>
+          </Link>
+
+          <Box className={styles.content}>
+            <Typography variant="h1" className={styles.title}>
+              {projectWithRelations.title}
+            </Typography>
+            <Box className={styles.tags} sx={{ mb: 4 }}>
+              {projectWithRelations.technologies.map((techId: string) => (
+                <Chip
+                  key={techId}
+                  label={techId}
+                  color="primary"
+                  variant="outlined"
+                  size="small"
+                  sx={{ mr: 1, mb: 1 }}
+                />
+              ))}
+            </Box>
+
+            <Grid container spacing={4} className={styles.grid}>
+              <Grid item xs={12} md={6}>
+                <ProjectImage
+                  imagePath={projectWithRelations.coverImage}
+                  title={projectWithRelations.title}
+                  className={styles.imageWrapper}
+                  width={800}
+                  height={450}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Box className={styles.details}>
+                  <Box className={styles.description}>
+                    <Typography variant="body1" paragraph>
+                      {projectWithRelations.summary}
+                    </Typography>
+                    <Box className={styles.longDescription}>
+                      {projectWithRelations.description.map(
+                        (paragraph: string, index: number) => (
                           <Typography key={index} variant="body2" paragraph>
                             {paragraph}
                           </Typography>
-                        ))}
-                      </Box>
+                        )
+                      )}
                     </Box>
-
-                    {project.links && (
-                      <Box
-                        className={styles.buttons}
-                        sx={{ display: "flex", gap: 2 }}
-                      >
-                        {project.links.live && (
-                          <Button
-                            href={project.links.live}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            variant="contained"
-                            startIcon={<Globe2 size={20} />}
-                          >
-                            View Live
-                          </Button>
-                        )}
-                        {project.links.github && (
-                          <Button
-                            href={project.links.github}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            variant="outlined"
-                            startIcon={<GitBranch size={20} />}
-                          >
-                            View Source
-                          </Button>
-                        )}
-                      </Box>
-                    )}
                   </Box>
-                </Grid>
-              </Grid>
-            </Box>
-          </Container>
-        </Box>
 
-        {project.gallery && project.gallery.length > 0 && (
+                  {projectWithRelations.links && (
+                    <Box
+                      className={styles.buttons}
+                      sx={{ display: "flex", gap: 2 }}
+                    >
+                      {projectWithRelations.links.live && (
+                        <Button
+                          href={projectWithRelations.links.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          variant="contained"
+                          startIcon={<Globe2 size={20} />}
+                        >
+                          View Live
+                        </Button>
+                      )}
+                      {projectWithRelations.links.github && (
+                        <Button
+                          href={projectWithRelations.links.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          variant="outlined"
+                          startIcon={<GitBranch size={20} />}
+                        >
+                          View Source
+                        </Button>
+                      )}
+                    </Box>
+                  )}
+                </Box>
+              </Grid>
+            </Grid>
+          </Box>
+        </Container>
+      </Box>
+
+      {projectWithRelations.gallery &&
+        projectWithRelations.gallery.length > 0 && (
           <Box component="section" className={styles.gallerySection}>
             <Container>
               <Typography variant="h2" className={styles.sectionTitle}>
                 Project Gallery
               </Typography>
-              <ImageGallery images={project.gallery} />
+              <ImageGallery images={projectWithRelations.gallery} />
             </Container>
           </Box>
         )}
 
-        <Box component="section" className={styles.detailsSection}>
-          <Container>
-            <Grid container spacing={4} className={styles.detailsGrid}>
-              <Grid item xs={12} md={6}>
-                <Paper className={styles.detailsCard}>
-                  <Typography variant="h5" className={styles.detailsTitle}>
-                    Technologies Used
-                  </Typography>
-                  <Divider sx={{ mb: 3 }} />
-                  <Box className={styles.techGrid}>
-                    {project.technologyDetails.map((tech) => (
+      <Box component="section" className={styles.detailsSection}>
+        <Container>
+          <Grid container spacing={4} className={styles.detailsGrid}>
+            <Grid item xs={12} md={6}>
+              <Paper className={styles.detailsCard}>
+                <Typography variant="h5" className={styles.detailsTitle}>
+                  Technologies Used
+                </Typography>
+                <Divider sx={{ mb: 3 }} />
+                <Box className={styles.techGrid}>
+                  {projectWithRelations.technologyDetails.map(
+                    (tech: Technology) => (
                       <Box key={tech.id} className={styles.techItem}>
                         <Box className={styles.techIcon}>
                           {getTechIcon(tech)}
@@ -190,38 +224,35 @@ export default async function ProjectDetail({
                           {tech.name}
                         </Typography>
                       </Box>
-                    ))}
-                  </Box>
-                </Paper>
-              </Grid>
-
-              <Grid item xs={12} md={6}>
-                <Paper className={styles.detailsCard}>
-                  <Typography variant="h5" className={styles.detailsTitle}>
-                    Skills Applied
-                  </Typography>
-                  <Divider sx={{ mb: 3 }} />
-                  <Box className={styles.techGrid}>
-                    {project.skillDetails.map((skill) => (
-                      <Box key={skill.id} className={styles.techItem}>
-                        <Box className={styles.techIcon}>
-                          <Code2 size={24} />
-                        </Box>
-                        <Typography variant="body2" className={styles.techName}>
-                          {skill.name}
-                        </Typography>
-                      </Box>
-                    ))}
-                  </Box>
-                </Paper>
-              </Grid>
+                    )
+                  )}
+                </Box>
+              </Paper>
             </Grid>
-          </Container>
-        </Box>
-      </div>
-    );
-  } catch (error) {
-    console.error("Error loading project:", error);
-    return <div>Error loading project</div>;
-  }
+
+            <Grid item xs={12} md={6}>
+              <Paper className={styles.detailsCard}>
+                <Typography variant="h5" className={styles.detailsTitle}>
+                  Skills Applied
+                </Typography>
+                <Divider sx={{ mb: 3 }} />
+                <Box className={styles.techGrid}>
+                  {projectWithRelations.skillDetails.map((skill: Skill) => (
+                    <Box key={skill.id} className={styles.techItem}>
+                      <Box className={styles.techIcon}>
+                        <Code2 size={24} />
+                      </Box>
+                      <Typography variant="body2" className={styles.techName}>
+                        {skill.name}
+                      </Typography>
+                    </Box>
+                  ))}
+                </Box>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
+    </div>
+  );
 }

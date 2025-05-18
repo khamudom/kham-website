@@ -7,8 +7,11 @@ import { ArrowRight } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import { getProjects } from "@/data";
-import type { Project } from "@/data/types";
+import { useApi } from "@/hooks/useApi";
+import { fetchProjects } from "@/utils/api";
+import type { Project } from "@/types/portfolio";
+import { LoadingSpinner } from "@/components/common/LoadingSpinner";
+import { ErrorMessage } from "@/components/common/ErrorMessage";
 import styles from "@/styles/pages/Portfolio.module.css";
 import {
   Typography,
@@ -27,31 +30,25 @@ import { Button } from "@/design-system/components/Button";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Portfolio() {
-  const [projects, setProjects] = useState<Project[]>([]);
+  const { data: projectsResponse, loading, error } = useApi(fetchProjects);
   const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const projectCardsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const loadProjects = async () => {
-      const data = await getProjects();
-      setProjects(data);
-      setFilteredProjects(data);
-    };
-    loadProjects();
-  }, []);
-
-  useEffect(() => {
-    if (selectedCategory === "all") {
-      setFilteredProjects(projects);
-    } else {
-      setFilteredProjects(
-        projects.filter((project) =>
-          project.category.includes(selectedCategory)
-        )
-      );
+    if (projectsResponse?.data?.data) {
+      const projects = projectsResponse.data.data;
+      if (selectedCategory === "all") {
+        setFilteredProjects(projects);
+      } else {
+        setFilteredProjects(
+          projects.filter((project) =>
+            project.technologies.includes(selectedCategory)
+          )
+        );
+      }
     }
-  }, [selectedCategory, projects]);
+  }, [selectedCategory, projectsResponse]);
 
   useGSAP(() => {
     if (projectCardsRef.current) {
@@ -78,6 +75,23 @@ export default function Portfolio() {
     }
   }, [filteredProjects]);
 
+  if (loading) {
+    return <LoadingSpinner size="large" />;
+  }
+
+  if (error) {
+    return (
+      <ErrorMessage
+        message="Failed to load projects. Please try again later."
+        onRetry={() => window.location.reload()}
+      />
+    );
+  }
+
+  if (!projectsResponse?.data?.data) {
+    return null;
+  }
+
   return (
     <div className="pt-20">
       <Box component="section" className={styles.section}>
@@ -102,28 +116,26 @@ export default function Portfolio() {
               All
             </Button>
             <Button
-              onClick={() => setSelectedCategory("enterprise")}
+              onClick={() => setSelectedCategory("Next.js")}
               variant={
-                selectedCategory === "enterprise" ? "contained" : "outlined"
+                selectedCategory === "Next.js" ? "contained" : "outlined"
               }
             >
-              Enterprise
+              Next.js
             </Button>
             <Button
-              onClick={() => setSelectedCategory("open-source")}
-              variant={
-                selectedCategory === "open-source" ? "contained" : "outlined"
-              }
+              onClick={() => setSelectedCategory("React")}
+              variant={selectedCategory === "React" ? "contained" : "outlined"}
             >
-              Open Source
+              React
             </Button>
             <Button
-              onClick={() => setSelectedCategory("personal")}
+              onClick={() => setSelectedCategory("TypeScript")}
               variant={
-                selectedCategory === "personal" ? "contained" : "outlined"
+                selectedCategory === "TypeScript" ? "contained" : "outlined"
               }
             >
-              Personal
+              TypeScript
             </Button>
           </ButtonGroup>
 
@@ -161,7 +173,7 @@ export default function Portfolio() {
                       }}
                     >
                       <Image
-                        src={project.coverImage}
+                        src={project.imageUrl}
                         alt={project.title}
                         fill
                         className={styles.projectImage}
@@ -176,7 +188,7 @@ export default function Portfolio() {
                       {project.title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      {project.summary}
+                      {project.description}
                     </Typography>
                   </CardContent>
                 </Card>

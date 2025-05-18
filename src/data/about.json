@@ -1,0 +1,14 @@
+{
+  "title": "About Me",
+  "description": "I'm a software engineer with a passion for creating beautiful and functional web experiences.",
+  "sections": [
+    {
+      "title": "Experience",
+      "content": "Over 10 years of experience in web development, focusing on user experience and performance optimization."
+    },
+    {
+      "title": "Skills",
+      "content": "Expertise in modern web technologies, design systems, and accessibility standards."
+    }
+  ]
+}

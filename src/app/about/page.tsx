@@ -2,8 +2,9 @@
 
 import React from "react";
 import { useApi } from "@/hooks/useApi";
-import { getProfile, getSkills, getExperience } from "@/data/portfolioServices";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import { fetchProfile, fetchSkills, fetchExperience } from "@/utils/api";
+import { LoadingSpinner } from "@/components/common/LoadingSpinner";
+import { ErrorMessage } from "@/components/common/ErrorMessage";
 import { Typography, Container, Grid, Box, Paper } from "@mui/material";
 import {
   Timeline,
@@ -17,17 +18,41 @@ import { Briefcase, GraduationCap } from "lucide-react";
 import styles from "@/styles/pages/About.module.css";
 
 export default function About() {
-  const { data: profile, loading: profileLoading } = useApi(getProfile);
-  const { data: skills, loading: skillsLoading } = useApi(getSkills);
-  const { data: experience, loading: experienceLoading } =
-    useApi(getExperience);
+  const {
+    data: profileResponse,
+    loading: profileLoading,
+    error: profileError,
+  } = useApi(fetchProfile);
+  const {
+    data: skillsResponse,
+    loading: skillsLoading,
+    error: skillsError,
+  } = useApi(fetchSkills);
+  const {
+    data: experienceResponse,
+    loading: experienceLoading,
+    error: experienceError,
+  } = useApi(fetchExperience);
 
-  if (typeof window !== "undefined") {
-    // safe to use localStorage
+  if (profileLoading || skillsLoading || experienceLoading) {
+    return <LoadingSpinner size="large" />;
   }
 
-  if (profileLoading || skillsLoading || experienceLoading || !profile) {
-    return <LoadingSpinner />;
+  if (profileError || skillsError || experienceError) {
+    return (
+      <ErrorMessage
+        message="Failed to load about page data. Please try again later."
+        onRetry={() => window.location.reload()}
+      />
+    );
+  }
+
+  const profile = profileResponse?.data;
+  const skills = skillsResponse?.data?.data || [];
+  const experience = experienceResponse?.data?.data || [];
+
+  if (!profile) {
+    return null;
   }
 
   return (
@@ -37,7 +62,7 @@ export default function About() {
         component="section"
         className={styles.hero}
         sx={{
-          backgroundImage: `url(${profile.coverImage})`,
+          backgroundImage: `url(/images/about-hero.jpg)`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           position: "relative",
@@ -80,16 +105,9 @@ export default function About() {
               <Typography variant="h2" gutterBottom>
                 My Journey
               </Typography>
-              {profile.bio.map((paragraph, index) => (
-                <Typography
-                  key={index}
-                  variant="body1"
-                  color="text.secondary"
-                  paragraph
-                >
-                  {paragraph}
-                </Typography>
-              ))}
+              <Typography variant="body1" color="text.secondary" paragraph>
+                {profile.bio}
+              </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
               <Paper
@@ -104,7 +122,7 @@ export default function About() {
                   Skills & Expertise
                 </Typography>
                 <Grid container spacing={2}>
-                  {skills?.map((skill) => (
+                  {skills.map((skill) => (
                     <Grid item xs={6} key={skill.id}>
                       <Box
                         sx={{
@@ -113,7 +131,7 @@ export default function About() {
                           gap: 1,
                         }}
                       >
-                        <span style={{ fontSize: 20 }}>{skill.iconName}</span>
+                        <span style={{ fontSize: 20 }}>{skill.icon}</span>
                         <Typography variant="body1">{skill.name}</Typography>
                       </Box>
                     </Grid>
@@ -135,7 +153,7 @@ export default function About() {
             Experience
           </Typography>
           <Timeline position="alternate">
-            {experience?.map((item) => (
+            {experience.map((item) => (
               <TimelineItem key={item.id}>
                 <TimelineSeparator>
                   <TimelineDot
@@ -161,7 +179,7 @@ export default function About() {
                     }}
                   >
                     <Typography variant="h6" gutterBottom>
-                      {item.title}
+                      {item.position}
                     </Typography>
                     <Typography
                       variant="subtitle1"
@@ -175,9 +193,13 @@ export default function About() {
                       color="text.secondary"
                       gutterBottom
                     >
-                      {item.period}
+                      {item.startDate} - {item.endDate || "Present"}
                     </Typography>
-                    <Typography variant="body1">{item.description}</Typography>
+                    {item.description.map((desc, index) => (
+                      <Typography key={index} variant="body1" paragraph>
+                        {desc}
+                      </Typography>
+                    ))}
                   </Paper>
                 </TimelineContent>
               </TimelineItem>

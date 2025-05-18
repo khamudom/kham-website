@@ -1,0 +1,41 @@
+{
+  "data": [
+    {
+      "id": "skill-1",
+      "name": "React",
+      "category": "frontend",
+      "proficiency": 5,
+      "yearsOfExperience": 3,
+      "icon": "react-icon.svg"
+    },
+    {
+      "id": "skill-2",
+      "name": "TypeScript",
+      "category": "frontend",
+      "proficiency": 4,
+      "yearsOfExperience": 2,
+      "icon": "typescript-icon.svg"
+    },
+    {
+      "id": "skill-3",
+      "name": "Node.js",
+      "category": "backend",
+      "proficiency": 4,
+      "yearsOfExperience": 2,
+      "icon": "nodejs-icon.svg"
+    },
+    {
+      "id": "skill-4",
+      "name": "Git",
+      "category": "tools",
+      "proficiency": 5,
+      "yearsOfExperience": 4,
+      "icon": "git-icon.svg"
+    }
+  ],
+  "metadata": {
+    "total": 4,
+    "categories": ["frontend", "backend", "tools"],
+    "lastUpdated": "2024-03-20"
+  }
+}

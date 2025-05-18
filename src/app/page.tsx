@@ -12,13 +12,10 @@ import {
   Gauge,
 } from "lucide-react";
 import { useApi } from "@/hooks/useApi";
-import {
-  getFeaturedProjects,
-  getProfile,
-  getSkills,
-} from "@/data/portfolioServices";
-import type { Profile, Skill, Project } from "@/data";
-import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import { fetchProfile, fetchProjects, fetchSkills } from "@/utils/api";
+import type { Profile, Skill, Project } from "@/types/portfolio";
+import { LoadingSpinner } from "@/components/common/LoadingSpinner";
+import { ErrorMessage } from "@/components/common/ErrorMessage";
 import RotatingTitle from "@/components/animations/RotatingTitle";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -40,14 +37,31 @@ import { Button } from "@/design-system/components/Button";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Page() {
-  const { data: projects, loading: projectsLoading } =
-    useApi(getFeaturedProjects);
-  const { data: profile, loading: profileLoading } = useApi(getProfile);
-  const { data: skills, loading: skillsLoading } = useApi(getSkills);
+  const {
+    data: projectsResponse,
+    loading: projectsLoading,
+    error: projectsError,
+  } = useApi(fetchProjects);
+  const {
+    data: profileResponse,
+    loading: profileLoading,
+    error: profileError,
+  } = useApi(fetchProfile);
+  const {
+    data: skillsResponse,
+    loading: skillsLoading,
+    error: skillsError,
+  } = useApi(fetchSkills);
+
   const projectCardsRef = useRef<HTMLDivElement>(null);
   const aboutSectionRef = useRef<HTMLDivElement>(null);
   const aboutContentRef = useRef<HTMLDivElement>(null);
   const aboutImageRef = useRef<HTMLDivElement>(null);
+
+  // Get featured projects (first 3)
+  const featuredProjects = projectsResponse?.data?.data.slice(0, 3) || [];
+  const skills = skillsResponse?.data?.data || [];
+  const profile = profileResponse?.data;
 
   useGSAP(() => {
     // Project cards animation
@@ -122,10 +136,23 @@ export default function Page() {
         }
       );
     }
-  }, [projects]);
+  }, [featuredProjects]);
 
-  if (projectsLoading || profileLoading || skillsLoading || !profile) {
-    return <LoadingSpinner />;
+  if (projectsLoading || profileLoading || skillsLoading) {
+    return <LoadingSpinner size="large" />;
+  }
+
+  if (projectsError || profileError || skillsError) {
+    return (
+      <ErrorMessage
+        message="Failed to load portfolio data. Please try again later."
+        onRetry={() => window.location.reload()}
+      />
+    );
+  }
+
+  if (!profile || !projectsResponse || !skillsResponse) {
+    return null;
   }
 
   const rotatingTitles = [
@@ -162,7 +189,7 @@ export default function Page() {
             <RotatingTitle titles={rotatingTitles} interval={2500} />
           </Typography>
           <Typography variant="body1" className={styles.heroText}>
-            {profile.bio[0]}
+            {profile.bio}
           </Typography>
           <Button
             component={Link}
@@ -185,14 +212,14 @@ export default function Page() {
             <Grid item xs={12} md={7}>
               <div ref={aboutContentRef}>
                 <Typography variant="h2" gutterBottom>
-                  Kham Udom
+                  {profile.name}
                 </Typography>
                 <Typography variant="body1" color="text.secondary" paragraph>
-                  {profile.bio[0]}
+                  {profile.bio}
                 </Typography>
                 <div className={styles.skillsList}>
-                  {skills?.map((skill) => {
-                    const IconComponent = getIconComponent(skill.iconName);
+                  {skills.map((skill) => {
+                    const IconComponent = getIconComponent(skill.icon);
                     return (
                       <div key={skill.id} className={styles.skillItem}>
                         <IconComponent className={styles.skillIcon} size={24} />
@@ -223,41 +250,34 @@ export default function Page() {
               </div>
             </Grid>
             <Grid item xs={12} md={5}>
-              <div ref={aboutImageRef} className={styles.aboutImage}>
-                <Box
-                  component="img"
-                  src="/images/placeholder.jpg"
-                  alt="Developer workspace with laptop and code"
-                  sx={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                  onError={(e) => {
-                    e.currentTarget.src = "/images/placeholder.jpg";
-                  }}
+              <div ref={aboutImageRef}>
+                <Image
+                  src="/images/profile.jpg"
+                  alt="Profile"
+                  width={400}
+                  height={400}
+                  className={styles.profileImage}
                 />
               </div>
             </Grid>
           </Grid>
         </Container>
       </Box>
-      {/* Featured Projects */}
+      {/* Featured Projects Section */}
       <Box
         component="section"
-        sx={{ py: 10, backgroundColor: "background.default" }}
+        sx={{ py: 8, backgroundColor: "background.paper" }}
       >
         <Container>
-          <Typography
-            variant="h2"
-            align="center"
-            gutterBottom
-            className={styles.sectionTitle}
-          >
+          <Typography variant="h2" gutterBottom>
             Featured Projects
           </Typography>
+          <Typography variant="body1" color="text.secondary" paragraph>
+            Here are some of my recent works that showcase my skills and
+            experience.
+          </Typography>
           <Grid container spacing={4} ref={projectCardsRef}>
-            {projects?.map((project) => (
+            {featuredProjects.map((project) => (
               <Grid
                 item
                 xs={12}
@@ -269,6 +289,8 @@ export default function Page() {
                 <Card
                   sx={{
                     height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
                     borderRadius: 2,
                     overflow: "hidden",
                     boxShadow: "0 4px 12px rgba(0, 0, 0, 0.08)",
@@ -281,70 +303,38 @@ export default function Page() {
                   <CardActionArea
                     component={Link}
                     href={`/portfolio/${project.slug}`}
+                    sx={{ flexShrink: 0 }}
                   >
-                    <CardMedia
-                      component="img"
-                      image={project.coverImage}
-                      alt={project.title}
-                      sx={{ height: 225 }}
-                      onError={(e) => {
-                        e.currentTarget.src = "/images/placeholder.jpg";
+                    <Box
+                      sx={{
+                        position: "relative",
+                        paddingTop: "56.25%" /* 16:9 aspect ratio */,
                       }}
-                    />
-                  </CardActionArea>
-                  <CardContent sx={{ p: 3 }}>
-                    <Typography
-                      variant="h5"
-                      gutterBottom
-                      sx={{ fontWeight: 600 }}
                     >
+                      <Image
+                        src={project.imageUrl}
+                        alt={project.title}
+                        fill
+                        className={styles.projectImage}
+                        onError={(e) => {
+                          e.currentTarget.src = "/images/placeholder.jpg";
+                        }}
+                      />
+                    </Box>
+                  </CardActionArea>
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography variant="h5" component="h3" gutterBottom>
                       {project.title}
                     </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      paragraph
-                    >
+                    <Typography variant="body2" color="text.secondary">
                       {project.description}
                     </Typography>
-                    <Box
-                      sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 2 }}
-                    >
-                      <Box
-                        sx={{
-                          px: 1.5,
-                          py: 0.5,
-                          bgcolor: "rgba(0, 102, 204, 0.1)",
-                          borderRadius: 1,
-                          fontSize: "0.875rem",
-                          color: "primary.main",
-                        }}
-                      >
-                        {project.category}
-                      </Box>
-                    </Box>
-                    <Button
-                      component={Link}
-                      href={`/portfolio/${project.slug}`}
-                      variant="text"
-                      endIcon={<ArrowRight size={16} />}
-                      sx={{
-                        p: 0,
-                        mt: "auto",
-                        "&:hover .MuiSvgIcon-root, &:hover svg": {
-                          transform: "translateX(4px)",
-                          transition: "transform 0.3s ease",
-                        },
-                      }}
-                    >
-                      View Project Details
-                    </Button>
                   </CardContent>
                 </Card>
               </Grid>
             ))}
           </Grid>
-          <Box className={styles.viewAllWrapper} sx={{ mt: 6 }}>
+          <Box sx={{ mt: 4, textAlign: "center" }}>
             <Button
               component={Link}
               href="/portfolio"

@@ -1,61 +1,135 @@
-export interface Project {
+// Base Entity Type
+export interface BaseEntity {
   id: string;
-  title: string;
-  description: string;
-  technologies: string[];
-  imageUrl: string;
-  liveUrl?: string;
-  githubUrl?: string;
-  slug: string;
-  summary: string;
-  coverImage: string;
-  category: "all" | "enterprise" | "open-source" | "personal";
-  featured: boolean;
-  gallery?: {
-    id: string;
-    url: string;
-    alt: string;
-    caption?: string;
-  }[];
-  links: {
-    live?: string;
-    github?: string;
-    documentation?: string;
-  };
-  skills: string[];
   createdAt: string;
   updatedAt: string;
 }
 
-export interface Experience {
+// Base API Response Type
+export interface ApiResponse<T> {
+  data: T;
+  error?: string;
+  loading: boolean;
+}
+
+// API Response with Metadata
+export interface ApiResponseWithMetadata<T> {
+  data: T[];
+  metadata: {
+    total: number;
+    page: number;
+    limit: number;
+  };
+}
+
+// Image Type
+export interface Image extends BaseEntity {
+  url: string;
+  alt: string;
+  caption?: string;
+}
+
+// Technology Type
+export interface Technology extends BaseEntity {
+  name: string;
+  description: string;
+}
+
+// Profile Types
+export interface SocialLinks {
+  github: string;
+  linkedin: string;
+  twitter?: string;
+}
+
+export interface ProfileLinks {
+  projects: string;
+  experience: string;
+  skills: string;
+}
+
+export interface Profile {
   id: string;
+  name: string;
+  title: string;
+  bio: string[];
+  coverImage: string;
+  email: string;
+  location: string;
+  socialLinks: SocialLinks;
+  links: ProfileLinks;
+}
+
+// Project Types
+export interface Project {
+  id: string;
+  slug: string;
+  title: string;
+  summary: string;
+  description: string[];
+  coverImage: string;
+  technologies: string[];
+  skills: string[];
+  category: string[];
+  links: {
+    live?: string;
+    github?: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+}
+
+// Experience Types
+export interface WorkExperience extends BaseEntity {
   company: string;
-  position: string;
+  title: string;
   startDate: string;
   endDate?: string;
+  current: boolean;
   description: string[];
+  technologies: string[];
+  achievements: string[];
+}
+
+export interface Experience {
+  id: string;
+  title: string;
+  company: string;
+  period: string;
+  description: string;
+  type: string;
+  location: string;
   technologies: string[];
 }
 
-export interface Skill {
-  id: string;
+// Skills Types
+export interface Skill extends BaseEntity {
   name: string;
-  category: "frontend" | "backend" | "tools" | "other";
-  proficiency: number; // 1-5
+  description: string;
+  iconName: string;
+  category: string;
+  proficiency: number;
+  yearsOfExperience: number;
 }
 
-export interface PortfolioData {
-  projects: Project[];
-  experience: Experience[];
-  skills: Skill[];
-  about: {
-    bio: string;
-    email: string;
-    location: string;
-    socialLinks: {
-      github?: string;
-      linkedin?: string;
-      twitter?: string;
-    };
+// About Types
+export interface AboutContent {
+  title: string;
+  description: string;
+  sections: {
+    title: string;
+    content: string;
+  }[];
+}
+
+// Contact Types
+export interface ContactInfo {
+  email: string;
+  phone?: string;
+  location: string;
+  socialLinks: {
+    github?: string;
+    linkedin?: string;
+    twitter?: string;
   };
 }

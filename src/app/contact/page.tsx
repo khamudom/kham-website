@@ -1,5 +1,10 @@
 "use client";
 import React, { useState } from "react";
+import { useApi } from "@/hooks/useApi";
+import { fetchContact } from "@/utils/api";
+import { LoadingSpinner } from "@/components/common/LoadingSpinner";
+import { ErrorMessage } from "@/components/common/ErrorMessage";
+import type { ContactInfo } from "@/types/portfolio";
 import {
   Typography,
   Container,
@@ -15,6 +20,7 @@ import { Mail, Phone, MapPin, Send } from "lucide-react";
 import styles from "@/styles/pages/Contact.module.css";
 
 export default function Contact() {
+  const { data: contactResponse, loading, error } = useApi(fetchContact);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -57,6 +63,25 @@ export default function Contact() {
   const handleCloseSnackbar = () => {
     setSnackbar((prev) => ({ ...prev, open: false }));
   };
+
+  if (loading) {
+    return <LoadingSpinner size="large" />;
+  }
+
+  if (error) {
+    return (
+      <ErrorMessage
+        message="Failed to load contact information. Please try again later."
+        onRetry={() => window.location.reload()}
+      />
+    );
+  }
+
+  const contactInfo = contactResponse?.data;
+
+  if (!contactInfo) {
+    return null;
+  }
 
   return (
     <div className={styles.contactPage}>
@@ -123,7 +148,7 @@ export default function Contact() {
                     <Box sx={{ ml: 2 }}>
                       <Typography variant="subtitle1">Email</Typography>
                       <Typography variant="body2" color="text.secondary">
-                        khamu@outlook.com
+                        {contactInfo.email}
                       </Typography>
                     </Box>
                   </Box>
@@ -132,7 +157,7 @@ export default function Contact() {
                     <Box sx={{ ml: 2 }}>
                       <Typography variant="subtitle1">Phone</Typography>
                       <Typography variant="body2" color="text.secondary">
-                        +1 (555) 123-4567
+                        {contactInfo.phone}
                       </Typography>
                     </Box>
                   </Box>
@@ -141,7 +166,7 @@ export default function Contact() {
                     <Box sx={{ ml: 2 }}>
                       <Typography variant="subtitle1">Location</Typography>
                       <Typography variant="body2" color="text.secondary">
-                        San Francisco, CA
+                        {contactInfo.location}
                       </Typography>
                     </Box>
                   </Box>
