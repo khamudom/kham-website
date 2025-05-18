@@ -2,6 +2,7 @@
 
 import React, { useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowRight,
   FileDown,
@@ -19,7 +20,6 @@ import {
 import type { Profile, Skill, Project } from "@/data";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import RotatingTitle from "@/components/animations/RotatingTitle";
-import { getImagePath } from "@/utils/imageLoader";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
@@ -148,15 +148,14 @@ export default function Page() {
 
   return (
     <div className="relative">
-      <section
-        className={styles.hero}
-        style={{
-          backgroundImage: `url(${getImagePath(
-            "/images/ku-portfolio-bg.webp",
-            "full"
-          )})`,
-        }}
-      >
+      <section className={styles.hero}>
+        <Image
+          src="/images/ku-portfolio-bg.webp"
+          alt="Portfolio background"
+          fill
+          priority
+          style={{ objectFit: "cover" }}
+        />
         <div className={styles.heroOverlay}></div>
         <div className={styles.heroContent}>
           <Typography variant="h1" className={styles.heroTitle}>
@@ -227,7 +226,7 @@ export default function Page() {
               <div ref={aboutImageRef} className={styles.aboutImage}>
                 <Box
                   component="img"
-                  src={getImagePath("/images/placeholder.jpg", "medium")}
+                  src="/images/placeholder.jpg"
                   alt="Developer workspace with laptop and code"
                   sx={{
                     width: "100%",
@@ -235,10 +234,7 @@ export default function Page() {
                     objectFit: "cover",
                   }}
                   onError={(e) => {
-                    e.currentTarget.src = getImagePath(
-                      "/images/placeholder.jpg",
-                      "medium"
-                    );
+                    e.currentTarget.src = "/images/placeholder.jpg";
                   }}
                 />
               </div>
@@ -288,14 +284,11 @@ export default function Page() {
                   >
                     <CardMedia
                       component="img"
-                      image={getImagePath(project.coverImage, "medium")}
+                      image={project.coverImage}
                       alt={project.title}
                       sx={{ height: 225 }}
                       onError={(e) => {
-                        e.currentTarget.src = getImagePath(
-                          "/images/placeholder.jpg",
-                          "medium"
-                        );
+                        e.currentTarget.src = "/images/placeholder.jpg";
                       }}
                     />
                   </CardActionArea>

@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import styles from "@/styles/pages/Contact.module.css";
-import { getImagePath } from "@/utils/imageUtils";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -66,10 +65,6 @@ export default function Contact() {
         component="section"
         className={styles.hero}
         sx={{
-          backgroundImage: `url(${getImagePath(
-            "/images/placeholder.jpg",
-            "full"
-          )})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           position: "relative",

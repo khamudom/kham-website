@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
-import type { Image } from "../data/types";
-import { getImagePath } from "../utils/imageLoader";
+import type { Image as GalleryImage } from "../data/types";
 import styles from "./ui/styles/ImageGallery.module.css";
 
 interface ImageGalleryProps {
-  images: Image[];
+  images: GalleryImage[];
 }
 
 const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
@@ -61,54 +61,18 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
     }
   };
 
-  // Focus trap for modal
   useEffect(() => {
-    if (selectedIndex !== -1) {
-      const focusableElements = modalRef.current?.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-      );
-
-      if (focusableElements) {
-        const firstFocusable = focusableElements[0] as HTMLElement;
-        const lastFocusable = focusableElements[
-          focusableElements.length - 1
-        ] as HTMLElement;
-
-        const handleTabKey = (e: KeyboardEvent) => {
-          if (e.key === "Tab") {
-            if (e.shiftKey) {
-              if (document.activeElement === firstFocusable) {
-                e.preventDefault();
-                lastFocusable.focus();
-              }
-            } else {
-              if (document.activeElement === lastFocusable) {
-                e.preventDefault();
-                firstFocusable.focus();
-              }
-            }
-          }
-        };
-
-        window.addEventListener("keydown", handleTabKey);
-
-        // Only focus the close button when first opening the modal
-        if (initialModalOpen.current) {
-          closeButtonRef.current?.focus();
-          initialModalOpen.current = false;
-        }
-
-        return () => {
-          window.removeEventListener("keydown", handleTabKey);
-        };
-      }
+    if (initialModalOpen.current) {
+      closeButtonRef.current?.focus();
     }
   }, [selectedIndex]);
 
   useEffect(() => {
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedIndex]);
 
   return (
     <div className={styles.gallery} role="region" aria-label="Project gallery">
@@ -128,16 +92,15 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
             tabIndex={0}
             aria-label={`View ${image.alt}`}
           >
-            <img
-              src={getImagePath(image.url, "thumbnail")}
+            <Image
+              src={image.url}
               alt={image.alt}
-              style={{ objectFit: "cover", width: "100%", height: "100%" }}
-              loading="lazy"
+              width={400}
+              height={300}
+              className={styles.thumbnail}
+              style={{ objectFit: "cover" }}
               onError={(e) => {
-                e.currentTarget.src = getImagePath(
-                  "/images/placeholder.jpg",
-                  "thumbnail"
-                );
+                e.currentTarget.src = "/images/placeholder.jpg";
               }}
             />
             {image.caption && (
@@ -187,15 +150,15 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ images }) => {
             className={styles.modalContent}
             onClick={(e) => e.stopPropagation()}
           >
-            <img
-              src={getImagePath(images[selectedIndex].url, "large")}
+            <Image
+              src={images[selectedIndex].url}
               alt={images[selectedIndex].alt}
+              width={1200}
+              height={800}
               className={styles.modalImage}
+              priority
               onError={(e) => {
-                e.currentTarget.src = getImagePath(
-                  "/images/placeholder.jpg",
-                  "large"
-                );
+                e.currentTarget.src = "/images/placeholder.jpg";
               }}
             />
             {images[selectedIndex].caption && (

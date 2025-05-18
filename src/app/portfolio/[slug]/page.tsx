@@ -105,6 +105,8 @@ export default async function ProjectDetail({
                     imagePath={project.coverImage}
                     title={project.title}
                     className={styles.imageWrapper}
+                    width={800}
+                    height={450}
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
