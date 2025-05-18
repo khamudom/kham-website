@@ -93,7 +93,7 @@ export default function Portfolio() {
   }
 
   return (
-    <div className="pt-20">
+    <div>
       <Box component="section" className={styles.section}>
         <Container>
           <Typography variant="h1" className={styles.title}>
@@ -173,7 +173,7 @@ export default function Portfolio() {
                       }}
                     >
                       <Image
-                        src={project.imageUrl}
+                        src={project.coverImage}
                         alt={project.title}
                         fill
                         className={styles.projectImage}

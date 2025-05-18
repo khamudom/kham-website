@@ -5,7 +5,6 @@ import {
   Code2,
   Blocks,
   Globe2,
-  Chrome,
   GitBranch,
   Database,
   Braces,
@@ -13,8 +12,8 @@ import {
   Server,
 } from "lucide-react";
 import type { Project, Technology, Skill, Image } from "@/types/portfolio";
-import ImageGallery from "@/components/ImageGallery";
-import ProjectImage from "@/components/ProjectImage";
+import ImageGallery from "@/components/ui/ImageGallery";
+import ProjectImage from "@/components/ui/ProjectImage";
 import styles from "@/styles/pages/ProjectDetail.module.css";
 import {
   Typography,
@@ -88,7 +87,7 @@ export default function ProjectDetail({
     JavaScript: Code2,
     React: Code2,
     "Web Component": Globe2,
-    Chromium: Chrome,
+    Chromium: Globe2,
     Gerrit: GitBranch,
     HTML: Code2,
     CSS: Code2,
@@ -103,7 +102,7 @@ export default function ProjectDetail({
   };
 
   return (
-    <div className="pt-20">
+    <div>
       <Box component="section" className={styles.section}>
         <Container>
           <Link href="/portfolio" passHref>

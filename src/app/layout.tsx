@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { ThemeProvider } from "@/design-system/ThemeProvider";
+import { AppProvider } from "@/context/AppContext";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import "@/styles/global.css";
@@ -33,13 +34,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning>
-        <ThemeProvider>
-          <div className="app-container">
-            <Header />
-            <main className="main-content">{children}</main>
-            <Footer />
-          </div>
-        </ThemeProvider>
+        <AppProvider>
+          <ThemeProvider>
+            <div className="app-container">
+              <Header />
+              <main className="main-content">{children}</main>
+              <Footer />
+            </div>
+          </ThemeProvider>
+        </AppProvider>
       </body>
     </html>
   );

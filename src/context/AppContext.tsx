@@ -1,5 +1,7 @@
+"use client";
+
 import React, { createContext, useContext, useReducer, ReactNode } from "react";
-import type { Project, Profile, Skill } from "../types";
+import type { Project, Profile, Skill } from "../types/portfolio";
 
 interface AppState {
   projects: Project[];

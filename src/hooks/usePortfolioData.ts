@@ -1,71 +1,49 @@
-import { useState, useEffect } from "react";
-import { ApiResponse } from "../types/portfolio";
-import * as api from "../utils/api";
+import { useEffect } from "react";
+import { useAppContext } from "@/context/AppContext";
+import { useApi } from "./useApi";
+import { fetchProfile, fetchProjects, fetchSkills } from "@/utils/api";
 
-export function useProfile() {
-  const [state, setState] = useState<ApiResponse<any>>({
-    data: null,
-    loading: true,
-  });
-
-  useEffect(() => {
-    const loadData = async () => {
-      const result = await api.fetchProfile();
-      setState(result);
-    };
-    loadData();
-  }, []);
-
-  return state;
-}
-
-export function useProjects() {
-  const [state, setState] = useState<ApiResponse<any>>({
-    data: null,
-    loading: true,
-  });
+export function usePortfolioData() {
+  const { state, dispatch } = useAppContext();
+  const {
+    data: projectsResponse,
+    loading: projectsLoading,
+    error: projectsError,
+  } = useApi(fetchProjects);
+  const {
+    data: profileResponse,
+    loading: profileLoading,
+    error: profileError,
+  } = useApi(fetchProfile);
+  const {
+    data: skillsResponse,
+    loading: skillsLoading,
+    error: skillsError,
+  } = useApi(fetchSkills);
 
   useEffect(() => {
-    const loadData = async () => {
-      const result = await api.fetchProjects();
-      setState(result);
-    };
-    loadData();
-  }, []);
-
-  return state;
-}
-
-export function useExperience() {
-  const [state, setState] = useState<ApiResponse<any>>({
-    data: null,
-    loading: true,
-  });
+    if (projectsResponse?.data?.data) {
+      dispatch({ type: "SET_PROJECTS", payload: projectsResponse.data.data });
+    }
+  }, [projectsResponse, dispatch]);
 
   useEffect(() => {
-    const loadData = async () => {
-      const result = await api.fetchExperience();
-      setState(result);
-    };
-    loadData();
-  }, []);
-
-  return state;
-}
-
-export function useSkills() {
-  const [state, setState] = useState<ApiResponse<any>>({
-    data: null,
-    loading: true,
-  });
+    if (profileResponse?.data) {
+      dispatch({ type: "SET_PROFILE", payload: profileResponse.data });
+    }
+  }, [profileResponse, dispatch]);
 
   useEffect(() => {
-    const loadData = async () => {
-      const result = await api.fetchSkills();
-      setState(result);
-    };
-    loadData();
-  }, []);
+    if (skillsResponse?.data?.data) {
+      dispatch({ type: "SET_SKILLS", payload: skillsResponse.data.data });
+    }
+  }, [skillsResponse, dispatch]);
 
-  return state;
+  return {
+    projects: state.projects,
+    profile: state.profile,
+    skills: state.skills,
+    loading: projectsLoading || profileLoading || skillsLoading,
+    error: projectsError || profileError || skillsError,
+  };
 }

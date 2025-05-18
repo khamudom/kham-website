@@ -17,6 +17,7 @@ const RotatingTitle: React.FC<RotatingTitleProps> = ({
   const currentTitleRef = useRef<HTMLSpanElement>(null);
   const nextTitleRef = useRef<HTMLSpanElement>(null);
   const indexRef = useRef(0);
+  const timelineRef = useRef<gsap.core.Timeline | null>(null);
 
   useGSAP(() => {
     if (
@@ -76,7 +77,7 @@ const RotatingTitle: React.FC<RotatingTitleProps> = ({
       left: "50%",
       xPercent: -50,
       opacity: 1,
-      y: 20,
+      y: 0,
     });
 
     gsap.set(nextTitleRef.current, {
@@ -88,16 +89,13 @@ const RotatingTitle: React.FC<RotatingTitleProps> = ({
       y: 20,
     });
 
-    // Initial animation
-    gsap.to(currentTitleRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: "power2.out",
-    });
-
     const rotateTitle = () => {
       if (!currentTitleRef.current || !nextTitleRef.current) return;
+
+      // Kill any existing timeline
+      if (timelineRef.current) {
+        timelineRef.current.kill();
+      }
 
       const nextIndex = (indexRef.current + 1) % titles.length;
       nextTitleRef.current.textContent = titles[nextIndex];
@@ -105,14 +103,16 @@ const RotatingTitle: React.FC<RotatingTitleProps> = ({
       // Update widths before animation
       updateWidths();
 
-      const tl = gsap.timeline();
+      // Create new timeline
+      timelineRef.current = gsap.timeline();
 
-      tl.to(currentTitleRef.current, {
-        opacity: 0,
-        y: -20,
-        duration: 0.8,
-        ease: "power2.inOut",
-      })
+      timelineRef.current
+        .to(currentTitleRef.current, {
+          opacity: 0,
+          y: -20,
+          duration: 0.8,
+          ease: "power2.inOut",
+        })
         .fromTo(
           nextTitleRef.current,
           { opacity: 0, y: 20 },
@@ -121,14 +121,16 @@ const RotatingTitle: React.FC<RotatingTitleProps> = ({
         )
         .call(() => {
           if (!currentTitleRef.current || !nextTitleRef.current) return;
-          // ✅ Ensure only one title has text at a time
+
+          // Update current title
           currentTitleRef.current.textContent =
             nextTitleRef.current.textContent;
           nextTitleRef.current.textContent = "";
 
-          // ✅ Reset visibility state correctly
+          // Reset positions
           gsap.set(currentTitleRef.current, { opacity: 1, y: 0 });
           gsap.set(nextTitleRef.current, { opacity: 0, y: 20 });
+
           indexRef.current = nextIndex;
         });
     };
@@ -138,6 +140,9 @@ const RotatingTitle: React.FC<RotatingTitleProps> = ({
     return () => {
       clearInterval(intervalId);
       window.removeEventListener("resize", updateWidths);
+      if (timelineRef.current) {
+        timelineRef.current.kill();
+      }
     };
   }, [titles, interval]);
 

@@ -11,9 +11,7 @@ import {
   Globe2,
   Gauge,
 } from "lucide-react";
-import { useApi } from "@/hooks/useApi";
-import { fetchProfile, fetchProjects, fetchSkills } from "@/utils/api";
-import type { Profile, Skill, Project } from "@/types/portfolio";
+import { usePortfolioData } from "@/hooks/usePortfolioData";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
 import { ErrorMessage } from "@/components/common/ErrorMessage";
 import RotatingTitle from "@/components/animations/RotatingTitle";
@@ -37,21 +35,7 @@ import { Button } from "@/design-system/components/Button";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Page() {
-  const {
-    data: projectsResponse,
-    loading: projectsLoading,
-    error: projectsError,
-  } = useApi(fetchProjects);
-  const {
-    data: profileResponse,
-    loading: profileLoading,
-    error: profileError,
-  } = useApi(fetchProfile);
-  const {
-    data: skillsResponse,
-    loading: skillsLoading,
-    error: skillsError,
-  } = useApi(fetchSkills);
+  const { projects, profile, skills, loading, error } = usePortfolioData();
 
   const projectCardsRef = useRef<HTMLDivElement>(null);
   const aboutSectionRef = useRef<HTMLDivElement>(null);
@@ -59,9 +43,7 @@ export default function Page() {
   const aboutImageRef = useRef<HTMLDivElement>(null);
 
   // Get featured projects (first 3)
-  const featuredProjects = projectsResponse?.data?.data.slice(0, 3) || [];
-  const skills = skillsResponse?.data?.data || [];
-  const profile = profileResponse?.data;
+  const featuredProjects = projects.slice(0, 3);
 
   useGSAP(() => {
     // Project cards animation
@@ -138,11 +120,11 @@ export default function Page() {
     }
   }, [featuredProjects]);
 
-  if (projectsLoading || profileLoading || skillsLoading) {
+  if (loading) {
     return <LoadingSpinner size="large" />;
   }
 
-  if (projectsError || profileError || skillsError) {
+  if (error) {
     return (
       <ErrorMessage
         message="Failed to load portfolio data. Please try again later."
@@ -151,7 +133,7 @@ export default function Page() {
     );
   }
 
-  if (!profile || !projectsResponse || !skillsResponse) {
+  if (!profile || !projects || !skills) {
     return null;
   }
 
@@ -219,7 +201,7 @@ export default function Page() {
                 </Typography>
                 <div className={styles.skillsList}>
                   {skills.map((skill) => {
-                    const IconComponent = getIconComponent(skill.icon);
+                    const IconComponent = getIconComponent(skill.iconName);
                     return (
                       <div key={skill.id} className={styles.skillItem}>
                         <IconComponent className={styles.skillIcon} size={24} />
@@ -252,7 +234,7 @@ export default function Page() {
             <Grid item xs={12} md={5}>
               <div ref={aboutImageRef}>
                 <Image
-                  src="/images/profile.jpg"
+                  src="/images/placeholder.jpg"
                   alt="Profile"
                   width={400}
                   height={400}
@@ -312,7 +294,7 @@ export default function Page() {
                       }}
                     >
                       <Image
-                        src={project.imageUrl}
+                        src={project.coverImage}
                         alt={project.title}
                         fill
                         className={styles.projectImage}
