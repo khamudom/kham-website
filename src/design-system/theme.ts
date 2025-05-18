@@ -1,35 +1,30 @@
-import tokens, { lightThemeTokens, darkThemeTokens } from "./tokens";
-import { createTheme, ThemeOptions } from "@mui/material/styles";
+import { ThemeOptions } from "@mui/material/styles";
+import {
+  colors,
+  spacing,
+  typography,
+  transitions,
+  borders,
+  lightThemeTokens,
+  darkThemeTokens,
+} from "./tokens";
 
-// Create theme options for Material UI based on our design tokens
 const createThemeOptions = (mode: "light" | "dark"): ThemeOptions => {
   const themeTokens = mode === "light" ? lightThemeTokens : darkThemeTokens;
-  const { colors, typography, spacing, borders } = tokens;
 
   return {
     palette: {
       mode,
       primary: {
-        main: mode === "light" ? colors.primary.main : "#2997ff",
-        light: mode === "light" ? colors.primary.light : "#5eb3ff",
-        dark: mode === "light" ? colors.primary.dark : "#0071e3",
-        contrastText: colors.neutral.white,
+        main: colors.primary.main,
+        light: colors.primary.light,
+        dark: colors.primary.dark,
       },
       secondary: {
         main: colors.secondary.main,
         light: colors.secondary.light,
         dark: colors.secondary.dark,
-        contrastText: colors.neutral.white,
       },
-      background: {
-        default: themeTokens.colors.background.primary,
-        paper: themeTokens.colors.background.tertiary,
-      },
-      text: {
-        primary: themeTokens.colors.text.primary,
-        secondary: themeTokens.colors.text.secondary,
-      },
-      divider: themeTokens.colors.divider,
       error: {
         main: colors.error.main,
         light: colors.error.light,
@@ -50,64 +45,67 @@ const createThemeOptions = (mode: "light" | "dark"): ThemeOptions => {
         light: colors.success.light,
         dark: colors.success.dark,
       },
+      background: {
+        default: themeTokens.colors.background.primary,
+        paper: themeTokens.colors.background.secondary,
+      },
+      text: {
+        primary: themeTokens.colors.text.primary,
+        secondary: themeTokens.colors.text.secondary,
+      },
+      divider: themeTokens.colors.divider,
     },
     typography: {
       fontFamily: typography.fontFamily,
       h1: {
         fontSize: typography.fontSize["4xl"],
-        fontWeight: typography.fontWeights.semibold,
+        fontWeight: typography.fontWeights.bold,
         lineHeight: typography.lineHeight.tight,
         letterSpacing: typography.letterSpacing.tight,
       },
       h2: {
         fontSize: typography.fontSize["3xl"],
-        fontWeight: typography.fontWeights.semibold,
+        fontWeight: typography.fontWeights.bold,
         lineHeight: typography.lineHeight.tight,
         letterSpacing: typography.letterSpacing.tight,
       },
       h3: {
         fontSize: typography.fontSize["2xl"],
         fontWeight: typography.fontWeights.semibold,
-        lineHeight: 1.3,
+        lineHeight: typography.lineHeight.tight,
+        letterSpacing: typography.letterSpacing.tight,
       },
       h4: {
         fontSize: typography.fontSize.xl,
         fontWeight: typography.fontWeights.semibold,
-        lineHeight: 1.4,
+        lineHeight: typography.lineHeight.normal,
       },
       h5: {
         fontSize: typography.fontSize.lg,
-        fontWeight: typography.fontWeights.semibold,
-        lineHeight: 1.4,
+        fontWeight: typography.fontWeights.medium,
+        lineHeight: typography.lineHeight.normal,
       },
       h6: {
         fontSize: typography.fontSize.base,
-        fontWeight: typography.fontWeights.semibold,
-        lineHeight: 1.4,
+        fontWeight: typography.fontWeights.medium,
+        lineHeight: typography.lineHeight.normal,
       },
       body1: {
         fontSize: typography.fontSize.base,
-        lineHeight: typography.lineHeight.normal,
+        lineHeight: typography.lineHeight.relaxed,
       },
       body2: {
         fontSize: typography.fontSize.sm,
-        lineHeight: typography.lineHeight.normal,
-        color: themeTokens.colors.text.secondary,
+        lineHeight: typography.lineHeight.relaxed,
       },
       button: {
-        textTransform: "none",
+        fontSize: typography.fontSize.base,
         fontWeight: typography.fontWeights.medium,
+        textTransform: "none",
       },
     },
     shape: {
-      borderRadius: parseInt(borders.radius.md.replace("rem", "")) * 16,
-    },
-    spacing: (factor: number) => {
-      // Convert our spacing scale to MUI's spacing function
-      const spacingValues = [
-        0, 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96, 128,
-      ];
-      return `${spacingValues[factor] || factor * 4}px`;
+      borderRadius: parseInt(borders.radius.md),
     },
     components: {
       MuiButton: {
@@ -115,7 +113,7 @@ const createThemeOptions = (mode: "light" | "dark"): ThemeOptions => {
           root: {
             padding: `${spacing[3]} ${spacing[6]}`,
             boxShadow: "none",
-            transition: `all ${tokens.transitions.duration.normal} ${tokens.transitions.timing.spring}`,
+            transition: `all ${transitions.duration.normal} ${transitions.timing.spring}`,
             "&:hover": {
               boxShadow: "none",
             },
@@ -123,17 +121,19 @@ const createThemeOptions = (mode: "light" | "dark"): ThemeOptions => {
           contained: {
             "&:hover": {
               backgroundColor:
-                mode === "light" ? colors.primary.light : "#0071e3",
+                mode === "light" ? colors.primary.light : colors.primary.dark,
             },
           },
           outlined: {
-            borderColor: mode === "light" ? colors.primary.main : "#2997ff",
+            borderColor:
+              mode === "light" ? colors.primary.main : colors.primary.light,
             "&:hover": {
               backgroundColor:
                 mode === "light"
                   ? "rgba(0, 102, 204, 0.04)"
                   : "rgba(41, 151, 255, 0.04)",
-              borderColor: mode === "light" ? colors.primary.light : "#0071e3",
+              borderColor:
+                mode === "light" ? colors.primary.light : colors.primary.dark,
             },
           },
         },
@@ -149,10 +149,12 @@ const createThemeOptions = (mode: "light" | "dark"): ThemeOptions => {
         styleOverrides: {
           root: {
             "&:hover .MuiOutlinedInput-notchedOutline": {
-              borderColor: mode === "light" ? colors.primary.light : "#0071e3",
+              borderColor:
+                mode === "light" ? colors.primary.light : colors.primary.dark,
             },
             "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-              borderColor: mode === "light" ? colors.primary.main : "#2997ff",
+              borderColor:
+                mode === "light" ? colors.primary.main : colors.primary.light,
             },
           },
           notchedOutline: {
@@ -165,37 +167,8 @@ const createThemeOptions = (mode: "light" | "dark"): ThemeOptions => {
           root: {
             color: themeTokens.colors.text.secondary,
             "&.Mui-focused": {
-              color: mode === "light" ? colors.primary.main : "#2997ff",
-            },
-          },
-        },
-      },
-      MuiCard: {
-        styleOverrides: {
-          root: {
-            backgroundColor: themeTokens.colors.background.tertiary,
-            borderRadius: borders.radius.md,
-            border: `1px solid ${themeTokens.colors.border}`,
-            transition: `all ${tokens.transitions.duration.normal} ${tokens.transitions.timing.spring}`,
-            "&:hover": {
-              boxShadow: tokens.shadows.md,
-            },
-          },
-        },
-      },
-      MuiPaper: {
-        styleOverrides: {
-          root: {
-            backgroundColor: themeTokens.colors.background.tertiary,
-            borderRadius: borders.radius.md,
-          },
-        },
-      },
-      MuiSnackbar: {
-        styleOverrides: {
-          root: {
-            "& .MuiSnackbarContent-root": {
-              backgroundColor: themeTokens.colors.background.secondary,
+              color:
+                mode === "light" ? colors.primary.main : colors.primary.light,
             },
           },
         },
@@ -204,11 +177,4 @@ const createThemeOptions = (mode: "light" | "dark"): ThemeOptions => {
   };
 };
 
-// Create and export the themes
-export const lightTheme = createTheme(createThemeOptions("light"));
-export const darkTheme = createTheme(createThemeOptions("dark"));
-
-// Export a function to get the current theme
-export const getCurrentTheme = (mode: "light" | "dark") => {
-  return mode === "light" ? lightTheme : darkTheme;
-};
+export default createThemeOptions;
