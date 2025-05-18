@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Sun, Moon } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useTheme } from "@/design-system/ThemeProvider";
 import {
   AppBar,
@@ -23,6 +23,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { Button } from "@/design-system/components/Button";
+import { ThemeSelector } from "@/components/ThemeSelector";
 import styles from "./styles/Header.module.css";
 
 interface HideOnScrollProps {
@@ -44,14 +45,8 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
-  const { mode, toggleTheme } = useTheme();
-  const isDark = mode === "dark";
   const muiTheme = useMuiTheme();
   const isMobile = useMediaQuery(muiTheme.breakpoints.down("md"));
-
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -135,42 +130,18 @@ const Header = () => {
                   {item.label}
                 </Button>
               ))}
-              <IconButton
-                onClick={toggleTheme}
-                sx={{
-                  "&:hover": { color: muiTheme.palette.primary.main },
-                }}
-                aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
-              >
-                {isDark ? (
-                  <Sun size={20} aria-hidden="true" />
-                ) : (
-                  <Moon size={20} aria-hidden="true" />
-                )}
-              </IconButton>
+              <ThemeSelector />
             </Box>
           )}
 
           {/* Mobile Navigation */}
           {isMobile && (
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <IconButton
-                onClick={toggleTheme}
-                sx={{
-                  mr: 1,
-                  "&:hover": { color: muiTheme.palette.primary.main },
-                }}
-                aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
-              >
-                {isDark ? (
-                  <Sun size={20} aria-hidden="true" />
-                ) : (
-                  <Moon size={20} aria-hidden="true" />
-                )}
-              </IconButton>
+              <ThemeSelector />
               <IconButton
                 onClick={() => setIsOpen(true)}
                 aria-label="Open menu"
+                sx={{ ml: 1 }}
               >
                 <Menu size={24} />
               </IconButton>
@@ -204,26 +175,11 @@ const Header = () => {
                     href={item.path}
                     selected={pathname === item.path}
                     onClick={() => setIsOpen(false)}
-                    sx={{
-                      py: 2,
-                      "&.Mui-selected": {
-                        backgroundColor: alpha(
-                          muiTheme.palette.primary.main,
-                          0.08
-                        ),
-                        color: muiTheme.palette.primary.main,
-                        "&:hover": {
-                          backgroundColor: alpha(
-                            muiTheme.palette.primary.main,
-                            0.12
-                          ),
-                        },
-                      },
-                    }}
                   >
                     <ListItemText
                       primary={item.label}
                       primaryTypographyProps={{
+                        color: pathname === item.path ? "primary" : "inherit",
                         fontWeight: pathname === item.path ? 600 : 400,
                       }}
                     />
