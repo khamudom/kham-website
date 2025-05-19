@@ -25,17 +25,20 @@ import {
   Grid,
   Card,
   CardContent,
-  CardMedia,
   Box,
   CardActionArea,
 } from "@mui/material";
 import { Button } from "@/design-system/components/Button";
+import { useTheme } from "@mui/material/styles";
+import { useThemeBackgrounds } from "@/hooks/useThemeBackgrounds";
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Page() {
   const { projects, profile, skills, loading, error } = usePortfolioData();
+  const theme = useTheme();
+  const backgrounds = useThemeBackgrounds();
 
   const projectCardsRef = useRef<HTMLDivElement>(null);
   const aboutSectionRef = useRef<HTMLDivElement>(null);
@@ -158,13 +161,15 @@ export default function Page() {
   return (
     <div className="relative">
       <section className={styles.hero}>
-        <Image
-          src="/images/ku-portfolio-bg.webp"
-          alt="Portfolio background"
-          fill
-          priority
-          style={{ objectFit: "cover" }}
-        />
+        {backgrounds.hero && (
+          <Image
+            src={backgrounds.hero}
+            alt="Portfolio background"
+            fill
+            priority
+            style={{ objectFit: "cover" }}
+          />
+        )}
         <div className={styles.heroOverlay}></div>
         <div className={styles.heroContent}>
           <Typography variant="h1" className={styles.heroTitle}>

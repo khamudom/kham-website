@@ -1,5 +1,22 @@
+/**
+ * Theme Configuration and Styling Rules
+ *
+ * This file defines how the theme tokens (from theme-tokens.ts) are applied to your UI components.
+ * Think of this as your "styling rulebook" that tells Material-UI how to use your colors.
+ *
+ * Key points:
+ * - Defines how colors are used in different component states (hover, active, etc.)
+ * - Sets up component-specific styling rules
+ * - Configures Material-UI theme options
+ * - Creates theme variations (default, dark, ninjaTurtles, matrix)
+ *
+ * Relationship with theme-tokens.ts:
+ * - theme-tokens.ts: "What are my colors?" (the raw values)
+ * - themes.ts: "How should these colors be used?" (the styling rules)
+ */
+
 import { ThemeOptions } from "@mui/material/styles";
-import { colors, spacing, typography, transitions, borders } from "./tokens";
+import { spacing, typography, transitions, borders } from "./tokens";
 import {
   defaultThemeTokens,
   ninjaTurtlesTokens,
@@ -77,40 +94,106 @@ const baseTheme = {
 };
 
 // Default theme
-export const defaultTheme: ThemeOptions = {
+export const defaultTheme = {
   ...baseTheme,
   palette: {
     mode: "light",
-    ...defaultThemeTokens.light,
+    primary: {
+      ...defaultThemeTokens.light.primary,
+      contrastText: "#fff",
+    },
+    secondary: {
+      ...defaultThemeTokens.light.secondary,
+      contrastText: "#fff",
+    },
+    background: {
+      ...defaultThemeTokens.light.background,
+    },
+    text: {
+      ...defaultThemeTokens.light.text,
+    },
   },
-};
+  backgrounds: defaultThemeTokens.light.backgrounds,
+} as ThemeOptions & { backgrounds: { hero: string | null } };
 
 // Default dark theme
-export const defaultDarkTheme: ThemeOptions = {
+export const defaultDarkTheme = {
   ...baseTheme,
   palette: {
     mode: "dark",
-    ...defaultThemeTokens.dark,
+    primary: {
+      ...defaultThemeTokens.dark.primary,
+      contrastText: "#fff",
+    },
+    secondary: {
+      ...defaultThemeTokens.dark.secondary,
+      contrastText: "#fff",
+    },
+    background: {
+      ...defaultThemeTokens.dark.background,
+    },
+    text: {
+      ...defaultThemeTokens.dark.text,
+    },
   },
-};
+  backgrounds: defaultThemeTokens.dark.backgrounds,
+} as ThemeOptions & { backgrounds: { hero: string | null } };
 
 // Ninja Turtles theme
-export const ninjaTurtlesTheme: ThemeOptions = {
+export const ninjaTurtlesTheme = {
   ...baseTheme,
   palette: {
-    mode: "light",
-    ...ninjaTurtlesTokens,
+    primary: {
+      ...ninjaTurtlesTokens.primary,
+      contrastText: "#fff",
+    },
+    secondary: {
+      ...ninjaTurtlesTokens.secondary,
+      contrastText: "#fff",
+    },
+    background: {
+      ...ninjaTurtlesTokens.background,
+    },
+    text: {
+      ...ninjaTurtlesTokens.text,
+    },
   },
-};
+  backgrounds: ninjaTurtlesTokens.backgrounds,
+} as ThemeOptions & { backgrounds: { hero: string | null } };
 
 // Matrix theme
-export const matrixTheme: ThemeOptions = {
+export const matrixTheme = {
   ...baseTheme,
   palette: {
     mode: "dark",
-    ...matrixTokens,
+    primary: {
+      ...matrixTokens.primary,
+      contrastText: matrixTokens.secondary.main,
+    },
+    secondary: {
+      ...matrixTokens.secondary,
+      contrastText: "#fff",
+    },
+    background: {
+      ...matrixTokens.background,
+    },
+    text: {
+      ...matrixTokens.text,
+    },
   },
-};
+  backgrounds: matrixTokens.backgrounds,
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        contained: {
+          "&:hover": {
+            backgroundColor: matrixTokens.primary.light,
+          },
+        },
+      },
+    },
+  },
+} as ThemeOptions & { backgrounds: { hero: string | null } };
 
 export type ThemeName = "default" | "defaultDark" | "ninjaTurtles" | "matrix";
 
