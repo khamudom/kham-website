@@ -1,0 +1,47 @@
+.verticalHeader {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.navItem {
+  position: relative;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.navItem:hover {
+  transform: translateX(4px);
+}
+
+/* Active state when section is in view */
+.navItem:target {
+  background-color: rgba(var(--primary-rgb), 0.1);
+}
+
+.navItem:target .indicator {
+  background-color: var(--primary);
+  transform: scale(1.5);
+}
+
+.indicator {
+  transition: all 0.3s ease;
+}
+
+.titleName {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.titleDescription {
+  font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+  line-height: 1.381;
+  letter-spacing: 0.011em;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 400;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+}

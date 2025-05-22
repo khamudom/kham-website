@@ -1,6 +1,6 @@
 export const themeBackgrounds = {
   default: {
-    hero: "/images/backgrounds/default-hero.webp",
+    hero: null,
   },
   defaultDark: {
     hero: null,

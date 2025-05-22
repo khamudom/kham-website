@@ -1,8 +1,6 @@
 import { Metadata } from "next";
 import { ThemeProvider } from "@/design-system/ThemeProvider";
 import { AppProvider } from "@/context/AppContext";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import "@/styles/global.css";
 
 export const metadata: Metadata = {
@@ -37,9 +35,7 @@ export default function RootLayout({
         <AppProvider>
           <ThemeProvider>
             <div className="app-container">
-              <Header />
               <main className="main-content">{children}</main>
-              <Footer />
             </div>
           </ThemeProvider>
         </AppProvider>

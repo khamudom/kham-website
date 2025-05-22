@@ -1,6 +1,7 @@
+/** @jsxImportSource react */
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -10,11 +11,16 @@ import {
   Layout,
   Globe2,
   Gauge,
+  Github,
+  Linkedin,
+  Mail,
+  MapPin,
+  Clock,
 } from "lucide-react";
 import { usePortfolioData } from "@/hooks/usePortfolioData";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
 import { ErrorMessage } from "@/components/common/ErrorMessage";
-import RotatingTitle from "@/components/animations/RotatingTitle";
+// import RotatingTitle from "@/components/animations/RotatingTitle";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
@@ -27,10 +33,16 @@ import {
   CardContent,
   Box,
   CardActionArea,
+  Divider,
+  IconButton,
+  Stack,
+  TextField,
 } from "@mui/material";
 import { Button } from "@/design-system/components/Button";
 import { useTheme } from "@mui/material/styles";
 import { useThemeBackgrounds } from "@/hooks/useThemeBackgrounds";
+import HeaderVertical from "@/components/layout/HeaderVertical";
+import { ThemeSelector } from "@/components/ThemeSelector";
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -39,11 +51,18 @@ export default function Page() {
   const { projects, profile, skills, loading, error } = usePortfolioData();
   const theme = useTheme();
   const backgrounds = useThemeBackgrounds();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
 
   const projectCardsRef = useRef<HTMLDivElement>(null);
   const aboutSectionRef = useRef<HTMLDivElement>(null);
+  const contactSectionRef = useRef<HTMLDivElement>(null);
   const aboutContentRef = useRef<HTMLDivElement>(null);
   const aboutImageRef = useRef<HTMLDivElement>(null);
+  const [activeSection, setActiveSection] = useState("about");
 
   // Get featured projects (first 3)
   const featuredProjects = projects.slice(0, 3);
@@ -123,6 +142,50 @@ export default function Page() {
     }
   }, [featuredProjects]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = [
+        { id: "about", ref: aboutSectionRef },
+        { id: "projects", ref: projectCardsRef },
+        { id: "contact", ref: contactSectionRef },
+      ];
+
+      const scrollPosition = window.scrollY + window.innerHeight / 3;
+
+      for (const section of sections) {
+        if (section.ref.current) {
+          const { top, bottom } = section.ref.current.getBoundingClientRect();
+          const offsetTop = top + window.scrollY;
+          const offsetBottom = bottom + window.scrollY;
+
+          if (scrollPosition >= offsetTop && scrollPosition <= offsetBottom) {
+            setActiveSection(section.id);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleFormChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // TODO: Implement form submission logic
+    console.log("Form submitted:", formData);
+  };
+
   if (loading) {
     return <LoadingSpinner size="large" />;
   }
@@ -159,50 +222,101 @@ export default function Page() {
   };
 
   return (
-    <div className="relative">
-      <section className={styles.hero}>
-        {backgrounds.hero && (
-          <Image
-            src={backgrounds.hero}
-            alt="Portfolio background"
-            fill
-            priority
-            style={{ objectFit: "cover" }}
+    <div className={styles.mainContainer}>
+      <div className={styles.mainNavContainer}>
+        <div className={styles.mainStickyNav}>
+          <HeaderVertical
+            activeSection={activeSection}
+            onSectionChange={setActiveSection}
           />
-        )}
-        <div className={styles.heroOverlay}></div>
-        <div className={styles.heroContent}>
-          <Typography variant="h1" className={styles.heroTitle}>
-            <RotatingTitle titles={rotatingTitles} interval={2500} />
-          </Typography>
-          <Typography variant="body1" className={styles.heroText}>
-            {profile.bio}
-          </Typography>
-          <Button
-            component={Link}
-            href="/portfolio"
-            variant="contained"
-            endIcon={<ArrowRight size={20} />}
-          >
-            View My Work
-          </Button>
+          <div className={styles.stickyFooter}>
+            {/* Social Links */}
+            <div className={styles.socialLinks}>
+              <IconButton
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                sx={{
+                  color: "text.primary",
+                  "&:hover": {
+                    color: "primary.main",
+                  },
+                }}
+              >
+                <Github className={styles.socialIcon} />
+              </IconButton>
+              <IconButton
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                sx={{
+                  color: "text.primary",
+                  "&:hover": {
+                    color: "primary.main",
+                  },
+                }}
+              >
+                <Linkedin className={styles.socialIcon} />
+              </IconButton>
+            </div>
+            <Divider />
+            <div>
+              <Typography variant="body2" sx={{ mb: 3, display: "block" }}>
+                Switch up the vibe with the theme selector!
+              </Typography>
+              <ThemeSelector />
+            </div>
+          </div>
         </div>
-      </section>
-      {/* About Section */}
-      <Box
-        component="section"
-        ref={aboutSectionRef}
-        sx={{ py: 8, backgroundColor: "background.default" }}
-      >
-        <Container>
-          <Grid container spacing={6}>
-            <Grid item xs={12} md={7}>
+      </div>
+      <div className={styles.mainContent}>
+        {/* About Section */}
+        <Box
+          component="section"
+          ref={aboutSectionRef}
+          id="about"
+          sx={{
+            scrollMarginTop: "6rem",
+          }}
+        >
+          <div>
+            <Grid container>
               <div ref={aboutContentRef}>
-                <Typography variant="h2" gutterBottom>
-                  {profile.name}
+                <Typography variant="body1" color="text.secondary" paragraph>
+                  <strong>Front-end UI Engineer</strong> with a track record of
+                  creating <strong>intuitive</strong>,{" "}
+                  <strong>performant</strong> user interfaces that drive{" "}
+                  <strong>content creation</strong>,{" "}
+                  <strong>business outcomes</strong>, and streamlined
+                  development workflows. Skilled in{" "}
+                  <strong>scaling design systems</strong> and guiding{" "}
+                  <strong>technical design decisions</strong> across{" "}
+                  <strong>enterprise-grade applications</strong>. Known for
+                  working <strong>cross-functionally</strong> with designers,
+                  product managers, and backend engineers to build{" "}
+                  <strong>accessible</strong>, reliable, and{" "}
+                  <strong>maintainable</strong> UI solutions. Brings a{" "}
+                  <strong>collaborative</strong>,{" "}
+                  <strong>flexible mindset</strong> and a strong sense of{" "}
+                  <strong>accountability</strong> to every project.
                 </Typography>
                 <Typography variant="body1" color="text.secondary" paragraph>
-                  {profile.bio}
+                  Currently, I work as a{" "}
+                  <strong>freelance front-end developer</strong>, partnering
+                  with <strong>startups</strong>, <strong>enterprises</strong>,
+                  and individual clients to design and build high-quality
+                  websites and <strong>web applications</strong>. I specialize
+                  in delivering <strong>tailored solutions</strong> that balance
+                  performance, <strong>usability</strong>, and{" "}
+                  <strong>visual polish</strong>. Whether it's a marketing site,
+                  an <strong>interactive product</strong>, or a{" "}
+                  <strong>scalable</strong> app, I bring a{" "}
+                  <strong>client-focused approach</strong> rooted in{" "}
+                  <strong>clear communication</strong>,{" "}
+                  <strong>efficient development practices</strong>, and a
+                  commitment to <strong>measurable results</strong>.
                 </Typography>
                 <div className={styles.skillsList}>
                   {skills.map((skill) => {
@@ -236,103 +350,218 @@ export default function Page() {
                 </div>
               </div>
             </Grid>
-            <Grid item xs={12} md={5}>
-              <div ref={aboutImageRef}>
-                <Image
-                  src="/images/placeholder.jpg"
-                  alt="Profile"
-                  width={400}
-                  height={400}
-                  className={styles.profileImage}
-                />
-              </div>
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
-      {/* Featured Projects Section */}
-      <Box
-        component="section"
-        sx={{ py: 8, backgroundColor: "background.paper" }}
-      >
-        <Container>
-          <Typography variant="h2" gutterBottom>
-            Featured Projects
-          </Typography>
-          <Typography variant="body1" color="text.secondary" paragraph>
-            Here are some of my recent works that showcase my skills and
-            experience.
-          </Typography>
-          <Grid container spacing={4} ref={projectCardsRef}>
-            {featuredProjects.map((project) => (
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                md={4}
-                key={project.id}
-                className="project-card"
-              >
+          </div>
+        </Box>
+        {/* Featured Projects Section */}
+        <Box
+          component="section"
+          ref={projectCardsRef}
+          id="projects"
+          sx={{
+            py: 8,
+            scrollMarginTop: "2rem",
+            display: "flex",
+            alignItems: "flex-start",
+            minHeight: "50vh",
+          }}
+        >
+          <div>
+            <Stack spacing={5}>
+              {featuredProjects.map((project) => (
                 <Card
+                  key={project.id}
+                  className={styles.projectCard}
                   sx={{
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                    borderRadius: 2,
-                    overflow: "hidden",
-                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.08)",
-                    transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                    backgroundColor: "transparent",
+                    backgroundImage: "none",
+                    border: "1px solid transparent",
+                    boxShadow: "none",
+                    transition: "all 0.3s ease",
                     "&:hover": {
-                      boxShadow: "0 12px 28px rgba(0, 0, 0, 0.15)",
+                      backgroundColor: "background.paper",
+                      border: "1px solid",
+                      borderColor: "divider",
                     },
                   }}
                 >
-                  <CardActionArea
-                    component={Link}
-                    href={`/portfolio/${project.slug}`}
-                    sx={{ flexShrink: 0 }}
-                  >
-                    <Box
-                      sx={{
-                        position: "relative",
-                        paddingTop: "56.25%" /* 16:9 aspect ratio */,
-                      }}
-                    >
+                  <CardContent sx={{ display: "flex", gap: 2 }}>
+                    <Box className={styles.cardImage}>
                       <Image
+                        width={200}
+                        height={80}
                         src={project.coverImage}
                         alt={project.title}
-                        fill
-                        className={styles.projectImage}
+                        className={styles.image}
+                        loading="lazy"
+                        decoding="async"
                         onError={(e) => {
                           e.currentTarget.src = "/images/placeholder.jpg";
                         }}
                       />
                     </Box>
-                  </CardActionArea>
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography variant="h5" component="h3" gutterBottom>
-                      {project.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {project.description}
-                    </Typography>
+                    <Box sx={{ display: "flex", flexDirection: "column" }}>
+                      <Typography variant="h5" component="h3">
+                        {project.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {project.description}
+                      </Typography>
+                    </Box>
                   </CardContent>
                 </Card>
-              </Grid>
-            ))}
-          </Grid>
-          <Box sx={{ mt: 4, textAlign: "center" }}>
-            <Button
-              component={Link}
-              href="/portfolio"
-              variant="outlined"
-              endIcon={<ArrowRight size={20} />}
-            >
-              View All Projects
-            </Button>
-          </Box>
-        </Container>
-      </Box>
+              ))}
+            </Stack>
+            <Box sx={{ mt: 4 }}>
+              <Button
+                component={Link}
+                href="/portfolio"
+                variant="outlined"
+                endIcon={<ArrowRight size={20} />}
+              >
+                View All Projects
+              </Button>
+            </Box>
+          </div>
+        </Box>
+        {/* Contact Section */}
+        <Box
+          component="section"
+          ref={contactSectionRef}
+          id="contact"
+          sx={{
+            py: 4,
+            backgroundColor: "background.default",
+            display: "flex",
+            alignItems: "center",
+            scrollMarginTop: "2rem",
+          }}
+        >
+          <Container maxWidth={false} disableGutters>
+            <Typography variant="h3" gutterBottom align="center">
+              Let's Start a Conversation
+            </Typography>
+            <Typography variant="body1" color="text.secondary" align="center">
+              I'm always open to discussing new projects, creative ideas, or
+              opportunities to be part of your vision.
+            </Typography>
+            <div>
+              <Box
+                sx={{
+                  mt: 3,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <div>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      mb: 2,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                    }}
+                  >
+                    <Mail size={20} />
+                    <strong>Email:</strong>{" "}
+                    <a href="mailto:khamudom@gmail.com">khamu@outlook.com</a>
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      mb: 2,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                    }}
+                  >
+                    <MapPin size={20} />
+                    <strong>Location:</strong> Monroe, WA
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      mb: 4,
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                    }}
+                  >
+                    <Clock size={20} />
+                    <strong>Availability:</strong> Available for freelance work
+                  </Typography>
+                </div>
+              </Box>
+              <Box
+                sx={{
+                  mt: 3,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <Box
+                  component="form"
+                  onSubmit={handleSubmit}
+                  sx={{
+                    mt: 3,
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 2,
+                  }}
+                >
+                  <TextField
+                    required
+                    fullWidth
+                    label="Name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleFormChange}
+                    variant="outlined"
+                  />
+
+                  <TextField
+                    required
+                    fullWidth
+                    label="Email"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleFormChange}
+                    variant="outlined"
+                  />
+
+                  <TextField
+                    required
+                    fullWidth
+                    label="Message"
+                    name="message"
+                    multiline
+                    rows={4}
+                    value={formData.message}
+                    onChange={handleFormChange}
+                    variant="outlined"
+                  />
+
+                  <Grid item xs={12}>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      size="large"
+                      fullWidth
+                      sx={{ mt: 2 }}
+                    >
+                      Send Message
+                    </Button>
+                  </Grid>
+                </Box>
+              </Box>
+            </div>
+          </Container>
+        </Box>
+      </div>
     </div>
   );
 }

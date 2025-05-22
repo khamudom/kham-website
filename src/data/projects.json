@@ -9,7 +9,99 @@
         "A modern portfolio website built with Next.js and TypeScript",
         "Features a responsive design and smooth animations"
       ],
-      "coverImage": "/images/placeholder.jpg",
+      "coverImage": "",
+      "technologies": ["Next.js", "TypeScript", "Tailwind CSS"],
+      "skills": ["Web Development", "UI/UX Design", "Frontend Development"],
+      "category": ["Web Development", "Personal Project"],
+      "links": {
+        "live": "https://your-portfolio.com",
+        "github": "https://github.com/yourusername/portfolio"
+      },
+      "gallery": [
+        {
+          "id": "gallery-1",
+          "url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+          "alt": "Portfolio website homepage",
+          "caption": "Modern and clean homepage design",
+          "createdAt": "2024-03-20",
+          "updatedAt": "2024-03-20"
+        },
+        {
+          "id": "gallery-2",
+          "url": "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&q=80",
+          "alt": "Portfolio projects section",
+          "caption": "Projects showcase with interactive cards",
+          "createdAt": "2024-03-20",
+          "updatedAt": "2024-03-20"
+        },
+        {
+          "id": "gallery-3",
+          "url": "https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&q=80",
+          "alt": "Portfolio contact section",
+          "caption": "Contact form with modern styling",
+          "createdAt": "2024-03-20",
+          "updatedAt": "2024-03-20"
+        }
+      ],
+      "createdAt": "2024-01-01",
+      "updatedAt": "2024-03-20"
+    },
+    {
+      "id": "project-1",
+      "slug": "portfolio-website",
+      "title": "Portfolio Website",
+      "summary": "A modern portfolio website built with Next.js and TypeScript",
+      "description": [
+        "A modern portfolio website built with Next.js and TypeScript",
+        "Features a responsive design and smooth animations"
+      ],
+      "coverImage": "",
+      "technologies": ["Next.js", "TypeScript", "Tailwind CSS"],
+      "skills": ["Web Development", "UI/UX Design", "Frontend Development"],
+      "category": ["Web Development", "Personal Project"],
+      "links": {
+        "live": "https://your-portfolio.com",
+        "github": "https://github.com/yourusername/portfolio"
+      },
+      "gallery": [
+        {
+          "id": "gallery-1",
+          "url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+          "alt": "Portfolio website homepage",
+          "caption": "Modern and clean homepage design",
+          "createdAt": "2024-03-20",
+          "updatedAt": "2024-03-20"
+        },
+        {
+          "id": "gallery-2",
+          "url": "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&q=80",
+          "alt": "Portfolio projects section",
+          "caption": "Projects showcase with interactive cards",
+          "createdAt": "2024-03-20",
+          "updatedAt": "2024-03-20"
+        },
+        {
+          "id": "gallery-3",
+          "url": "https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&q=80",
+          "alt": "Portfolio contact section",
+          "caption": "Contact form with modern styling",
+          "createdAt": "2024-03-20",
+          "updatedAt": "2024-03-20"
+        }
+      ],
+      "createdAt": "2024-01-01",
+      "updatedAt": "2024-03-20"
+    },
+    {
+      "id": "project-1",
+      "slug": "portfolio-website",
+      "title": "Portfolio Website",
+      "summary": "A modern portfolio website built with Next.js and TypeScript",
+      "description": [
+        "A modern portfolio website built with Next.js and TypeScript",
+        "Features a responsive design and smooth animations"
+      ],
+      "coverImage": "",
       "technologies": ["Next.js", "TypeScript", "Tailwind CSS"],
       "skills": ["Web Development", "UI/UX Design", "Frontend Development"],
       "category": ["Web Development", "Personal Project"],
@@ -48,7 +140,7 @@
     }
   ],
   "metadata": {
-    "total": 1,
+    "total": 3,
     "page": 1,
     "limit": 10
   }

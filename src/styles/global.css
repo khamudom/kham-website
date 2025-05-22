@@ -7,6 +7,7 @@
   --color-background: var(--color-background-primary);
   --color-background-secondary: var(--color-background-secondary);
   --color-border: var(--color-border);
+  --color-border-hover: var(--color-border-hover);
   --color-link: var(--color-primary-main);
 
   /* Spacing */
@@ -114,24 +115,14 @@ a {
 }
 
 /* Layout */
-.container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--spacing-md);
-}
-
-.app-container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--color-background);
-  color: var(--color-text);
-}
 
 .main-content {
-  flex: 1;
-  padding-top: 64px; /* Height of MUI AppBar */
+  /* flex: 1; */
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 3rem;
+  padding-right: 3rem;
 }
 
 /* Utility Classes */

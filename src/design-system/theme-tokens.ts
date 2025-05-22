@@ -52,6 +52,10 @@ export const defaultThemeTokens = {
       secondary: colors.secondary.main,
     },
     backgrounds: themeBackgrounds.default,
+    colors: {
+      border: colors.neutral.medium,
+      borderHover: colors.neutral.borderHover,
+    },
   },
   dark: {
     primary: {
@@ -73,6 +77,10 @@ export const defaultThemeTokens = {
       secondary: colors.secondary.main,
     },
     backgrounds: themeBackgrounds.defaultDark,
+    colors: {
+      border: colors.neutral.dark,
+      borderHover: colors.neutral.borderHover,
+    },
   },
 };
 
@@ -97,6 +105,10 @@ export const ninjaTurtlesTokens = {
     secondary: "#558B2F",
   },
   backgrounds: themeBackgrounds.ninjaTurtles,
+  colors: {
+    border: "#388E3C",
+    borderHover: "#81C784",
+  },
 };
 
 // Matrix theme tokens
@@ -120,4 +132,8 @@ export const matrixTokens = {
     secondary: "#66FF66",
   },
   backgrounds: themeBackgrounds.matrix,
+  colors: {
+    border: "#003300",
+    borderHover: "#66FF66",
+  },
 };
