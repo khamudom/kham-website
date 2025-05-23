@@ -202,19 +202,29 @@ export default function Page() {
     return null;
   }
 
-  // Map icon names to Lucide components
-  const getIconComponent = (iconName: string) => {
-    const icons: { [key: string]: React.ElementType } = {
-      "code-2": Code2,
-      layout: Layout,
-      "globe-2": Globe2,
-      gauge: Gauge,
-    };
-    return icons[iconName] || Code2;
-  };
-
   return (
     <div className={styles.mainContainer}>
+      {backgrounds.hero && typeof backgrounds.hero === "string" && (
+        <img
+          src={backgrounds.hero}
+          alt="Background"
+          style={{
+            position: "fixed",
+            top: "280px",
+            left: 0,
+            zIndex: -2,
+            width: "auto",
+            height: "auto",
+            maxWidth: "none",
+            maxHeight: "none",
+            transform: "scale(.5)",
+            transformOrigin: "top left",
+            pointerEvents: "none",
+            userSelect: "none",
+            display: "block",
+          }}
+        />
+      )}
       <div className={styles.mainNavContainer}>
         <div className={styles.mainStickyNav}>
           <HeaderVertical

@@ -6,10 +6,11 @@ export const themeBackgrounds = {
     hero: null,
   },
   ninjaTurtles: {
-    hero: "/images/backgrounds/ninja-turtles-hero.jpg",
+    hero: "/images/backgrounds/tmnt.png",
   },
   matrix: {
-    hero: "/images/backgrounds/matrix-hero.webp",
+    hero: null,
+    // hero: "/images/backgrounds/matrix-hero.webp",
   },
 } as const;
 

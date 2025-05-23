@@ -87,27 +87,27 @@ export const defaultThemeTokens = {
 // Ninja Turtles theme tokens
 export const ninjaTurtlesTokens = {
   primary: {
-    main: "#4CAF50",
+    main: "#4CAF50", // Classic TMNT green
     light: "#81C784",
     dark: "#388E3C",
   },
   secondary: {
-    main: "#FF9800",
-    light: "#FFB74D",
-    dark: "#F57C00",
+    main: "#FF6B00", // Michelangelo's orange
+    light: "#FFA64D",
+    dark: "#CC5500",
   },
   background: {
-    default: "#E8F5E9",
+    default: "#E8F5E9", // Light green background
     paper: "#C8E6C9",
   },
   text: {
-    primary: "#1B5E20",
-    secondary: "#558B2F",
+    primary: "#1B5E20", // Dark green text
+    secondary: "#FF0000", // Raphael's red as accent
   },
   backgrounds: themeBackgrounds.ninjaTurtles,
   colors: {
-    border: "#388E3C",
-    borderHover: "#81C784",
+    border: "#4B0082", // Donatello's purple as border
+    borderHover: "#0000FF", // Leonardo's blue as hover
   },
 };
 
