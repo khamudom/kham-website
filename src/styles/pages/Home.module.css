@@ -68,23 +68,51 @@
   margin-bottom: 2rem;
 }
 
+.skillsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 4rem 0;
+}
+
+.skillsCategory {
+  padding: 0.125rem 1rem;
+}
+
+.categoryHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.categoryIcon {
+  color: var(--primary-main);
+}
+
 .skillsList {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  align-items: center;
 }
 
 .skillItem {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  color: var(--color-text);
+  padding: 0.25rem 0;
+  font-size: 0.9rem;
+}
+
+.bullet {
+  color: var(--text-secondary);
+  margin: 0 0.25rem;
+  font-size: 1.2rem;
+  line-height: 1;
 }
 
 .skillIcon {
-  color: var(--color-primary);
-  flex-shrink: 0;
+  color: var(--primary-main);
 }
 
 .aboutImage {
@@ -142,11 +170,6 @@
   text-decoration: none;
   transition: all 0.3s ease;
 }
-
-/* .button:hover {
-  background-color: var(--color-primary-hover);
-  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.2);
-} */
 
 .buttonOutline {
   background-color: transparent;

@@ -2,40 +2,200 @@
   "data": [
     {
       "id": "skill-1",
-      "name": "React",
-      "category": "frontend",
+      "name": "JavaScript",
+      "category": "languages",
       "proficiency": 5,
-      "yearsOfExperience": 3,
-      "icon": "react-icon.svg"
+      "yearsOfExperience": 5
     },
     {
       "id": "skill-2",
       "name": "TypeScript",
-      "category": "frontend",
+      "category": "languages",
       "proficiency": 4,
-      "yearsOfExperience": 2,
-      "icon": "typescript-icon.svg"
+      "yearsOfExperience": 3
     },
     {
       "id": "skill-3",
-      "name": "Node.js",
-      "category": "backend",
-      "proficiency": 4,
-      "yearsOfExperience": 2,
-      "icon": "nodejs-icon.svg"
+      "name": "HTML",
+      "category": "languages",
+      "proficiency": 5,
+      "yearsOfExperience": 5
     },
     {
       "id": "skill-4",
-      "name": "Git",
+      "name": "CSS",
+      "category": "languages",
+      "proficiency": 5,
+      "yearsOfExperience": 5
+    },
+    {
+      "id": "skill-5",
+      "name": "SASS",
+      "category": "languages",
+      "proficiency": 5,
+      "yearsOfExperience": 5
+    },
+    {
+      "id": "skill-6",
+      "name": "XAML",
+      "category": "languages",
+      "proficiency": 5,
+      "yearsOfExperience": 5
+    },
+
+    {
+      "id": "skill-7",
+      "name": "Astro",
+      "category": "frameworks",
+      "proficiency": 5,
+      "yearsOfExperience": 4
+    },
+    {
+      "id": "skill-8",
+      "name": "Lit",
+      "category": "frameworks",
+      "proficiency": 5,
+      "yearsOfExperience": 4
+    },
+    {
+      "id": "skill-9",
+      "name": "React",
+      "category": "frameworks",
+      "proficiency": 5,
+      "yearsOfExperience": 4
+    },
+    {
+      "id": "skill-10",
+      "name": "Next.js",
+      "category": "frameworks",
+      "proficiency": 4,
+      "yearsOfExperience": 3
+    },
+    {
+      "id": "skill-11",
+      "name": "GSAP",
+      "category": "frameworks",
+      "proficiency": 4,
+      "yearsOfExperience": 3
+    },
+    {
+      "id": "skill-12",
+      "name": "FAST",
+      "category": "frameworks",
+      "proficiency": 5,
+      "yearsOfExperience": 4
+    },
+    {
+      "id": "skill-13",
+      "name": "Fluent UI",
+      "category": "frameworks",
+      "proficiency": 5,
+      "yearsOfExperience": 4
+    },
+    {
+      "id": "skill-14",
+      "name": "Material-UI",
+      "category": "frameworks",
+      "proficiency": 4,
+      "yearsOfExperience": 2
+    },
+    {
+      "id": "skill-15",
+      "name": "Vite",
+      "category": "tools",
+      "proficiency": 4,
+      "yearsOfExperience": 2
+    },
+    {
+      "id": "skill-16",
+      "name": "Node.js",
+      "category": "tools",
+      "proficiency": 4,
+      "yearsOfExperience": 3
+    },
+    {
+      "id": "skill-17",
+      "name": "Storybook",
       "category": "tools",
       "proficiency": 5,
-      "yearsOfExperience": 4,
-      "icon": "git-icon.svg"
+      "yearsOfExperience": 4
+    },
+    {
+      "id": "skill-18",
+      "name": "GitHub",
+      "category": "tools",
+      "proficiency": 5,
+      "yearsOfExperience": 4
+    },
+    {
+      "id": "skill-19",
+      "name": "Azure DevOps",
+      "category": "tools",
+      "proficiency": 3,
+      "yearsOfExperience": 1
+    },
+    {
+      "id": "skill-20",
+      "name": "Webflow",
+      "category": "tools",
+      "proficiency": 3,
+      "yearsOfExperience": 1
+    },
+    {
+      "id": "skill-21",
+      "name": "WordPress",
+      "category": "tools",
+      "proficiency": 4,
+      "yearsOfExperience": 2
+    },
+    {
+      "id": "skill-22",
+      "name": "Sanity",
+      "category": "tools",
+      "proficiency": 3,
+      "yearsOfExperience": 1
+    },
+    {
+      "id": "skill-23",
+      "name": "Vercel",
+      "category": "tools",
+      "proficiency": 3,
+      "yearsOfExperience": 1
+    },
+    {
+      "id": "skill-24",
+      "name": "Netlify",
+      "category": "tools",
+      "proficiency": 3,
+      "yearsOfExperience": 1
+    },
+    {
+      "id": "skill-25",
+      "name": "Cloudflare",
+      "category": "tools",
+      "proficiency": 3,
+      "yearsOfExperience": 1
     }
   ],
   "metadata": {
-    "total": 4,
-    "categories": ["frontend", "backend", "tools"],
+    "total": 25,
+    "categories": [
+      {
+        "name": "languages",
+        "iconName": "code-2",
+        "displayName": "Programming Languages"
+      },
+      {
+        "name": "frameworks",
+        "iconName": "layout",
+        "displayName": "Libraries & Frameworks"
+      },
+      {
+        "name": "tools",
+        "iconName": "wrench",
+        "displayName": "Tools & Platforms"
+      }
+    ],
     "lastUpdated": "2024-03-20"
   }
 }

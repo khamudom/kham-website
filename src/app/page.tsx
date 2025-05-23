@@ -16,11 +16,11 @@ import {
   Mail,
   MapPin,
   Clock,
+  Wrench,
 } from "lucide-react";
 import { usePortfolioData } from "@/hooks/usePortfolioData";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
 import { ErrorMessage } from "@/components/common/ErrorMessage";
-// import RotatingTitle from "@/components/animations/RotatingTitle";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
@@ -32,7 +32,6 @@ import {
   Card,
   CardContent,
   Box,
-  CardActionArea,
   Divider,
   IconButton,
   Stack,
@@ -203,13 +202,6 @@ export default function Page() {
     return null;
   }
 
-  const rotatingTitles = [
-    "Frontend UX Engineer",
-    "Design Systems Developer",
-    "Component Library Expert",
-    "Web Standards Advocate",
-  ];
-
   // Map icon names to Lucide components
   const getIconComponent = (iconName: string) => {
     const icons: { [key: string]: React.ElementType } = {
@@ -284,7 +276,7 @@ export default function Page() {
           <div>
             <Grid container>
               <div ref={aboutContentRef}>
-                <Typography variant="body1" color="text.secondary" paragraph>
+                <Typography variant="body1" color="text.primary" paragraph>
                   <strong>Front-end UI Engineer</strong> with a track record of
                   creating <strong>intuitive</strong>,{" "}
                   <strong>performant</strong> user interfaces that drive{" "}
@@ -302,7 +294,7 @@ export default function Page() {
                   <strong>flexible mindset</strong> and a strong sense of{" "}
                   <strong>accountability</strong> to every project.
                 </Typography>
-                <Typography variant="body1" color="text.secondary" paragraph>
+                <Typography variant="body1" color="text.primary" paragraph>
                   Currently, I work as a{" "}
                   <strong>freelance front-end developer</strong>, partnering
                   with <strong>startups</strong>, <strong>enterprises</strong>,
@@ -318,16 +310,71 @@ export default function Page() {
                   <strong>efficient development practices</strong>, and a
                   commitment to <strong>measurable results</strong>.
                 </Typography>
-                <div className={styles.skillsList}>
-                  {skills.map((skill) => {
-                    const IconComponent = getIconComponent(skill.iconName);
-                    return (
-                      <div key={skill.id} className={styles.skillItem}>
-                        <IconComponent className={styles.skillIcon} size={24} />
-                        <span>{skill.name}</span>
-                      </div>
-                    );
-                  })}
+                <div className={styles.skillsContainer}>
+                  <div className={styles.skillsCategory}>
+                    <div className={styles.categoryHeader}>
+                      <Code2 className={styles.categoryIcon} size={24} />
+                      <Typography variant="h6">
+                        Programming Languages
+                      </Typography>
+                    </div>
+                    <div className={styles.skillsList}>
+                      {skills
+                        .filter((skill) => skill.category === "languages")
+                        .map((skill, index, array) => (
+                          <React.Fragment key={skill.id}>
+                            <div className={styles.skillItem}>
+                              <span>{skill.name}</span>
+                            </div>
+                            {index < array.length - 1 && (
+                              <span className={styles.bullet}>•</span>
+                            )}
+                          </React.Fragment>
+                        ))}
+                    </div>
+                  </div>
+                  <div className={styles.skillsCategory}>
+                    <div className={styles.categoryHeader}>
+                      <Layout className={styles.categoryIcon} size={24} />
+                      <Typography variant="h6">
+                        Libraries & Frameworks
+                      </Typography>
+                    </div>
+                    <div className={styles.skillsList}>
+                      {skills
+                        .filter((skill) => skill.category === "frameworks")
+                        .map((skill, index, array) => (
+                          <React.Fragment key={skill.id}>
+                            <div className={styles.skillItem}>
+                              <span>{skill.name}</span>
+                            </div>
+                            {index < array.length - 1 && (
+                              <span className={styles.bullet}>•</span>
+                            )}
+                          </React.Fragment>
+                        ))}
+                    </div>
+                  </div>
+                  <div className={styles.skillsCategory}>
+                    <div className={styles.categoryHeader}>
+                      <Wrench className={styles.categoryIcon} size={24} />
+                      <Typography variant="h6">Tools & Platforms</Typography>
+                    </div>
+                    <div className={styles.skillsList}>
+                      {skills
+                        .filter((skill) => skill.category === "tools")
+                        .map((skill, index, array) => (
+                          <React.Fragment key={skill.id}>
+                            <div className={styles.skillItem}>
+                              <span>{skill.name}</span>
+                            </div>
+                            {index < array.length - 1 && (
+                              <span className={styles.bullet}>•</span>
+                            )}
+                          </React.Fragment>
+                        ))}
+                    </div>
+                  </div>
                 </div>
                 <div className={styles.aboutButtons}>
                   <Button
@@ -358,70 +405,67 @@ export default function Page() {
           ref={projectCardsRef}
           id="projects"
           sx={{
-            py: 8,
+            py: 10,
             scrollMarginTop: "2rem",
             display: "flex",
-            alignItems: "flex-start",
-            minHeight: "50vh",
+            flexDirection: "column",
           }}
         >
-          <div>
-            <Stack spacing={5}>
-              {featuredProjects.map((project) => (
-                <Card
-                  key={project.id}
-                  className={styles.projectCard}
-                  sx={{
-                    backgroundColor: "transparent",
-                    backgroundImage: "none",
-                    border: "1px solid transparent",
-                    boxShadow: "none",
-                    transition: "all 0.3s ease",
-                    "&:hover": {
-                      backgroundColor: "background.paper",
-                      border: "1px solid",
-                      borderColor: "divider",
-                    },
-                  }}
-                >
-                  <CardContent sx={{ display: "flex", gap: 2 }}>
-                    <Box className={styles.cardImage}>
-                      <Image
-                        width={200}
-                        height={80}
-                        src={project.coverImage}
-                        alt={project.title}
-                        className={styles.image}
-                        loading="lazy"
-                        decoding="async"
-                        onError={(e) => {
-                          e.currentTarget.src = "/images/placeholder.jpg";
-                        }}
-                      />
-                    </Box>
-                    <Box sx={{ display: "flex", flexDirection: "column" }}>
-                      <Typography variant="h5" component="h3">
-                        {project.title}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {project.description}
-                      </Typography>
-                    </Box>
-                  </CardContent>
-                </Card>
-              ))}
-            </Stack>
-            <Box sx={{ mt: 4 }}>
-              <Button
-                component={Link}
-                href="/portfolio"
-                variant="outlined"
-                endIcon={<ArrowRight size={20} />}
+          <Stack spacing={2}>
+            {featuredProjects.map((project) => (
+              <Card
+                key={project.id}
+                className={styles.projectCard}
+                sx={{
+                  backgroundColor: "transparent",
+                  backgroundImage: "none",
+                  border: "1px solid transparent",
+                  boxShadow: "none",
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    backgroundColor: "background.paper",
+                    border: "1px solid",
+                    borderColor: "divider",
+                  },
+                }}
               >
-                View All Projects
-              </Button>
-            </Box>
-          </div>
+                <CardContent sx={{ display: "flex", gap: 2 }}>
+                  <Box className={styles.cardImage}>
+                    <Image
+                      width={200}
+                      height={80}
+                      src={project.coverImage}
+                      alt={project.title}
+                      className={styles.image}
+                      loading="lazy"
+                      decoding="async"
+                      onError={(e) => {
+                        e.currentTarget.src = "/images/placeholder.jpg";
+                      }}
+                    />
+                  </Box>
+                  <Box sx={{ display: "flex", flexDirection: "column" }}>
+                    <Typography variant="h5" component="h3">
+                      {project.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {project.description}
+                    </Typography>
+                  </Box>
+                </CardContent>
+              </Card>
+            ))}
+          </Stack>
+          <Box sx={{ mt: 4 }}>
+            <Button
+              component={Link}
+              href="/portfolio"
+              variant="outlined"
+              endIcon={<ArrowRight size={20} />}
+            >
+              View All Projects
+            </Button>
+          </Box>
         </Box>
         {/* Contact Section */}
         <Box

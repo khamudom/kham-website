@@ -3,26 +3,35 @@
   flex-direction: column;
   width: 100%;
   height: 100%;
+  gap: 2rem;
+}
+
+.headerContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
 }
 
 .navItem {
   position: relative;
-  transition: all 0.3s ease;
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
+  background-color: transparent;
 }
 
-.navItem:hover {
-  transform: translateX(4px);
+.navItem:hover:not(.active) {
+  background-color: transparent;
+}
+
+.navItem.active {
+  background-color: transparent;
+  box-shadow: 0 4px 24px 0 rgba(0, 255, 128, 0.1), 0 1.5px 0 0 var(--primary);
+  z-index: 1;
 }
 
 /* Active state when section is in view */
 .navItem:target {
-  background-color: rgba(var(--primary-rgb), 0.1);
-}
-
-.navItem:target .indicator {
-  background-color: var(--primary);
-  transform: scale(1.5);
+  background-color: transparent;
 }
 
 .indicator {
@@ -30,7 +39,7 @@
 }
 
 .titleName {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   width: 100%;
 }
 
@@ -38,10 +47,18 @@
   font-size: clamp(1.125rem, 2.5vw, 1.5rem);
   line-height: 1.381;
   letter-spacing: 0.011em;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
   font-weight: 400;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+}
+
+.navItem :global(.MuiListItemButton-root:hover) {
+  background-color: transparent;
+}
+
+.navItem:hover:not(.active) .leftIndicator {
+  width: 30px !important;
 }
