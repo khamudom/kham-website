@@ -131,7 +131,7 @@ export default function About() {
                           gap: 1,
                         }}
                       >
-                        <span style={{ fontSize: 20 }}>{skill.icon}</span>
+                        <span style={{ fontSize: 20 }}>{skill.iconName}</span>
                         <Typography variant="body1">{skill.name}</Typography>
                       </Box>
                     </Grid>
@@ -179,7 +179,7 @@ export default function About() {
                     }}
                   >
                     <Typography variant="h6" gutterBottom>
-                      {item.position}
+                      {item.title}
                     </Typography>
                     <Typography
                       variant="subtitle1"
@@ -193,13 +193,11 @@ export default function About() {
                       color="text.secondary"
                       gutterBottom
                     >
-                      {item.startDate} - {item.endDate || "Present"}
+                      {item.period}
                     </Typography>
-                    {item.description.map((desc, index) => (
-                      <Typography key={index} variant="body1" paragraph>
-                        {desc}
-                      </Typography>
-                    ))}
+                    <Typography variant="body1" paragraph>
+                      {item.description}
+                    </Typography>
                   </Paper>
                 </TimelineContent>
               </TimelineItem>
