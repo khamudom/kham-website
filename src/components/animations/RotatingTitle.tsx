@@ -205,9 +205,9 @@ const RotatingTitle: React.FC<RotatingTitleProps> = memo(
             display: "block",
             textAlign: "left",
             whiteSpace: "nowrap",
-            fontSize: "clamp(0.875rem, 4vw, 1.75rem)",
+            fontSize: "1.25rem",
+            lineHeight: "1.75rem",
             fontWeight: 600,
-            lineHeight: 1.2,
             transformOrigin: "center center",
           }}
         />
@@ -217,9 +217,9 @@ const RotatingTitle: React.FC<RotatingTitleProps> = memo(
             display: "block",
             textAlign: "left",
             whiteSpace: "nowrap",
-            fontSize: "clamp(0.875rem, 4vw, 1.75rem)",
+            fontSize: "1.25rem",
+            lineHeight: "1.75rem",
             fontWeight: 600,
-            lineHeight: 1.2,
             transformOrigin: "center center",
           }}
         />

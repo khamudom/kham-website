@@ -6,17 +6,15 @@ import Link from "next/link";
 import Image from "next/image";
 import {
   ArrowRight,
-  FileDown,
   Code2,
   Layout,
-  Globe2,
-  Gauge,
   Github,
   Linkedin,
   Mail,
   MapPin,
   Clock,
   Wrench,
+  ExternalLink,
 } from "lucide-react";
 import { usePortfolioData } from "@/hooks/usePortfolioData";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
@@ -38,17 +36,16 @@ import {
   TextField,
 } from "@mui/material";
 import { Button } from "@/design-system/components/Button";
-import { useTheme } from "@mui/material/styles";
 import { useThemeBackgrounds } from "@/hooks/useThemeBackgrounds";
 import HeaderVertical from "@/components/layout/HeaderVertical";
 import { ThemeSelector } from "@/components/ThemeSelector";
+import RotatingTitle from "@/components/animations/RotatingTitle";
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Page() {
   const { projects, profile, skills, loading, error } = usePortfolioData();
-  const theme = useTheme();
   const backgrounds = useThemeBackgrounds();
   const [formData, setFormData] = useState({
     name: "",
@@ -62,6 +59,9 @@ export default function Page() {
   const aboutContentRef = useRef<HTMLDivElement>(null);
   const aboutImageRef = useRef<HTMLDivElement>(null);
   const [activeSection, setActiveSection] = useState("about");
+  const [isMobile, setIsMobile] = useState(false);
+  const [showStickyHeader, setShowStickyHeader] = useState(false);
+  const mobileHeaderRef = useRef<HTMLDivElement>(null);
 
   // Get featured projects (first 3)
   const featuredProjects = projects.slice(0, 3);
@@ -169,6 +169,31 @@ export default function Page() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (!isMobile) {
+      setShowStickyHeader(false);
+      return;
+    }
+    const handleScroll = () => {
+      if (mobileHeaderRef.current) {
+        const rect = mobileHeaderRef.current.getBoundingClientRect();
+        // If the bottom of the header is above the top of the viewport, show sticky header
+        setShowStickyHeader(rect.bottom <= 0);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    // Run once on mount
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isMobile]);
+
   const handleFormChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -204,10 +229,12 @@ export default function Page() {
 
   return (
     <div className={styles.mainContainer}>
+      {/* Background image, hidden on mobile */}
       {backgrounds.hero && typeof backgrounds.hero === "string" && (
         <img
           src={backgrounds.hero}
           alt="Background"
+          className={isMobile ? styles.mobileHideBg : undefined}
           style={{
             position: "fixed",
             top: "280px",
@@ -225,6 +252,7 @@ export default function Page() {
           }}
         />
       )}
+      {/* Navigation and theme selector, hidden on mobile via CSS */}
       <div className={styles.mainNavContainer}>
         <div className={styles.mainStickyNav}>
           <HeaderVertical
@@ -263,9 +291,9 @@ export default function Page() {
                 <Linkedin className={styles.socialIcon} />
               </IconButton>
             </div>
-            <Divider />
+            <Divider sx={{ mb: 1 }} />
             <div>
-              <Typography variant="body2" sx={{ mb: 3, display: "block" }}>
+              <Typography variant="body2" sx={{ mb: 2, display: "block" }}>
                 Switch up the vibe with the theme selector!
               </Typography>
               <ThemeSelector />
@@ -274,13 +302,85 @@ export default function Page() {
         </div>
       </div>
       <div className={styles.mainContent}>
+        {/* Mobile HeaderContent and social links */}
+        {isMobile && (
+          <div
+            ref={mobileHeaderRef}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: "1rem",
+              padding: "1.5rem 0 0.5rem 0",
+              background: "var(--color-background)",
+              zIndex: 101,
+              marginBottom: "1rem",
+            }}
+          >
+            {profile && (
+              <>
+                <h1 style={{ fontSize: "2rem", margin: 0, fontWeight: 700 }}>
+                  {profile.name}
+                </h1>
+                <RotatingTitle
+                  titles={[
+                    "Frontend Engineer",
+                    "Design Systems Developer",
+                    "Component Library Expert",
+                    "Web Standards Advocate",
+                    "Web Developer",
+                  ]}
+                  interval={5000}
+                />
+              </>
+            )}
+            <div className={styles.socialLinks} style={{ marginTop: "0.5rem" }}>
+              <IconButton
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                sx={{
+                  color: "text.primary",
+                  "&:hover": {
+                    color: "primary.main",
+                  },
+                }}
+              >
+                <Github className={styles.socialIcon} />
+              </IconButton>
+              <IconButton
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                sx={{
+                  color: "text.primary",
+                  "&:hover": {
+                    color: "primary.main",
+                  },
+                }}
+              >
+                <Linkedin className={styles.socialIcon} />
+              </IconButton>
+            </div>
+          </div>
+        )}
+        {/* Mobile sticky section header */}
+        {isMobile && showStickyHeader && (
+          <div className={styles.mobileSectionHeader}>
+            {activeSection === "about" && "About"}
+            {activeSection === "projects" && "Projects"}
+            {activeSection === "contact" && "Contact"}
+          </div>
+        )}
         {/* About Section */}
         <Box
           component="section"
           ref={aboutSectionRef}
           id="about"
           sx={{
-            scrollMarginTop: "6rem",
+            scrollMarginTop: isMobile ? "3.5rem" : "6rem",
           }}
         >
           <div>
@@ -391,18 +491,10 @@ export default function Page() {
                     component={Link}
                     href="/about"
                     variant="outlined"
+                    size="small"
                     endIcon={<ArrowRight size={20} />}
                   >
-                    Learn More About Me
-                  </Button>
-                  <Button
-                    component="a"
-                    href="/resume.pdf"
-                    download="kham-udom-resume.pdf"
-                    variant="contained"
-                    startIcon={<FileDown size={20} />}
-                  >
-                    Download Resume
+                    Work Experiences
                   </Button>
                 </div>
               </div>
@@ -416,7 +508,7 @@ export default function Page() {
           id="projects"
           sx={{
             py: 10,
-            scrollMarginTop: "2rem",
+            scrollMarginTop: isMobile ? "3.5rem" : "2rem",
             display: "flex",
             flexDirection: "column",
           }}
@@ -471,6 +563,7 @@ export default function Page() {
               component={Link}
               href="/portfolio"
               variant="outlined"
+              size="small"
               endIcon={<ArrowRight size={20} />}
             >
               View All Projects
@@ -487,7 +580,7 @@ export default function Page() {
             backgroundColor: "background.default",
             display: "flex",
             alignItems: "center",
-            scrollMarginTop: "2rem",
+            scrollMarginTop: isMobile ? "3.5rem" : "2rem",
           }}
         >
           <Container maxWidth={false} disableGutters>
@@ -615,6 +708,42 @@ export default function Page() {
             </div>
           </Container>
         </Box>
+        <Divider sx={{ my: 3 }} />
+        {/* Footer */}
+        <footer
+          style={{
+            padding: "0 0 4rem 0",
+            textAlign: "center",
+            color: "var(--color-text-secondary)",
+          }}
+        >
+          <p style={{ margin: 0, fontSize: "1rem" }}>
+            This website was designed and built using <strong>Next.js</strong>,{" "}
+            <strong>React</strong>, <strong>TypeScript</strong>,{" "}
+            <strong>Material UI</strong>, and <strong>GSAP</strong> for
+            animations. View the source code on{" "}
+            <a
+              href="https://github.com/khamudom/kham-website"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                color: "var(--color-primary)",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.25rem",
+              }}
+            >
+              GitHub
+              <ExternalLink size={16} />
+            </a>
+          </p>
+          <div className={styles.mobileThemeSelector}>
+            <Typography variant="body2" sx={{ mb: 2, display: "block" }}>
+              Switch up the vibe with the theme selector!
+            </Typography>
+            <ThemeSelector />
+          </div>
+        </footer>
       </div>
     </div>
   );
