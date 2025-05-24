@@ -34,6 +34,8 @@ import {
   IconButton,
   Stack,
   TextField,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import { Button } from "@/design-system/components/Button";
 import { useThemeBackgrounds } from "@/hooks/useThemeBackgrounds";
@@ -52,6 +54,12 @@ export default function Page() {
     name: "",
     email: "",
     message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success" as "success" | "error",
   });
 
   const projectCardsRef = useRef<HTMLDivElement>(null);
@@ -218,10 +226,49 @@ export default function Page() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement form submission logic
-    console.log("Form submitted:", formData);
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT!,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (response.ok) {
+        setSnackbar({
+          open: true,
+          message: "Message sent successfully!",
+          severity: "success",
+        });
+        setFormData({
+          name: "",
+          email: "",
+          message: "",
+        });
+      } else {
+        throw new Error("Failed to send message");
+      }
+    } catch (error) {
+      setSnackbar({
+        open: true,
+        message: "Failed to send message. Please try again later.",
+        severity: "error",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
   };
 
   if (loading) {
@@ -627,6 +674,8 @@ export default function Page() {
                     value={formData.name}
                     onChange={handleFormChange}
                     variant="outlined"
+                    disabled={isSubmitting}
+                    size="small"
                   />
 
                   <TextField
@@ -638,6 +687,8 @@ export default function Page() {
                     value={formData.email}
                     onChange={handleFormChange}
                     variant="outlined"
+                    disabled={isSubmitting}
+                    size="small"
                   />
 
                   <TextField
@@ -650,17 +701,20 @@ export default function Page() {
                     value={formData.message}
                     onChange={handleFormChange}
                     variant="outlined"
+                    disabled={isSubmitting}
+                    size="small"
                   />
 
                   <Grid item xs={12}>
                     <Button
                       type="submit"
                       variant="contained"
-                      size="large"
+                      size="small"
                       fullWidth
                       sx={{ mt: 2 }}
+                      disabled={isSubmitting}
                     >
-                      Send Message
+                      {isSubmitting ? "Sending..." : "Send Message"}
                     </Button>
                   </Grid>
                 </Box>
@@ -704,6 +758,20 @@ export default function Page() {
           </div>
         </footer>
       </div>
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

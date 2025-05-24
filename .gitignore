@@ -74,3 +74,6 @@ out/
 # Misc
 .DS_Store
 *.pem
+
+# Formspree
+.formspree

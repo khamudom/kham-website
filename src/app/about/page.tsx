@@ -129,7 +129,7 @@ export default function About() {
                 }}
               >
                 <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
+                  expandIcon={<ExpandMoreIcon sx={{ color: "text.primary" }} />}
                   aria-controls={`${item.id}-content`}
                   id={`${item.id}-header`}
                   sx={{
