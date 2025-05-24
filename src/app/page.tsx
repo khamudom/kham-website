@@ -19,19 +19,14 @@ import {
 import { usePortfolioData } from "@/hooks/usePortfolioData";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
 import { ErrorMessage } from "@/components/common/ErrorMessage";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
 import styles from "@/styles/pages/Home.module.css";
 import {
   Typography,
   Container,
-  Grid,
   Card,
   CardContent,
   Box,
   Divider,
-  IconButton,
   Stack,
   TextField,
   Snackbar,
@@ -43,9 +38,6 @@ import HeaderVertical from "@/components/layout/HeaderVertical";
 import { ThemeSelector } from "@/components/ThemeSelector";
 import RotatingTitle from "@/components/animations/RotatingTitle";
 import { SocialLinks } from "@/components/common/SocialLinks";
-
-// Register ScrollTrigger plugin
-gsap.registerPlugin(ScrollTrigger);
 
 export default function Page() {
   const { projects, profile, skills, loading, error } = usePortfolioData();
@@ -66,7 +58,6 @@ export default function Page() {
   const aboutSectionRef = useRef<HTMLDivElement>(null);
   const contactSectionRef = useRef<HTMLDivElement>(null);
   const aboutContentRef = useRef<HTMLDivElement>(null);
-  const aboutImageRef = useRef<HTMLDivElement>(null);
   const mobileHeaderRef = useRef<HTMLDivElement>(null);
   const [activeSection, setActiveSection] = useState("about");
   const [isMobile, setIsMobile] = useState(false);
@@ -87,81 +78,6 @@ export default function Page() {
       label: "LinkedIn",
     },
   ];
-
-  useGSAP(() => {
-    // Project cards animation
-    if (projectCardsRef.current) {
-      const cards = projectCardsRef.current.querySelectorAll(".project-card");
-      gsap.fromTo(
-        cards,
-        {
-          opacity: 0,
-          y: 100,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.2,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: projectCardsRef.current,
-            start: "top bottom-=100",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
-    }
-
-    // About section animation
-    if (
-      aboutSectionRef.current &&
-      aboutContentRef.current &&
-      aboutImageRef.current
-    ) {
-      const contentElements = aboutContentRef.current.children;
-
-      gsap.fromTo(
-        Array.from(contentElements),
-        {
-          opacity: 0,
-          y: 50,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.2,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: aboutSectionRef.current,
-            start: "top center+=250",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
-
-      gsap.fromTo(
-        aboutImageRef.current,
-        {
-          opacity: 0,
-          y: 50,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          delay: 0.4,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: aboutSectionRef.current,
-            start: "top center+=250",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
-    }
-  }, [featuredProjects]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -206,12 +122,10 @@ export default function Page() {
     const handleScroll = () => {
       if (mobileHeaderRef.current) {
         const rect = mobileHeaderRef.current.getBoundingClientRect();
-        // If the bottom of the header is above the top of the viewport, show sticky header
         setShowStickyHeader(rect.bottom <= 0);
       }
     };
     window.addEventListener("scroll", handleScroll);
-    // Run once on mount
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isMobile]);
@@ -290,7 +204,6 @@ export default function Page() {
 
   return (
     <div className={styles.mainContainer}>
-      {/* Background image, hidden on mobile */}
       {backgrounds.hero && typeof backgrounds.hero === "string" && (
         <img
           src={backgrounds.hero}
@@ -313,7 +226,6 @@ export default function Page() {
           }}
         />
       )}
-      {/* Navigation and theme selector, hidden on mobile via CSS */}
       <div className={styles.mainNavContainer}>
         <div className={styles.mainStickyNav}>
           <HeaderVertical
@@ -321,7 +233,6 @@ export default function Page() {
             onSectionChange={setActiveSection}
           />
           <div className={styles.stickyFooter}>
-            {/* Social Links */}
             <div className={styles.socialLinks}>
               <SocialLinks links={socialLinks} />
             </div>
@@ -336,7 +247,6 @@ export default function Page() {
         </div>
       </div>
       <div className={styles.mainContent}>
-        {/* Mobile HeaderContent and social links */}
         {isMobile && (
           <div
             ref={mobileHeaderRef}
@@ -373,7 +283,6 @@ export default function Page() {
             </div>
           </div>
         )}
-        {/* Mobile sticky section header */}
         {isMobile && showStickyHeader && (
           <div className={styles.mobileSectionHeader}>
             {activeSection === "about" && "About"}
@@ -381,7 +290,6 @@ export default function Page() {
             {activeSection === "contact" && "Contact"}
           </div>
         )}
-        {/* About Section */}
         <Box
           component="section"
           ref={aboutSectionRef}
@@ -391,124 +299,115 @@ export default function Page() {
           }}
         >
           <div>
-            <Grid container>
-              <div ref={aboutContentRef}>
-                <Typography variant="body1" color="text.primary" paragraph>
-                  <strong>Front-end engineer</strong> with a track record of
-                  creating <strong>intuitive</strong>,{" "}
-                  <strong>performant</strong> user interfaces that drive{" "}
-                  <strong>content creation</strong>,{" "}
-                  <strong>business outcomes</strong>, and streamlined
-                  development workflows. Skilled in{" "}
-                  <strong>scaling design systems</strong> and guiding{" "}
-                  <strong>technical design decisions</strong> across{" "}
-                  <strong>enterprise-grade applications</strong>. Known for
-                  working <strong>cross-functionally</strong> with designers,
-                  product managers, and backend engineers to build{" "}
-                  <strong>accessible</strong>, reliable, and{" "}
-                  <strong>maintainable</strong> UI solutions. Brings a{" "}
-                  <strong>collaborative</strong>,{" "}
-                  <strong>flexible mindset</strong> and a strong sense of{" "}
-                  <strong>accountability</strong> to every project.
-                </Typography>
-                <Typography variant="body1" color="text.primary" paragraph>
-                  Currently, I work as a{" "}
-                  <strong>freelance front-end developer</strong>, partnering
-                  with <strong>startups</strong>, <strong>enterprises</strong>,
-                  and individual clients to design and build high-quality
-                  websites and <strong>web applications</strong>. I specialize
-                  in delivering <strong>tailored solutions</strong> that balance
-                  performance, <strong>usability</strong>, and{" "}
-                  <strong>visual polish</strong>. Whether it's a marketing site,
-                  an <strong>interactive product</strong>, or a{" "}
-                  <strong>scalable</strong> app, I bring a{" "}
-                  <strong>client-focused approach</strong> rooted in{" "}
-                  <strong>clear communication</strong>,{" "}
-                  <strong>efficient development practices</strong>, and a
-                  commitment to <strong>measurable results</strong>.
-                </Typography>
-                <div className={styles.skillsContainer}>
-                  <div className={styles.skillsCategory}>
-                    <div className={styles.categoryHeader}>
-                      <Code2 className={styles.categoryIcon} size={24} />
-                      <Typography variant="h6">
-                        Programming Languages
-                      </Typography>
-                    </div>
-                    <div className={styles.skillsList}>
-                      {skills
-                        .filter((skill) => skill.category === "languages")
-                        .map((skill, index, array) => (
-                          <React.Fragment key={skill.id}>
-                            <div className={styles.skillItem}>
-                              <span>{skill.name}</span>
-                            </div>
-                            {index < array.length - 1 && (
-                              <span className={styles.bullet}>•</span>
-                            )}
-                          </React.Fragment>
-                        ))}
-                    </div>
+            <div ref={aboutContentRef}>
+              <Typography variant="body1" color="text.primary" paragraph>
+                <strong>Front-end engineer</strong> with a track record of
+                creating <strong>intuitive</strong>, <strong>performant</strong>{" "}
+                user interfaces that drive <strong>content creation</strong>,{" "}
+                <strong>business outcomes</strong>, and streamlined development
+                workflows. Skilled in <strong>scaling design systems</strong>{" "}
+                and guiding <strong>technical design decisions</strong> across{" "}
+                <strong>enterprise-grade applications</strong>. Known for
+                working <strong>cross-functionally</strong> with designers,
+                product managers, and backend engineers to build{" "}
+                <strong>accessible</strong>, reliable, and{" "}
+                <strong>maintainable</strong> UI solutions. Brings a{" "}
+                <strong>collaborative</strong>,{" "}
+                <strong>flexible mindset</strong> and a strong sense of{" "}
+                <strong>accountability</strong> to every project.
+              </Typography>
+              <Typography variant="body1" color="text.primary" paragraph>
+                Currently, I work as a{" "}
+                <strong>freelance front-end developer</strong>, partnering with{" "}
+                <strong>startups</strong>, <strong>enterprises</strong>, and
+                individual clients to design and build high-quality websites and{" "}
+                <strong>web applications</strong>. I specialize in delivering{" "}
+                <strong>tailored solutions</strong> that balance performance,{" "}
+                <strong>usability</strong>, and <strong>visual polish</strong>.
+                Whether it's a marketing site, an{" "}
+                <strong>interactive product</strong>, or a{" "}
+                <strong>scalable</strong> app, I bring a{" "}
+                <strong>client-focused approach</strong> rooted in{" "}
+                <strong>clear communication</strong>,{" "}
+                <strong>efficient development practices</strong>, and a
+                commitment to <strong>measurable results</strong>.
+              </Typography>
+              <div className={styles.skillsContainer}>
+                <div className={styles.skillsCategory}>
+                  <div className={styles.categoryHeader}>
+                    <Code2 className={styles.categoryIcon} size={24} />
+                    <Typography variant="h6">Programming Languages</Typography>
                   </div>
-                  <div className={styles.skillsCategory}>
-                    <div className={styles.categoryHeader}>
-                      <Layout className={styles.categoryIcon} size={24} />
-                      <Typography variant="h6">
-                        Libraries & Frameworks
-                      </Typography>
-                    </div>
-                    <div className={styles.skillsList}>
-                      {skills
-                        .filter((skill) => skill.category === "frameworks")
-                        .map((skill, index, array) => (
-                          <React.Fragment key={skill.id}>
-                            <div className={styles.skillItem}>
-                              <span>{skill.name}</span>
-                            </div>
-                            {index < array.length - 1 && (
-                              <span className={styles.bullet}>•</span>
-                            )}
-                          </React.Fragment>
-                        ))}
-                    </div>
-                  </div>
-                  <div className={styles.skillsCategory}>
-                    <div className={styles.categoryHeader}>
-                      <Wrench className={styles.categoryIcon} size={24} />
-                      <Typography variant="h6">Tools & Platforms</Typography>
-                    </div>
-                    <div className={styles.skillsList}>
-                      {skills
-                        .filter((skill) => skill.category === "tools")
-                        .map((skill, index, array) => (
-                          <React.Fragment key={skill.id}>
-                            <div className={styles.skillItem}>
-                              <span>{skill.name}</span>
-                            </div>
-                            {index < array.length - 1 && (
-                              <span className={styles.bullet}>•</span>
-                            )}
-                          </React.Fragment>
-                        ))}
-                    </div>
+                  <div className={styles.skillsList}>
+                    {skills
+                      .filter((skill) => skill.category === "languages")
+                      .map((skill, index, array) => (
+                        <React.Fragment key={skill.id}>
+                          <div className={styles.skillItem}>
+                            <span>{skill.name}</span>
+                          </div>
+                          {index < array.length - 1 && (
+                            <span className={styles.bullet}>•</span>
+                          )}
+                        </React.Fragment>
+                      ))}
                   </div>
                 </div>
-                <div className={styles.aboutButtons}>
-                  <Button
-                    component={Link}
-                    href="/about"
-                    variant="outlined"
-                    size="small"
-                    endIcon={<ArrowRight size={20} />}
-                  >
-                    Work Experiences
-                  </Button>
+                <div className={styles.skillsCategory}>
+                  <div className={styles.categoryHeader}>
+                    <Layout className={styles.categoryIcon} size={24} />
+                    <Typography variant="h6">Libraries & Frameworks</Typography>
+                  </div>
+                  <div className={styles.skillsList}>
+                    {skills
+                      .filter((skill) => skill.category === "frameworks")
+                      .map((skill, index, array) => (
+                        <React.Fragment key={skill.id}>
+                          <div className={styles.skillItem}>
+                            <span>{skill.name}</span>
+                          </div>
+                          {index < array.length - 1 && (
+                            <span className={styles.bullet}>•</span>
+                          )}
+                        </React.Fragment>
+                      ))}
+                  </div>
+                </div>
+                <div className={styles.skillsCategory}>
+                  <div className={styles.categoryHeader}>
+                    <Wrench className={styles.categoryIcon} size={24} />
+                    <Typography variant="h6">Tools & Platforms</Typography>
+                  </div>
+                  <div className={styles.skillsList}>
+                    {skills
+                      .filter((skill) => skill.category === "tools")
+                      .map((skill, index, array) => (
+                        <React.Fragment key={skill.id}>
+                          <div className={styles.skillItem}>
+                            <span>{skill.name}</span>
+                          </div>
+                          {index < array.length - 1 && (
+                            <span className={styles.bullet}>•</span>
+                          )}
+                        </React.Fragment>
+                      ))}
+                  </div>
                 </div>
               </div>
-            </Grid>
+              <div className={styles.aboutButtons}>
+                <Button
+                  component={Link}
+                  href="/about"
+                  variant="outlined"
+                  size="small"
+                  endIcon={<ArrowRight size={20} />}
+                >
+                  Work Experiences
+                </Button>
+              </div>
+            </div>
           </div>
         </Box>
-        {/* Featured Projects Section */}
         <Box
           component="section"
           ref={projectCardsRef}
@@ -568,7 +467,7 @@ export default function Page() {
           <Box sx={{ mt: 4 }}>
             <Button
               component={Link}
-              href="/portfolio"
+              href="/projects"
               variant="outlined"
               size="small"
               endIcon={<ArrowRight size={20} />}
@@ -577,7 +476,6 @@ export default function Page() {
             </Button>
           </Box>
         </Box>
-        {/* Contact Section */}
         <Box
           component="section"
           ref={contactSectionRef}
@@ -705,25 +603,22 @@ export default function Page() {
                     size="small"
                   />
 
-                  <Grid item xs={12}>
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      size="small"
-                      fullWidth
-                      sx={{ mt: 2 }}
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? "Sending..." : "Send Message"}
-                    </Button>
-                  </Grid>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    size="small"
+                    fullWidth
+                    sx={{ mt: 2 }}
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? "Sending..." : "Send Message"}
+                  </Button>
                 </Box>
               </Box>
             </div>
           </Container>
         </Box>
         <Divider sx={{ my: 3 }} />
-        {/* Footer */}
         <footer
           style={{
             padding: "0 0 4rem 0",
@@ -734,7 +629,7 @@ export default function Page() {
           <p style={{ margin: 0, fontSize: "1rem" }}>
             This website was designed and built using <strong>Next.js</strong>,{" "}
             <strong>TypeScript</strong>, <strong>Material UI</strong>, and{" "}
-            <strong>GSAP</strong> for animations. View the source code on{" "}
+            <strong>GSAP</strong>. <br /> View the source code on{" "}
             <a
               href="https://github.com/khamudom/kham-website"
               target="_blank"

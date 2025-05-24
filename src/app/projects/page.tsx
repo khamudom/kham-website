@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
@@ -13,17 +12,15 @@ import type { Project } from "@/types/portfolio";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
 import { ErrorMessage } from "@/components/common/ErrorMessage";
 import { PageHeader } from "@/components/common/PageHeader";
-import styles from "@/styles/pages/Portfolio.module.css";
+import styles from "@/styles/pages/Projects.module.css";
 import {
   Typography,
   Container,
-  Grid,
   Card,
   CardContent,
   Box,
   CardActionArea,
 } from "@mui/material";
-import { Button } from "@/design-system/components/Button";
 
 // Register ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
@@ -116,7 +113,7 @@ export default function Portfolio() {
             >
               <CardActionArea
                 component={Link}
-                href={`/portfolio/${project.slug}`}
+                href={`/projects/${project.slug}`}
                 sx={{ flexShrink: 0 }}
               >
                 <Box

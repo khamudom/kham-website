@@ -105,7 +105,7 @@ export default function ProjectDetail({
     <div>
       <Box component="section" className={styles.section}>
         <Container>
-          <Link href="/portfolio" passHref>
+          <Link href="/projects" passHref>
             <Button startIcon={<ArrowLeft size={20} />} sx={{ mb: 4 }}>
               Back to Projects
             </Button>

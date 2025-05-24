@@ -124,15 +124,3 @@ export interface AboutContent {
     content: string;
   }[];
 }
-
-// Contact Types
-export interface ContactInfo {
-  email: string;
-  phone?: string;
-  location: string;
-  socialLinks: {
-    github?: string;
-    linkedin?: string;
-    twitter?: string;
-  };
-}

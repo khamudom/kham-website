@@ -66,25 +66,14 @@ const Footer = () => {
               </Box>
               <Box
                 component={Link}
-                href="/portfolio"
+                href="/projects"
                 sx={{
                   color: "text.secondary",
                   textDecoration: "none",
                   "&:hover": { color: "primary.main" },
                 }}
               >
-                Portfolio
-              </Box>
-              <Box
-                component={Link}
-                href="/contact"
-                sx={{
-                  color: "text.secondary",
-                  textDecoration: "none",
-                  "&:hover": { color: "primary.main" },
-                }}
-              >
-                Contact
+                Projects
               </Box>
             </Box>
           </Box>

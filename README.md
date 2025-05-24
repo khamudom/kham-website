@@ -25,13 +25,15 @@ A modern, responsive portfolio website showcasing the work and skills of Kham Ud
 
 ## 🛠️ Tech Stack
 
-- **Next.js 14**: React framework for production
-- **TypeScript**: Type-safe JavaScript
-- **Material UI**: Component library and theming
-- **GSAP**: Advanced animations
-- **Lucide Icons**: Beautiful, consistent iconography
-- **React Intersection Observer**: For lazy loading and scroll animations
-- **Emotion**: CSS-in-JS styling solution
+- **Next.js 14.1.0**: React framework for production
+- **React 18.3.1**: UI library
+- **TypeScript 5.3.3**: Type-safe JavaScript
+- **Material UI 5.15.10**: Component library and theming
+- **GSAP 3.12.5**: Advanced animations
+- **Lucide React 0.511.0**: Beautiful, consistent iconography
+- **React Intersection Observer 9.8.1**: For lazy loading and scroll animations
+- **Emotion 11.11.3**: CSS-in-JS styling solution
+- **ESLint 8.56.0**: Code quality and style enforcement
 
 ## 🏗️ Project Structure
 
@@ -43,9 +45,7 @@ src/
 ├── data/          # Data models and mock API
 ├── design-system/ # Design system components
 ├── hooks/         # Custom React hooks
-├── pages/         # Page components
 ├── styles/        # Global styles
-├── theme/         # Theme configuration
 ├── types/         # TypeScript interfaces
 └── utils/         # Utility functions
 ```
@@ -68,6 +68,7 @@ The project uses Material UI with a custom theme:
 - Server-side rendering for better indexing
 - Optimized images and assets
 - Edge network deployment for optimal performance
+- Vercel deployment configuration for production
 
 ## 📄 License
 
@@ -75,6 +76,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 🙏 Acknowledgments
 
-- Images from [Unsplash](https://unsplash.com)
 - Icons from [Lucide](https://lucide.dev)
 - Design inspiration from Material UI

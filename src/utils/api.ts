@@ -4,7 +4,6 @@ import {
   Experience,
   Skill,
   AboutContent,
-  ContactInfo,
   ApiResponse,
   ApiResponseWithMetadata,
 } from "../types/portfolio";
@@ -86,8 +85,4 @@ export async function fetchSkills(): Promise<
 
 export async function fetchAbout(): Promise<ApiResponse<AboutContent>> {
   return fetchData<AboutContent>("about");
-}
-
-export async function fetchContact(): Promise<ApiResponse<ContactInfo>> {
-  return fetchData<ContactInfo>("contact");
 }
