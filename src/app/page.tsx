@@ -40,6 +40,7 @@ import { useThemeBackgrounds } from "@/hooks/useThemeBackgrounds";
 import HeaderVertical from "@/components/layout/HeaderVertical";
 import { ThemeSelector } from "@/components/ThemeSelector";
 import RotatingTitle from "@/components/animations/RotatingTitle";
+import { SocialLinks } from "@/components/common/SocialLinks";
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -58,13 +59,26 @@ export default function Page() {
   const contactSectionRef = useRef<HTMLDivElement>(null);
   const aboutContentRef = useRef<HTMLDivElement>(null);
   const aboutImageRef = useRef<HTMLDivElement>(null);
+  const mobileHeaderRef = useRef<HTMLDivElement>(null);
   const [activeSection, setActiveSection] = useState("about");
   const [isMobile, setIsMobile] = useState(false);
   const [showStickyHeader, setShowStickyHeader] = useState(false);
-  const mobileHeaderRef = useRef<HTMLDivElement>(null);
 
   // Get featured projects (first 3)
   const featuredProjects = projects.slice(0, 3);
+
+  const socialLinks = [
+    {
+      href: "https://github.com/khamudom",
+      icon: Github,
+      label: "GitHub",
+    },
+    {
+      href: "https://www.linkedin.com/in/khamudom/",
+      icon: Linkedin,
+      label: "LinkedIn",
+    },
+  ];
 
   useGSAP(() => {
     // Project cards animation
@@ -262,34 +276,7 @@ export default function Page() {
           <div className={styles.stickyFooter}>
             {/* Social Links */}
             <div className={styles.socialLinks}>
-              <IconButton
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-                sx={{
-                  color: "text.primary",
-                  "&:hover": {
-                    color: "primary.main",
-                  },
-                }}
-              >
-                <Github className={styles.socialIcon} />
-              </IconButton>
-              <IconButton
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                sx={{
-                  color: "text.primary",
-                  "&:hover": {
-                    color: "primary.main",
-                  },
-                }}
-              >
-                <Linkedin className={styles.socialIcon} />
-              </IconButton>
+              <SocialLinks links={socialLinks} />
             </div>
             <Divider sx={{ mb: 1 }} />
             <div>
@@ -335,34 +322,7 @@ export default function Page() {
               </>
             )}
             <div className={styles.socialLinks} style={{ marginTop: "0.5rem" }}>
-              <IconButton
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-                sx={{
-                  color: "text.primary",
-                  "&:hover": {
-                    color: "primary.main",
-                  },
-                }}
-              >
-                <Github className={styles.socialIcon} />
-              </IconButton>
-              <IconButton
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                sx={{
-                  color: "text.primary",
-                  "&:hover": {
-                    color: "primary.main",
-                  },
-                }}
-              >
-                <Linkedin className={styles.socialIcon} />
-              </IconButton>
+              <SocialLinks links={socialLinks} />
             </div>
           </div>
         )}
@@ -387,7 +347,7 @@ export default function Page() {
             <Grid container>
               <div ref={aboutContentRef}>
                 <Typography variant="body1" color="text.primary" paragraph>
-                  <strong>Front-end UI Engineer</strong> with a track record of
+                  <strong>Front-end engineer</strong> with a track record of
                   creating <strong>intuitive</strong>,{" "}
                   <strong>performant</strong> user interfaces that drive{" "}
                   <strong>content creation</strong>,{" "}
@@ -719,9 +679,8 @@ export default function Page() {
         >
           <p style={{ margin: 0, fontSize: "1rem" }}>
             This website was designed and built using <strong>Next.js</strong>,{" "}
-            <strong>React</strong>, <strong>TypeScript</strong>,{" "}
-            <strong>Material UI</strong>, and <strong>GSAP</strong> for
-            animations. View the source code on{" "}
+            <strong>TypeScript</strong>, <strong>Material UI</strong>, and{" "}
+            <strong>GSAP</strong> for animations. View the source code on{" "}
             <a
               href="https://github.com/khamudom/kham-website"
               target="_blank"

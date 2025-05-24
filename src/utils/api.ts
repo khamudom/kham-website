@@ -55,7 +55,15 @@ async function fetchDataWithMetadata<T>(
 }
 
 export async function fetchProfile(): Promise<ApiResponse<Profile>> {
-  return fetchData<Profile>("profile");
+  const response = await fetchData<Profile>("profile");
+  if (response.data) {
+    // Normalize bio to always be a string
+    const bio = Array.isArray(response.data.bio)
+      ? response.data.bio.join(" ")
+      : response.data.bio || "";
+    response.data = { ...response.data, bio };
+  }
+  return response;
 }
 
 export async function fetchProjects(): Promise<

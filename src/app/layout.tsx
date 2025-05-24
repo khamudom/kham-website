@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   keywords:
     "Frontend UX Engineer, Web Developer, Design Systems, Component Libraries, React, TypeScript, Web Components",
   authors: [{ name: "Kham Udom" }],
+  icons: {
+    icon: "/kulogo.ico",
+  },
   openGraph: {
     title: "Kham Udom | Frontend UX Engineer",
     description:

@@ -1,23 +1,162 @@
 {
   "data": [
     {
-      "id": "exp-1",
-      "slug": "example-company-software-engineer",
-      "company": "Example Company",
-      "position": "Software Engineer",
-      "startDate": "2022-01",
-      "endDate": "2023-12",
+      "id": "exp-0",
+      "slug": "camden-computers-web-app-developer",
+      "company": "Freelance",
+      "position": "Web and App Developer",
+      "startDate": "2022-11",
+      "endDate": "Present",
       "description": [
-        "Developed and maintained web applications using React and TypeScript",
-        "Collaborated with cross-functional teams to deliver high-quality software"
+        "Develop and maintain responsive web applications and mobile apps for various clients",
+        "Implement modern UI/UX designs with a focus on accessibility and performance",
+        "Collaborate with clients to understand requirements and deliver tailored solutions",
+        "Optimize applications for cross-platform compatibility and seamless user experience",
+        "Integrate third-party APIs and services to enhance application functionality"
       ],
-      "technologies": ["React", "TypeScript", "Node.js"],
+      "technologies": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "TypeScript",
+        "Astro",
+        "Sanity",
+        "Lit",
+        "React",
+        "GSAP",
+        "WordPress",
+        "Webflow",
+        "Accessibility"
+      ],
       "location": "Remote",
+      "type": "Full-time"
+    },
+    {
+      "id": "exp-1",
+      "slug": "microsoft-cxe-cx-studio-software-engineer",
+      "company": "C+E CX Studio, Microsoft (Vendor)",
+      "position": "Software Engineer",
+      "startDate": "2023-10",
+      "endDate": "2025-03",
+      "description": [
+        "Built a reusable design system using Lit Web Components to streamline development and ensure UI consistency across teams",
+        "Improved component discoverability and usability through a structured React Storybook implementation",
+        "Ensured ARIA-compliant accessibility and high-contrast support across all components",
+        "Worked cross-functionally with designers and engineers to deliver performant, intuitive user interfaces",
+        "Contributed to front-end best practices in accessibility, testing, and maintainability"
+      ],
+      "technologies": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "TypeScript",
+        "Lit",
+        "React",
+        "Storybook",
+        "Web Components"
+      ],
+      "location": "Remote",
+      "type": "Contract"
+    },
+    {
+      "id": "exp-2",
+      "slug": "microsoft-web-experiences-prototyping-ux-engineer",
+      "company": "Web Experiences Prototyping Team, Microsoft",
+      "position": "UX Engineer II",
+      "startDate": "2021-12",
+      "endDate": "2022-11",
+      "description": [
+        "Developed interactive, high-fidelity prototypes using Web Components and TypeScript to validate new UX ideas",
+        "Worked cross-functionally with design and engineering to accelerate alignment in early product reviews",
+        "Ensured prototypes followed accessibility and performance standards to support informed product decisions"
+      ],
+      "technologies": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "TypeScript",
+        "FAST",
+        "Storybook",
+        "Web Components"
+      ],
+      "location": "Redmond, WA",
+      "type": "Full-time"
+    },
+    {
+      "id": "exp-3",
+      "slug": "microsoft-web-experiences-platform-ux-engineer",
+      "company": "Web Experiences Platform Team, Microsoft",
+      "position": "UX Engineer II",
+      "startDate": "2017-11",
+      "endDate": "2021-12",
+      "description": [
+        "Built core components for Microsoft Edge, News, and Shopping used across multiple product teams",
+        "Contributed to Microsoft's FAST design system and helped onboard teams adopting Fluent UI Web Components",
+        "Worked cross-functionally to identify UI improvements and align on scalable architecture",
+        "Led accessibility and UI performance initiatives to meet modern web standards"
+      ],
+      "technologies": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "TypeScript",
+        "FAST",
+        "Fluent UI",
+        "React",
+        "Storybook",
+        "Web Components"
+      ],
+      "location": "Redmond, WA",
+      "type": "Full-time"
+    },
+    {
+      "id": "exp-4",
+      "slug": "microsoft-xbox-design-developer",
+      "company": "Xbox, Microsoft",
+      "position": "Design Developer",
+      "startDate": "2012-12",
+      "endDate": "2017-11",
+      "description": [
+        "Developed performant UI for the Xbox Dashboard, supporting multiple console release cycles",
+        "Collaborated with designers and engineers to bring creative visions to life through interactive prototypes",
+        "Worked cross-functionally to ensure high-quality user experiences through every iteration"
+      ],
+      "technologies": ["UI Development", "Prototyping"],
+      "location": "Redmond, WA",
+      "type": "Full-time"
+    },
+    {
+      "id": "exp-5",
+      "slug": "microsoft-windows-phone-design-integrator",
+      "company": "Windows Phone, Microsoft (Vendor)",
+      "position": "Design Integrator",
+      "startDate": "2012-02",
+      "endDate": "2012-11",
+      "description": [
+        "Maintained design consistency across Windows Phone interfaces with a focus on accessibility and brand alignment"
+      ],
+      "technologies": ["XAML", "C#"],
+      "location": "Redmond, WA",
+      "type": "Contract"
+    },
+    {
+      "id": "exp-6",
+      "slug": "amaze-entertainment-3d-environment-artist",
+      "company": "Amaze Entertainment",
+      "position": "3D Environment Artist",
+      "startDate": "2002-08",
+      "endDate": "2011-02",
+      "description": [
+        "Created detailed 3D environments and interactive assets for cross-platform games",
+        "Contributed to creative direction through collaboration and iterative feedback sessions"
+      ],
+      "technologies": ["Maya", "Adobe Photoshop"],
+      "location": "Kirkland, WA",
       "type": "Full-time"
     }
   ],
   "metadata": {
-    "total": 1,
+    "total": 6,
     "page": 1,
     "limit": 10
   }

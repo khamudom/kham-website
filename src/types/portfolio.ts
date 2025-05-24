@@ -52,7 +52,7 @@ export interface Profile {
   id: string;
   name: string;
   title: string;
-  bio: string[];
+  bio: string;
   coverImage: string;
   email: string;
   location: string;
@@ -96,10 +96,13 @@ export interface Experience {
   title: string;
   company: string;
   period: string;
-  description: string;
+  position: string;
+  description: string[];
   type: string;
   location: string;
   technologies: string[];
+  startDate: string;
+  endDate?: string;
 }
 
 // Skills Types

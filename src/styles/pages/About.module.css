@@ -1,39 +1,6 @@
-.section {
-  padding: 5rem 1.5rem;
-}
-
-.hero {
-  background-color: var(--color-background);
-}
-
-.content {
-  max-width: 48rem;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.title {
-  font-size: 48px;
-  font-weight: 600;
-  letter-spacing: -0.003em;
-  line-height: 1.08349;
-  margin-bottom: 1.5rem;
-  background: linear-gradient(
-    to right,
-    var(--color-primary),
-    var(--color-primary-hover)
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
 .description {
-  font-size: 21px;
-  line-height: 1.381;
-  letter-spacing: 0.011em;
+  font-size: 1.25rem;
   color: var(--color-text-secondary);
-  margin-bottom: 2rem;
 }
 
 .resumeButton {
