@@ -254,7 +254,7 @@ export default function Page() {
               display: "flex",
               flexDirection: "column",
               alignItems: "flex-start",
-              gap: "1rem",
+              gap: ".3rem",
               padding: "1.5rem 0 0.5rem 0",
               background: "var(--color-background)",
               zIndex: 101,

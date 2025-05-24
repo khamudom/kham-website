@@ -1,0 +1,20 @@
+.cursorContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.cursorDot {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(45deg, #00ff00, #00cc00);
+  transform-origin: center;
+  transition: transform 0.1s ease-out;
+  will-change: transform;
+  box-shadow: 0 0 10px rgba(0, 204, 0, 0.5);
+}

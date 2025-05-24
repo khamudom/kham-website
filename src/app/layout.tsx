@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { ThemeProvider } from "@/design-system/ThemeProvider";
 import { AppProvider } from "@/context/AppContext";
+import { CursorEffect } from "@/components/CursorEffect";
 import "@/styles/global.css";
 
 export const metadata: Metadata = {
@@ -38,6 +39,7 @@ export default function RootLayout({
         <AppProvider>
           <ThemeProvider>
             <div className="app-container">
+              <CursorEffect />
               <main className="main-content">{children}</main>
             </div>
           </ThemeProvider>
