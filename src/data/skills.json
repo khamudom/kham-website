@@ -136,41 +136,48 @@
     },
     {
       "id": "skill-20",
+      "name": "Figma",
+      "category": "tools",
+      "proficiency": 5,
+      "yearsOfExperience": 4
+    },
+    {
+      "id": "skill-21",
       "name": "Webflow",
       "category": "tools",
       "proficiency": 3,
       "yearsOfExperience": 1
     },
     {
-      "id": "skill-21",
+      "id": "skill-22",
       "name": "WordPress",
       "category": "tools",
       "proficiency": 4,
       "yearsOfExperience": 2
     },
     {
-      "id": "skill-22",
+      "id": "skill-23",
       "name": "Sanity",
       "category": "tools",
       "proficiency": 3,
       "yearsOfExperience": 1
     },
     {
-      "id": "skill-23",
+      "id": "skill-24",
       "name": "Vercel",
       "category": "tools",
       "proficiency": 3,
       "yearsOfExperience": 1
     },
     {
-      "id": "skill-24",
+      "id": "skill-25",
       "name": "Netlify",
       "category": "tools",
       "proficiency": 3,
       "yearsOfExperience": 1
     },
     {
-      "id": "skill-25",
+      "id": "skill-26",
       "name": "Cloudflare",
       "category": "tools",
       "proficiency": 3,
@@ -178,7 +185,7 @@
     }
   ],
   "metadata": {
-    "total": 25,
+    "total": 26,
     "categories": [
       {
         "name": "languages",

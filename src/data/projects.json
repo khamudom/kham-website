@@ -2,20 +2,17 @@
   "data": [
     {
       "id": "project-1",
-      "slug": "portfolio-website",
-      "title": "Portfolio Website",
-      "summary": "A modern portfolio website built with Next.js and TypeScript",
-      "description": [
-        "A modern portfolio website built with Next.js and TypeScript",
-        "Features a responsive design and smooth animations"
-      ],
+      "slug": "camden-computers",
+      "title": "Camden Computers",
+      "summary": "A modern, responsive business website built with Astro.js, featuring smooth animations, dynamic content management, and a clean, professional design for an IT services company.",
+      "description": [""],
       "coverImage": "",
-      "technologies": ["Next.js", "TypeScript", "Tailwind CSS"],
-      "skills": ["Web Development", "UI/UX Design", "Frontend Development"],
-      "category": ["Web Development", "Personal Project"],
+      "technologies": [""],
+      "skills": [""],
+      "category": [""],
       "links": {
-        "live": "https://your-portfolio.com",
-        "github": "https://github.com/yourusername/portfolio"
+        "live": "",
+        "github": ""
       },
       "gallery": [
         {
