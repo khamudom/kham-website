@@ -13,6 +13,11 @@ export const ThemeSelector: React.FC = () => {
         value={themeName}
         label="Theme"
         onChange={(e) => setTheme(e.target.value as any)}
+        sx={{
+          "&:hover .MuiOutlinedInput-notchedOutline": {
+            borderColor: (theme) => theme.palette.primary.main,
+          },
+        }}
       >
         <MenuItem value="default">Default Light</MenuItem>
         <MenuItem value="defaultDark">Default Dark</MenuItem>

@@ -12,32 +12,33 @@ interface Point {
 export const CursorEffect = () => {
   const { themeName } = useTheme();
   const [points, setPoints] = useState<Point[]>([]);
-  const [mousePosition, setMousePosition] = useState<Point>({ x: 0, y: 0 });
 
   useEffect(() => {
-    // Only add event listener if Matrix theme is active
     if (themeName !== "matrix") {
-      setPoints([]); // Clear points when not in Matrix theme
+      setPoints([]);
       return;
     }
 
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
       setPoints((prevPoints) => {
         const newPoints = [...prevPoints, { x: e.clientX, y: e.clientY }];
-        // Keep only the last 20 points for the trail
         return newPoints.slice(-15);
       });
     };
 
+    const handleMouseLeave = () => {
+      setPoints([]);
+    };
+
     window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseout", handleMouseLeave);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseout", handleMouseLeave);
     };
-  }, [themeName]); // Add themeName to dependencies
+  }, [themeName]);
 
-  // Don't render anything if not in Matrix theme
   if (themeName !== "matrix") {
     return null;
   }
@@ -51,8 +52,8 @@ export const CursorEffect = () => {
           style={{
             left: point.x,
             top: point.y,
-            opacity: index / points.length,
-            transform: `scale(${index / points.length})`,
+            opacity: (index + 1) / points.length,
+            transform: `scale(${(index + 1) / points.length})`
           }}
         />
       ))}

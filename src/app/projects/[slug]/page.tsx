@@ -44,7 +44,7 @@ export default function ProjectDetail({
     return <div>Project not found</div>;
   }
 
-  const project = projectsData.data.find((p) => p.slug === slug);
+  const project = projectsData.data.find((p) => p.slug === slug) as Project;
 
   if (!project) {
     return <div>Project not found</div>;
@@ -75,7 +75,7 @@ export default function ProjectDetail({
   }));
 
   const projectWithRelations: ProjectWithRelations = {
-    ...project,
+    ...(project as Project),
     technologyDetails,
     skillDetails,
   };
@@ -128,16 +128,29 @@ export default function ProjectDetail({
               ))}
             </Box>
 
-            <Grid container spacing={4} className={styles.grid}>
-              <Grid item xs={12} md={6}>
-                <ProjectImage
-                  imagePath={projectWithRelations.coverImage}
-                  title={projectWithRelations.title}
-                  className={styles.imageWrapper}
-                  width={800}
-                  height={450}
-                />
-              </Grid>
+            <Grid container spacing={4} className={styles.grid}> 
+              <Box component="section" className={styles.heroSection}>
+                <Container maxWidth="xl" disableGutters>
+                  {projectWithRelations.displayType === 'iframe' && projectWithRelations.iframeUrl ? (
+                    <Box className={styles.iframeWrapper}>
+                      <iframe
+                        src={projectWithRelations.iframeUrl}
+                        title={projectWithRelations.title}
+                        className={styles.projectIframe}
+                      />
+                    </Box>
+                  ) : (
+                    <Box className={styles.imageWrapper}>
+                      <ProjectImage
+                        imagePath={projectWithRelations.coverImage}
+                        title={projectWithRelations.title}
+                        width={1920}
+                        height={1080}
+                      />
+                    </Box>
+                  )}
+                </Container>
+              </Box>
               <Grid item xs={12} md={6}>
                 <Box className={styles.details}>
                   <Box className={styles.description}>

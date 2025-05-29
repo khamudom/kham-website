@@ -216,6 +216,36 @@
   overflow: hidden;
 }
 
+.heroSection {
+  width: 100%;
+  background-color: #000;
+  margin-bottom: 64px;
+}
+
+.iframeWrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  background-color: #000;
+}
+
+.projectIframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+}
+
 .featureList {
   list-style-type: none;
   padding: 0;

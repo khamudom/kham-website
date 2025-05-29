@@ -3,15 +3,17 @@
     {
       "id": "project-1",
       "slug": "camden-computers",
-      "title": "Camden Computers",
+      "title": "Camden Computers LLC",
       "summary": "A modern, responsive business website built with Astro.js, featuring smooth animations, dynamic content management, and a clean, professional design for an IT services company.",
       "description": [""],
-      "coverImage": "",
-      "technologies": [""],
-      "skills": [""],
-      "category": [""],
+      "coverImage": "/images/projects/cc_website.webp",
+      "displayType": "iframe",
+      "iframeUrl": "https://camdencomputers.netlify.app/",
+      "technologies": ["Astro", "TypeScript", "HTML", "CSS", "GSAP"],
+      "skills": ["Web Development", "UI/UX Design", "Frontend Development"],
+      "category": ["Web Development"],
       "links": {
-        "live": "",
+        "live": "https://camdencomputers.netlify.app/",
         "github": ""
       },
       "gallery": [
@@ -53,6 +55,8 @@
         "Features a responsive design and smooth animations"
       ],
       "coverImage": "",
+      "displayType": "iframe",
+      "iframeUrl": "https://your-portfolio.com",
       "technologies": ["Next.js", "TypeScript", "Tailwind CSS"],
       "skills": ["Web Development", "UI/UX Design", "Frontend Development"],
       "category": ["Web Development", "Personal Project"],

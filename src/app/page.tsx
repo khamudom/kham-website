@@ -38,10 +38,28 @@ import HeaderVertical from "@/components/layout/HeaderVertical";
 import { ThemeSelector } from "@/components/ThemeSelector";
 import RotatingTitle from "@/components/animations/RotatingTitle";
 import { SocialLinks } from "@/components/common/SocialLinks";
+import { Theme } from "@mui/material/styles";
 
 export default function Page() {
+  const textFieldStyles = {
+    "& .MuiOutlinedInput-root": {
+      "&:hover fieldset": {
+        borderColor: (theme: Theme) => theme.palette.primary.main,
+      },
+    },
+  };
+
+  const anchorButtonStyles = {
+    "& .MuiButton-endIcon": {
+      transition: "transform 0.2s cubic-bezier(0.28, 0.11, 0.32, 1)",
+    },
+    "&:hover .MuiButton-endIcon": {
+      transform: "translateX(4px)",
+    },
+  }
+
   const { projects, profile, skills, loading, error } = usePortfolioData();
-  const backgrounds = useThemeBackgrounds();
+  const themeBackgrounds: { hero: string | null } = useThemeBackgrounds();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -204,9 +222,9 @@ export default function Page() {
 
   return (
     <div className={styles.mainContainer}>
-      {backgrounds.hero && typeof backgrounds.hero === "string" && (
+      {themeBackgrounds.hero && typeof themeBackgrounds.hero === "string" && (
         <img
-          src={backgrounds.hero}
+          src={themeBackgrounds.hero}
           alt="Background"
           className={isMobile ? styles.mobileHideBg : undefined}
           style={{
@@ -401,6 +419,7 @@ export default function Page() {
                   variant="outlined"
                   size="small"
                   endIcon={<ArrowRight size={20} />}
+                  sx={anchorButtonStyles}
                 >
                   Work Experiences
                 </Button>
@@ -471,6 +490,14 @@ export default function Page() {
               variant="outlined"
               size="small"
               endIcon={<ArrowRight size={20} />}
+              sx={{
+                "& .MuiButton-endIcon": {
+                  transition: "transform 0.3s cubic-bezier(0.28, 0.11, 0.32, 1)",
+                },
+                "&:hover .MuiButton-endIcon": {
+                  transform: "translateX(4px)",
+                },
+              }}
             >
               View All Projects
             </Button>
@@ -574,6 +601,7 @@ export default function Page() {
                     variant="outlined"
                     disabled={isSubmitting}
                     size="small"
+                    sx={textFieldStyles}
                   />
 
                   <TextField
@@ -587,6 +615,7 @@ export default function Page() {
                     variant="outlined"
                     disabled={isSubmitting}
                     size="small"
+                    sx={textFieldStyles}
                   />
 
                   <TextField
@@ -601,6 +630,7 @@ export default function Page() {
                     variant="outlined"
                     disabled={isSubmitting}
                     size="small"
+                    sx={textFieldStyles}
                   />
 
                   <Button

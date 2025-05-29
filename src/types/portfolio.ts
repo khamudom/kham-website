@@ -68,6 +68,8 @@ export interface Project {
   summary: string;
   description: string[];
   coverImage: string;
+  displayType?: 'image' | 'iframe';
+  iframeUrl?: string;
   technologies: string[];
   skills: string[];
   category: string[];
