@@ -9,39 +9,21 @@
       "coverImage": "/images/projects/cc_website.webp",
       "displayType": "iframe",
       "iframeUrl": "https://camdencomputers.netlify.app/",
-      "technologies": ["Astro", "TypeScript", "HTML", "CSS", "GSAP"],
-      "skills": ["Web Development", "UI/UX Design", "Frontend Development"],
+      "technologies": [
+        "TypeScript",
+        "HTML",
+        "CSS",
+        "Astro",
+        "GSAP",
+        "Material UI"
+      ],
+      "skills": [""],
       "category": ["Web Development"],
       "links": {
         "live": "https://camdencomputers.netlify.app/",
         "github": ""
       },
-      "gallery": [
-        {
-          "id": "gallery-1",
-          "url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
-          "alt": "Portfolio website homepage",
-          "caption": "Modern and clean homepage design",
-          "createdAt": "2024-03-20",
-          "updatedAt": "2024-03-20"
-        },
-        {
-          "id": "gallery-2",
-          "url": "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&q=80",
-          "alt": "Portfolio projects section",
-          "caption": "Projects showcase with interactive cards",
-          "createdAt": "2024-03-20",
-          "updatedAt": "2024-03-20"
-        },
-        {
-          "id": "gallery-3",
-          "url": "https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&q=80",
-          "alt": "Portfolio contact section",
-          "caption": "Contact form with modern styling",
-          "createdAt": "2024-03-20",
-          "updatedAt": "2024-03-20"
-        }
-      ],
+      "gallery": [],
       "createdAt": "2024-01-01",
       "updatedAt": "2024-03-20"
     },

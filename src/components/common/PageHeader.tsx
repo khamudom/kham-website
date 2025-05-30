@@ -14,27 +14,6 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
 }) => {
   return (
     <>
-      <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-        <ArrowRight
-          style={{
-            color: "var(--color-text-secondary)",
-            transform: "rotate(180deg)",
-            marginRight: 8,
-          }}
-          size={22}
-        />
-        <Link
-          href="/"
-          style={{
-            color: "var(--color-text-secondary)",
-            fontWeight: 600,
-            fontSize: "1.25rem",
-            textDecoration: "none",
-          }}
-        >
-          Kham Udom
-        </Link>
-      </Box>
       <Typography variant="h1" sx={{ fontSize: "3rem", lineHeight: 1 }}>
         {title}
       </Typography>

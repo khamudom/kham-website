@@ -117,12 +117,8 @@ a {
 /* Layout */
 
 .main-content {
-  /* flex: 1; */
-  max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 3rem;
-  padding-right: 3rem;
 }
 
 /* Utility Classes */

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { JSX } from "react";
 import { useApi } from "@/hooks/useApi";
 import { fetchProfile, fetchSkills, fetchExperience } from "@/utils/api";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
@@ -19,6 +19,7 @@ import {
 import { Download, Calendar, MapPin } from "lucide-react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import styles from "@/styles/pages/About.module.css";
 
 export default function About() {
   const {
@@ -76,23 +77,14 @@ export default function About() {
   return (
     <>
       {/* Sticky Header */}
-      <header
-        style={{
-          position: "sticky",
-          top: 0,
-          left: 0,
-          zIndex: 1100,
-          padding: "1rem 0",
-          minHeight: 64,
-          backgroundColor: "var(--color-background)",
-        }}
-      >
+      <header className={styles.stickyHeader}>
         <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
             width: "100%",
+            maxWidth: "1280px",
           }}
         >
           <Button startIcon={<ArrowBackIcon />} href="/" color="inherit">
@@ -112,7 +104,10 @@ export default function About() {
       </header>
       {/* Main Content */}
       <Box component="section" sx={{ py: 9 }}>
-        <Container>
+        <Container
+          maxWidth={false}
+          sx={{ maxWidth: "1280px", margin: "0 auto" }}
+        >
           <Typography variant="h1" sx={{ fontSize: "3rem", lineHeight: 1 }}>
             Experience
           </Typography>

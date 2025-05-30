@@ -20,6 +20,7 @@ import {
   CardContent,
   Box,
   CardActionArea,
+  Breadcrumbs,
 } from "@mui/material";
 
 // Register ScrollTrigger
@@ -90,7 +91,22 @@ export default function Portfolio() {
 
   return (
     <Box component="section" sx={{ py: 9 }}>
-      <Container>
+      <Container maxWidth={false} sx={{ maxWidth: "1280px", margin: "0 auto" }}>
+        <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 4 }}>
+          <Link
+            href="/"
+            passHref
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <Typography variant="body2" color="text.secondary">
+              Home
+            </Typography>
+          </Link>
+          <Typography variant="body2" color="text.primary">
+            Projects
+          </Typography>
+        </Breadcrumbs>
+
         <PageHeader
           title="Projects"
           description="A collection of my work, from enterprise applications to personal projects."

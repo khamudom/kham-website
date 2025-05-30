@@ -10,6 +10,7 @@ import {
   Braces,
   Cpu,
   Server,
+  ChevronRight,
 } from "lucide-react";
 import type { Project, Technology, Skill, Image } from "@/types/portfolio";
 import ImageGallery from "@/components/ui/ImageGallery";
@@ -24,6 +25,7 @@ import {
   Paper,
   Chip,
   Divider,
+  Breadcrumbs,
 } from "@mui/material";
 import projectsData from "@/data/projects.json";
 
@@ -102,43 +104,116 @@ export default function ProjectDetail({
   };
 
   return (
-    <div>
+    <div className={styles.projectDetailPage}>
       <Box component="section" className={styles.section}>
-        <Container>
-          <Link href="/projects" passHref>
-            <Button startIcon={<ArrowLeft size={20} />} sx={{ mb: 4 }}>
-              Back to Projects
-            </Button>
-          </Link>
-
-          <Box className={styles.content}>
-            <Typography variant="h1" className={styles.title}>
+        <Container
+          maxWidth={false}
+          sx={{ maxWidth: "1280px", margin: "0 auto" }}
+        >
+          <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 4 }}>
+            <Link
+              href="/"
+              passHref
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <Typography variant="body2" color="text.secondary">
+                Home
+              </Typography>
+            </Link>
+            <Link
+              href="/projects"
+              passHref
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <Typography variant="body2" color="text.secondary">
+                Projects
+              </Typography>
+            </Link>
+            <Typography variant="body2" color="text.primary">
               {projectWithRelations.title}
             </Typography>
-            <Box className={styles.tags} sx={{ mb: 4 }}>
-              {projectWithRelations.technologies.map((techId: string) => (
-                <Chip
-                  key={techId}
-                  label={techId}
-                  color="primary"
-                  variant="outlined"
-                  size="small"
-                  sx={{ mr: 1, mb: 1 }}
-                />
-              ))}
-            </Box>
+          </Breadcrumbs>
 
-            <Grid container spacing={4} className={styles.grid}> 
-              <Box component="section" className={styles.heroSection}>
-                <Container maxWidth="xl" disableGutters>
-                  {projectWithRelations.displayType === 'iframe' && projectWithRelations.iframeUrl ? (
-                    <Box className={styles.iframeWrapper}>
+          <Box className={styles.content}>
+            <div className={styles.headerWrapper}>
+              <div>
+                <Typography
+                  variant="h1"
+                  sx={{
+                    fontSize: "var(--font-size-2xl)",
+                    fontWeight: "bold",
+                    marginBottom: "var(--spacing-md)",
+                    color: "var(--color-primary)",
+                  }}
+                >
+                  {projectWithRelations.title}
+                </Typography>
+                <Box className={styles.tags} sx={{ mb: 4 }}>
+                  {projectWithRelations.technologies.map((techId: string) => (
+                    <Chip
+                      key={techId}
+                      label={techId}
+                      color="primary"
+                      variant="outlined"
+                      size="small"
+                      sx={{ mr: 1, mb: 1 }}
+                    />
+                  ))}
+                </Box>
+              </div>
+              {projectWithRelations.links && (
+                <Box
+                  className={styles.buttons}
+                  sx={{ display: "flex", alignItems: "flex-start", gap: 2 }}
+                >
+                  {projectWithRelations.links.live && (
+                    <Button
+                      href={projectWithRelations.links.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="contained"
+                      startIcon={<Globe2 size={20} />}
+                      sx={{
+                        padding: "6px 20px",
+                      }}
+                    >
+                      View Live
+                    </Button>
+                  )}
+                  {projectWithRelations.links.github && (
+                    <Button
+                      href={projectWithRelations.links.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="outlined"
+                      startIcon={<GitBranch size={20} />}
+                      sx={{
+                        padding: "6px 20px",
+                      }}
+                    >
+                      View Source
+                    </Button>
+                  )}
+                </Box>
+              )}
+            </div>
+
+            <div className={styles.heroWrapper}>
+              <div className={styles.heroSection}>
+                <Container
+                  maxWidth={false}
+                  disableGutters
+                  sx={{ maxWidth: "1280px", margin: "0 auto" }}
+                >
+                  {projectWithRelations.displayType === "iframe" &&
+                  projectWithRelations.iframeUrl ? (
+                    <div className={styles.iframeWrapper}>
                       <iframe
                         src={projectWithRelations.iframeUrl}
                         title={projectWithRelations.title}
                         className={styles.projectIframe}
                       />
-                    </Box>
+                    </div>
                   ) : (
                     <Box className={styles.imageWrapper}>
                       <ProjectImage
@@ -150,8 +225,8 @@ export default function ProjectDetail({
                     </Box>
                   )}
                 </Container>
-              </Box>
-              <Grid item xs={12} md={6}>
+              </div>
+              {/* <Grid item xs={12} md={6}>
                 <Box className={styles.details}>
                   <Box className={styles.description}>
                     <Typography variant="body1" paragraph>
@@ -167,39 +242,9 @@ export default function ProjectDetail({
                       )}
                     </Box>
                   </Box>
-
-                  {projectWithRelations.links && (
-                    <Box
-                      className={styles.buttons}
-                      sx={{ display: "flex", gap: 2 }}
-                    >
-                      {projectWithRelations.links.live && (
-                        <Button
-                          href={projectWithRelations.links.live}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          variant="contained"
-                          startIcon={<Globe2 size={20} />}
-                        >
-                          View Live
-                        </Button>
-                      )}
-                      {projectWithRelations.links.github && (
-                        <Button
-                          href={projectWithRelations.links.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          variant="outlined"
-                          startIcon={<GitBranch size={20} />}
-                        >
-                          View Source
-                        </Button>
-                      )}
-                    </Box>
-                  )}
                 </Box>
-              </Grid>
-            </Grid>
+              </Grid> */}
+            </div>
           </Box>
         </Container>
       </Box>
@@ -216,7 +261,7 @@ export default function ProjectDetail({
           </Box>
         )}
 
-      <Box component="section" className={styles.detailsSection}>
+      {/* <Box component="section" className={styles.detailsSection}>
         <Container>
           <Grid container spacing={4} className={styles.detailsGrid}>
             <Grid item xs={12} md={6}>
@@ -264,7 +309,7 @@ export default function ProjectDetail({
             </Grid>
           </Grid>
         </Container>
-      </Box>
+      </Box> */}
     </div>
   );
 }
