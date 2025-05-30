@@ -56,7 +56,7 @@ export default function Page() {
     "&:hover .MuiButton-endIcon": {
       transform: "translateX(4px)",
     },
-  }
+  };
 
   const { projects, profile, skills, loading, error } = usePortfolioData();
   const themeBackgrounds: { hero: string | null } = useThemeBackgrounds();
@@ -440,47 +440,52 @@ export default function Page() {
         >
           <Stack spacing={2}>
             {featuredProjects.map((project) => (
-              <Card
+              <Link
+                href={`/projects/${project.slug}`}
                 key={project.id}
-                className={styles.projectCard}
-                sx={{
-                  backgroundColor: "transparent",
-                  backgroundImage: "none",
-                  border: "1px solid transparent",
-                  boxShadow: "none",
-                  transition: "all 0.3s ease",
-                  "&:hover": {
-                    backgroundColor: "background.paper",
-                    border: "1px solid",
-                    borderColor: "divider",
-                  },
-                }}
+                style={{ textDecoration: "none", color: "inherit" }}
               >
-                <CardContent sx={{ display: "flex", gap: 2 }}>
-                  <Box className={styles.cardImage}>
-                    <Image
-                      width={200}
-                      height={80}
-                      src={project.coverImage}
-                      alt={project.title}
-                      className={styles.image}
-                      loading="lazy"
-                      decoding="async"
-                      onError={(e) => {
-                        e.currentTarget.src = "/images/placeholder.jpg";
-                      }}
-                    />
-                  </Box>
-                  <Box sx={{ display: "flex", flexDirection: "column" }}>
-                    <Typography variant="h5" component="h3">
-                      {project.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {project.description}
-                    </Typography>
-                  </Box>
-                </CardContent>
-              </Card>
+                <Card
+                  className={styles.projectCard}
+                  sx={{
+                    backgroundColor: "transparent",
+                    backgroundImage: "none",
+                    border: "1px solid transparent",
+                    boxShadow: "none",
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      backgroundColor: "background.paper",
+                      border: "1px solid",
+                      borderColor: "divider",
+                    },
+                  }}
+                >
+                  <CardContent sx={{ display: "flex", gap: 2 }}>
+                    <Box className={styles.cardImage}>
+                      <Image
+                        width={200}
+                        height={80}
+                        src={project.coverImage}
+                        alt={project.title}
+                        className={styles.image}
+                        loading="lazy"
+                        decoding="async"
+                        onError={(e) => {
+                          e.currentTarget.src = "/images/placeholder.jpg";
+                        }}
+                      />
+                    </Box>
+                    <Box sx={{ display: "flex", flexDirection: "column" }}>
+                      <Typography variant="h5" component="h3">
+                        {project.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {project.description}
+                      </Typography>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </Stack>
           <Box sx={{ mt: 4 }}>
@@ -492,7 +497,8 @@ export default function Page() {
               endIcon={<ArrowRight size={20} />}
               sx={{
                 "& .MuiButton-endIcon": {
-                  transition: "transform 0.3s cubic-bezier(0.28, 0.11, 0.32, 1)",
+                  transition:
+                    "transform 0.3s cubic-bezier(0.28, 0.11, 0.32, 1)",
                 },
                 "&:hover .MuiButton-endIcon": {
                   transform: "translateX(4px)",
