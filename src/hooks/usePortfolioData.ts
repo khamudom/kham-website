@@ -35,7 +35,16 @@ export function usePortfolioData() {
 
   useEffect(() => {
     if (skillsResponse?.data?.data) {
-      dispatch({ type: "SET_SKILLS", payload: skillsResponse.data.data });
+      const skillsRaw = skillsResponse.data.data;
+      const skills = Array.isArray(skillsRaw) ? skillsRaw : [];
+      dispatch({
+        type: "SET_SKILLS",
+        payload: {
+          languages: skills.filter((s) => s.category === "language"),
+          frameworks: skills.filter((s) => s.category === "framework"),
+          tools: skills.filter((s) => s.category === "tool"),
+        },
+      });
     }
   }, [skillsResponse, dispatch]);
 

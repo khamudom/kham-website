@@ -1,0 +1,45 @@
+/* eslint-disable @next/next/no-img-element */
+import React from "react";
+import styles from "./ProjectTile.module.css";
+
+interface ProjectTileProps {
+  width?: number;
+  height?: number;
+  href?: string;
+  target?: string;
+  title?: string;
+  imgSrc?: string;
+  imgAlt?: string;
+  projectType?: string;
+}
+
+const ProjectTile = ({
+  width,
+  height,
+  title,
+  href,
+  target,
+  imgSrc,
+  imgAlt,
+  projectType,
+}: ProjectTileProps) => {
+  return (
+    <div
+      className={styles.card}
+      style={{ width: `${width}px`, height: `${height}px` }}
+    >
+      <img className={styles.image} src={imgSrc} alt={imgAlt} />
+      <div className={styles.overlay}></div>
+      <div className={styles.contentWrapper}>
+        <div className={styles.content}>
+          <a className={styles.anchor} href={href} target={target}>
+            <span className={styles.title}>{title}</span>
+          </a>
+          <p className={styles.type}>{projectType}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProjectTile;

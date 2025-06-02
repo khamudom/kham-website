@@ -22,6 +22,7 @@ import {
   CardActionArea,
   Breadcrumbs,
 } from "@mui/material";
+import ProjectTile from "@/components/ui/ProjectTile/ProjectTile";
 
 // Register ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
@@ -112,50 +113,23 @@ export default function Portfolio() {
           description="A collection of my work, from enterprise applications to personal projects."
         />
 
-        <div ref={projectCardsRef} style={{ display: "flex", gap: "1rem" }}>
-          {filteredProjects.map((project) => (
-            <Card
-              sx={{
-                width: "240px",
-                height: "100%",
-                borderRadius: 2,
-                overflow: "hidden",
-                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.08)",
-                transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                "&:hover": {
-                  boxShadow: "0 12px 28px rgba(0, 0, 0, 0.15)",
-                },
-              }}
-            >
-              <CardActionArea
-                component={Link}
-                href={`/projects/${project.slug}`}
-                sx={{ flexShrink: 0 }}
-              >
-                <Box
-                  sx={{
-                    position: "relative",
-                    paddingTop: "56.25%" /* 16:9 aspect ratio */,
-                  }}
-                >
-                  <Image
-                    src={project.coverImage}
-                    alt={project.title}
-                    fill
-                    className={styles.projectImage}
-                    onError={(e) => {
-                      e.currentTarget.src = "/images/placeholder.jpg";
-                    }}
-                  />
-                </Box>
-              </CardActionArea>
-              <CardContent>
-                <Typography variant="h5" component="h3" gutterBottom>
-                  {project.title}
-                </Typography>
-              </CardContent>
-            </Card>
-          ))}
+        <div ref={projectCardsRef}>
+          <ul style={{ display: "flex", gap: "1rem" }}>
+            {filteredProjects.map((item) => (
+              <li key={item.id} style={{ listStyle: "none" }}>
+                <ProjectTile
+                  width={280}
+                  height={180}
+                  imgSrc={item.coverImage}
+                  imgAlt={item.title}
+                  title={item.title}
+                  href={`/projects/${item.slug}`}
+                  target={"_self"}
+                  projectType={item.category[0]}
+                />
+              </li>
+            ))}
+          </ul>
         </div>
       </Container>
     </Box>

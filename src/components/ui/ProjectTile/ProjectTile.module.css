@@ -1,0 +1,137 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--light-one);
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  position: relative;
+  box-shadow: 0 10px 30px -15px var(--dark-one);
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transform: translateY(-100%);
+  transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
+.contentWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  height: 100%;
+}
+
+.content .type {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  transform: translateY(30px) scale(0.5, 0.5);
+  color: #fff;
+  opacity: 0;
+  pointer-events: none;
+  font-size: 1em;
+  margin-top: 40px;
+}
+
+.anchor {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  opacity: 0;
+}
+
+.anchor:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.anchor .title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 1.25em;
+  color: #fff;
+  transform: translateY(-110px);
+}
+
+.card:hover .overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card:hover .anchor {
+  opacity: 1;
+  animation: fadeIn 0.7s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+}
+
+.card:hover .anchor .title {
+  transform: translateY(-30px);
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.card:hover .type {
+  opacity: 1;
+  transform: translateY(30px) scale(1, 1);
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.card:hover .skills {
+  transform: translateY(0);
+  transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1) 0.1s;
+}
+
+@media (max-width: 430px) {
+  .card {
+    width: 100%;
+    height: inherit;
+  }
+  .card .content .skills {
+    display: NONE;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
