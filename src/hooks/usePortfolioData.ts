@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useAppContext } from "@/context/AppContext";
 import { useApi } from "./useApi";
 import { fetchProfile, fetchProjects, fetchSkills } from "@/utils/api";
+import type { Skill } from "@/types/portfolio";
 
 export function usePortfolioData() {
   const { state, dispatch } = useAppContext();
@@ -36,15 +37,34 @@ export function usePortfolioData() {
   useEffect(() => {
     if (skillsResponse?.data?.data) {
       const skillsRaw = skillsResponse.data.data;
-      const skills = Array.isArray(skillsRaw) ? skillsRaw : [];
-      dispatch({
-        type: "SET_SKILLS",
-        payload: {
-          languages: skills.filter((s) => s.category === "language"),
-          frameworks: skills.filter((s) => s.category === "framework"),
-          tools: skills.filter((s) => s.category === "tool"),
-        },
-      });
+      // Type guard for grouped skills object
+      const isGrouped = (
+        obj: any
+      ): obj is { languages: Skill[]; frameworks: Skill[]; tools: Skill[] } =>
+        obj &&
+        typeof obj === "object" &&
+        Array.isArray(obj.languages) &&
+        Array.isArray(obj.frameworks) &&
+        Array.isArray(obj.tools);
+      if (isGrouped(skillsRaw)) {
+        dispatch({
+          type: "SET_SKILLS",
+          payload: {
+            languages: skillsRaw.languages,
+            frameworks: skillsRaw.frameworks,
+            tools: skillsRaw.tools,
+          },
+        });
+      } else if (Array.isArray(skillsRaw)) {
+        dispatch({
+          type: "SET_SKILLS",
+          payload: {
+            languages: skillsRaw.filter((s) => s.category === "language"),
+            frameworks: skillsRaw.filter((s) => s.category === "framework"),
+            tools: skillsRaw.filter((s) => s.category === "tool"),
+          },
+        });
+      }
     }
   }, [skillsResponse, dispatch]);
 
