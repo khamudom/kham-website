@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import {
-  ArrowLeft,
   Code2,
   Blocks,
   Globe2,
@@ -10,7 +9,6 @@ import {
   Braces,
   Cpu,
   Server,
-  ChevronRight,
 } from "lucide-react";
 import type { Project, Technology, Skill, Image } from "@/types/portfolio";
 import ImageGallery from "@/components/ui/ImageGallery";
@@ -20,11 +18,8 @@ import {
   Typography,
   Button,
   Container,
-  Grid,
   Box,
-  Paper,
   Chip,
-  Divider,
   Breadcrumbs,
 } from "@mui/material";
 import projectsData from "@/data/projects.json";

@@ -94,7 +94,7 @@ export default function About() {
             variant="contained"
             color="primary"
             startIcon={<Download size={20} />}
-            href="/khamu_resume.pdf"
+            href="/khamudom_resume.pdf"
             size="small"
             download
           >

@@ -1,19 +1,16 @@
 /** @jsxImportSource react */
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
   ArrowRight,
-  Code2,
-  Layout,
   Github,
   Linkedin,
   Mail,
   MapPin,
   Clock,
-  Wrench,
   ExternalLink,
 } from "lucide-react";
 import { usePortfolioData } from "@/hooks/usePortfolioData";
@@ -39,6 +36,7 @@ import { ThemeSelector } from "@/components/ThemeSelector";
 import RotatingTitle from "@/components/animations/RotatingTitle";
 import { SocialLinks } from "@/components/common/SocialLinks";
 import { Theme } from "@mui/material/styles";
+import { SkillsDisplay } from "@/components/SkillsDisplay";
 
 export default function Page() {
   const textFieldStyles = {
@@ -60,6 +58,7 @@ export default function Page() {
 
   const { projects, profile, skills, loading, error } = usePortfolioData();
   const themeBackgrounds: { hero: string | null } = useThemeBackgrounds();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -318,7 +317,18 @@ export default function Page() {
         >
           <div>
             <div ref={aboutContentRef}>
-              <Typography variant="body1" color="text.primary" paragraph>
+              <Typography
+                variant="body1"
+                color="text.primary"
+                paragraph
+                sx={{
+                  lineHeight: { xs: 1.8, sm: 1.9 },
+                  letterSpacing: { xs: "0.01em", sm: "0.02em" },
+                  fontSize: { xs: "1rem", sm: "1.1rem" },
+                  maxWidth: "65ch",
+                  margin: "0 auto",
+                }}
+              >
                 <strong>Front-end engineer</strong> with a track record of
                 creating <strong>intuitive</strong>, <strong>performant</strong>{" "}
                 user interfaces that drive <strong>content creation</strong>,{" "}
@@ -334,10 +344,20 @@ export default function Page() {
                 <strong>flexible mindset</strong> and a strong sense of{" "}
                 <strong>accountability</strong> to every project.
               </Typography>
-              <Typography variant="body1" color="text.primary" paragraph>
+              <Typography
+                variant="body1"
+                color="text.primary"
+                paragraph
+                sx={{
+                  lineHeight: { xs: 1.8, sm: 1.9 },
+                  letterSpacing: { xs: "0.01em", sm: "0.02em" },
+                  fontSize: { xs: "1rem", sm: "1.1rem" },
+                  maxWidth: "65ch",
+                  margin: "0 auto",
+                }}
+              >
                 Currently, I work as a{" "}
-                <strong>freelance front-end developer</strong>, partnering with{" "}
-                <strong>startups</strong>, <strong>enterprises</strong>, and
+                <strong>freelance front-end developer</strong>, partnering with
                 individual clients to design and build high-quality websites and{" "}
                 <strong>web applications</strong>. I specialize in delivering{" "}
                 <strong>tailored solutions</strong> that balance performance,{" "}
@@ -351,66 +371,7 @@ export default function Page() {
                 commitment to <strong>measurable results</strong>.
               </Typography>
               <div className={styles.skillsContainer}>
-                <div className={styles.skillsCategory}>
-                  <div className={styles.categoryHeader}>
-                    <Code2 className={styles.categoryIcon} size={24} />
-                    <Typography variant="h6">Programming Languages</Typography>
-                  </div>
-                  <div className={styles.skillsList}>
-                    {skills
-                      .filter((skill) => skill.category === "languages")
-                      .map((skill, index, array) => (
-                        <React.Fragment key={skill.id}>
-                          <div className={styles.skillItem}>
-                            <span>{skill.name}</span>
-                          </div>
-                          {index < array.length - 1 && (
-                            <span className={styles.bullet}>•</span>
-                          )}
-                        </React.Fragment>
-                      ))}
-                  </div>
-                </div>
-                <div className={styles.skillsCategory}>
-                  <div className={styles.categoryHeader}>
-                    <Layout className={styles.categoryIcon} size={24} />
-                    <Typography variant="h6">Libraries & Frameworks</Typography>
-                  </div>
-                  <div className={styles.skillsList}>
-                    {skills
-                      .filter((skill) => skill.category === "frameworks")
-                      .map((skill, index, array) => (
-                        <React.Fragment key={skill.id}>
-                          <div className={styles.skillItem}>
-                            <span>{skill.name}</span>
-                          </div>
-                          {index < array.length - 1 && (
-                            <span className={styles.bullet}>•</span>
-                          )}
-                        </React.Fragment>
-                      ))}
-                  </div>
-                </div>
-                <div className={styles.skillsCategory}>
-                  <div className={styles.categoryHeader}>
-                    <Wrench className={styles.categoryIcon} size={24} />
-                    <Typography variant="h6">Tools & Platforms</Typography>
-                  </div>
-                  <div className={styles.skillsList}>
-                    {skills
-                      .filter((skill) => skill.category === "tools")
-                      .map((skill, index, array) => (
-                        <React.Fragment key={skill.id}>
-                          <div className={styles.skillItem}>
-                            <span>{skill.name}</span>
-                          </div>
-                          {index < array.length - 1 && (
-                            <span className={styles.bullet}>•</span>
-                          )}
-                        </React.Fragment>
-                      ))}
-                  </div>
-                </div>
+                <SkillsDisplay skills={skills} />
               </div>
               <div className={styles.aboutButtons}>
                 <Button
@@ -523,19 +484,26 @@ export default function Page() {
         >
           <Container maxWidth={false} disableGutters>
             <Typography variant="h3" gutterBottom align="center">
-              Let's Start a Conversation
+              Let's Build Something That Drives Results
             </Typography>
-            <Typography variant="body1" color="text.secondary" align="center">
-              I'm always open to discussing new projects, creative ideas, or
-              opportunities to be part of your vision.
+            <Typography
+              variant="body1"
+              color="text.secondary"
+              align="center"
+              sx={{ mb: 4 }}
+            >
+              Whether you need to increase conversions, improve user experience,
+              or scale your technical infrastructure, I deliver measurable
+              results on time and on budget.
             </Typography>
             <div>
               <Box
                 sx={{
                   mt: 3,
                   display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
+                  flexDirection: { xs: "column", md: "row" },
+                  gap: 4,
+                  justifyContent: "center",
                 }}
               >
                 <div>
@@ -564,19 +532,98 @@ export default function Page() {
                     <MapPin size={20} />
                     <strong>Location:</strong> Monroe, WA
                   </Typography>
-                  <Typography
-                    variant="body1"
+                </div>
+                <Divider
+                  orientation="vertical"
+                  flexItem
+                  sx={{
+                    display: { xs: "none", md: "block" },
+                    mx: 2,
+                  }}
+                />
+                <Box sx={{ minWidth: { md: "300px" } }}>
+                  <Typography variant="h6" sx={{ mb: 2 }}>
+                    What You Can Expect
+                  </Typography>
+                  <Box
+                    component="ul"
                     sx={{
-                      mb: 4,
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 1,
+                      listStyle: "none",
+                      padding: 0,
+                      margin: 0,
                     }}
                   >
-                    <Clock size={20} />
-                    <strong>Availability:</strong> Available for freelance work
-                  </Typography>
-                </div>
+                    <Box
+                      component="li"
+                      sx={{
+                        display: "flex",
+                        alignItems: "flex-start",
+                        gap: "0.5rem",
+                        marginBottom: "1rem",
+                      }}
+                    >
+                      <span
+                        style={{
+                          color: "var(--color-primary)",
+                          lineHeight: 1.5,
+                          fontSize: "1.3em",
+                          marginTop: "2px",
+                        }}
+                      >
+                        ✓
+                      </span>
+                      <span>Fast turnaround without compromising quality</span>
+                    </Box>
+                    <Box
+                      component="li"
+                      sx={{
+                        display: "flex",
+                        alignItems: "flex-start",
+                        gap: "0.5rem",
+                        marginBottom: "1rem",
+                      }}
+                    >
+                      <span
+                        style={{
+                          color: "var(--color-primary)",
+                          lineHeight: 1.5,
+                          fontSize: "1.3em",
+                          marginTop: "2px",
+                        }}
+                      >
+                        ✓
+                      </span>
+                      <span>
+                        Clear communication and seamless collaboration with
+                        designers, engineers, and stakeholders
+                      </span>
+                    </Box>
+                    <Box
+                      component="li"
+                      sx={{
+                        display: "flex",
+                        alignItems: "flex-start",
+                        gap: "0.5rem",
+                        marginBottom: "1rem",
+                      }}
+                    >
+                      <span
+                        style={{
+                          color: "var(--color-primary)",
+                          lineHeight: 1.5,
+                          fontSize: "1.3em",
+                          marginTop: "2px",
+                        }}
+                      >
+                        ✓
+                      </span>
+                      <span>
+                        Mobile-first designs that work flawlessly across all
+                        devices
+                      </span>
+                    </Box>
+                  </Box>
+                </Box>
               </Box>
               <Box
                 sx={{
@@ -647,7 +694,9 @@ export default function Page() {
                     sx={{ mt: 2 }}
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? "Sending..." : "Send Message"}
+                    {isSubmitting
+                      ? "Sending..."
+                      : "Let's Talk About Your Project"}
                   </Button>
                 </Box>
               </Box>

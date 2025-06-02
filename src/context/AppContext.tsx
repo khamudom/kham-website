@@ -6,18 +6,33 @@ import type { Project, Profile, Skill } from "../types/portfolio";
 interface AppState {
   projects: Project[];
   profile: Profile | null;
-  skills: Skill[];
+  skills: {
+    languages: Skill[];
+    frameworks: Skill[];
+    tools: Skill[];
+  };
 }
 
 type AppAction =
   | { type: "SET_PROJECTS"; payload: Project[] }
   | { type: "SET_PROFILE"; payload: Profile }
-  | { type: "SET_SKILLS"; payload: Skill[] };
+  | {
+      type: "SET_SKILLS";
+      payload: {
+        languages: Skill[];
+        frameworks: Skill[];
+        tools: Skill[];
+      };
+    };
 
 const initialState: AppState = {
   projects: [],
   profile: null,
-  skills: [],
+  skills: {
+    languages: [],
+    frameworks: [],
+    tools: [],
+  },
 };
 
 const AppContext = createContext<{

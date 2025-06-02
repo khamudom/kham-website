@@ -1,191 +1,125 @@
 {
-  "data": [
-    {
-      "id": "skill-1",
-      "name": "JavaScript",
-      "category": "languages",
-      "proficiency": 5,
-      "yearsOfExperience": 5
-    },
-    {
-      "id": "skill-2",
-      "name": "TypeScript",
-      "category": "languages",
-      "proficiency": 4,
-      "yearsOfExperience": 3
-    },
-    {
-      "id": "skill-3",
-      "name": "HTML",
-      "category": "languages",
-      "proficiency": 5,
-      "yearsOfExperience": 5
-    },
-    {
-      "id": "skill-4",
-      "name": "CSS",
-      "category": "languages",
-      "proficiency": 5,
-      "yearsOfExperience": 5
-    },
-    {
-      "id": "skill-5",
-      "name": "SASS",
-      "category": "languages",
-      "proficiency": 5,
-      "yearsOfExperience": 5
-    },
-    {
-      "id": "skill-6",
-      "name": "XAML",
-      "category": "languages",
-      "proficiency": 5,
-      "yearsOfExperience": 5
-    },
-
-    {
-      "id": "skill-7",
-      "name": "Astro",
-      "category": "frameworks",
-      "proficiency": 5,
-      "yearsOfExperience": 4
-    },
-    {
-      "id": "skill-8",
-      "name": "Lit",
-      "category": "frameworks",
-      "proficiency": 5,
-      "yearsOfExperience": 4
-    },
-    {
-      "id": "skill-9",
-      "name": "React",
-      "category": "frameworks",
-      "proficiency": 5,
-      "yearsOfExperience": 4
-    },
-    {
-      "id": "skill-10",
-      "name": "Next.js",
-      "category": "frameworks",
-      "proficiency": 4,
-      "yearsOfExperience": 3
-    },
-    {
-      "id": "skill-11",
-      "name": "GSAP",
-      "category": "frameworks",
-      "proficiency": 4,
-      "yearsOfExperience": 3
-    },
-    {
-      "id": "skill-12",
-      "name": "FAST",
-      "category": "frameworks",
-      "proficiency": 5,
-      "yearsOfExperience": 4
-    },
-    {
-      "id": "skill-13",
-      "name": "Fluent UI",
-      "category": "frameworks",
-      "proficiency": 5,
-      "yearsOfExperience": 4
-    },
-    {
-      "id": "skill-14",
-      "name": "Material-UI",
-      "category": "frameworks",
-      "proficiency": 4,
-      "yearsOfExperience": 2
-    },
-    {
-      "id": "skill-15",
-      "name": "Vite",
-      "category": "tools",
-      "proficiency": 4,
-      "yearsOfExperience": 2
-    },
-    {
-      "id": "skill-16",
-      "name": "Node.js",
-      "category": "tools",
-      "proficiency": 4,
-      "yearsOfExperience": 3
-    },
-    {
-      "id": "skill-17",
-      "name": "Storybook",
-      "category": "tools",
-      "proficiency": 5,
-      "yearsOfExperience": 4
-    },
-    {
-      "id": "skill-18",
-      "name": "GitHub",
-      "category": "tools",
-      "proficiency": 5,
-      "yearsOfExperience": 4
-    },
-    {
-      "id": "skill-19",
-      "name": "Azure DevOps",
-      "category": "tools",
-      "proficiency": 3,
-      "yearsOfExperience": 1
-    },
-    {
-      "id": "skill-20",
-      "name": "Figma",
-      "category": "tools",
-      "proficiency": 5,
-      "yearsOfExperience": 4
-    },
-    {
-      "id": "skill-21",
-      "name": "Webflow",
-      "category": "tools",
-      "proficiency": 3,
-      "yearsOfExperience": 1
-    },
-    {
-      "id": "skill-22",
-      "name": "WordPress",
-      "category": "tools",
-      "proficiency": 4,
-      "yearsOfExperience": 2
-    },
-    {
-      "id": "skill-23",
-      "name": "Sanity",
-      "category": "tools",
-      "proficiency": 3,
-      "yearsOfExperience": 1
-    },
-    {
-      "id": "skill-24",
-      "name": "Vercel",
-      "category": "tools",
-      "proficiency": 3,
-      "yearsOfExperience": 1
-    },
-    {
-      "id": "skill-25",
-      "name": "Netlify",
-      "category": "tools",
-      "proficiency": 3,
-      "yearsOfExperience": 1
-    },
-    {
-      "id": "skill-26",
-      "name": "Cloudflare",
-      "category": "tools",
-      "proficiency": 3,
-      "yearsOfExperience": 1
-    }
-  ],
+  "data": {
+    "languages": [
+      {
+        "id": "lang-1",
+        "name": "JavaScript"
+      },
+      {
+        "id": "lang-2",
+        "name": "TypeScript"
+      },
+      {
+        "id": "lang-3",
+        "name": "HTML"
+      },
+      {
+        "id": "lang-4",
+        "name": "CSS"
+      },
+      {
+        "id": "lang-6",
+        "name": "XAML"
+      }
+    ],
+    "frameworks": [
+      {
+        "id": "fw-1",
+        "name": "Astro"
+      },
+      {
+        "id": "fw-2",
+        "name": "Lit"
+      },
+      {
+        "id": "fw-3",
+        "name": "React"
+      },
+      {
+        "id": "fw-4",
+        "name": "Next.js"
+      },
+      {
+        "id": "fw-5",
+        "name": "GSAP"
+      },
+      {
+        "id": "fw-6",
+        "name": "FAST"
+      },
+      {
+        "id": "fw-7",
+        "name": "Fluent UI"
+      },
+      {
+        "id": "fw-8",
+        "name": "Material-UI"
+      },
+      {
+        "id": "fw-9",
+        "name": "Emotion"
+      },
+      {
+        "id": "fw-10",
+        "name": "styled-components"
+      }
+    ],
+    "tools": [
+      {
+        "id": "tool-1",
+        "name": "Vite"
+      },
+      {
+        "id": "tool-2",
+        "name": "Node.js"
+      },
+      {
+        "id": "tool-3",
+        "name": "Storybook"
+      },
+      {
+        "id": "tool-5",
+        "name": "Azure DevOps"
+      },
+      {
+        "id": "tool-6",
+        "name": "Figma"
+      },
+      {
+        "id": "tool-7",
+        "name": "Webflow"
+      },
+      {
+        "id": "tool-8",
+        "name": "WordPress"
+      },
+      {
+        "id": "tool-9",
+        "name": "Sanity"
+      },
+      {
+        "id": "tool-10",
+        "name": "Vercel"
+      },
+      {
+        "id": "tool-11",
+        "name": "Netlify"
+      },
+      {
+        "id": "tool-12",
+        "name": "Cloudflare"
+      },
+      {
+        "id": "tool-13",
+        "name": "Git"
+      },
+      {
+        "id": "tool-14",
+        "name": "SASS"
+      }
+    ]
+  },
   "metadata": {
-    "total": 26,
     "categories": [
       {
         "name": "languages",
