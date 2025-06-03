@@ -327,6 +327,7 @@ export default function Page() {
                   fontSize: { xs: "1rem", sm: "1.1rem" },
                   maxWidth: "65ch",
                   margin: "0 auto",
+                  marginBottom: "1rem",
                 }}
               >
                 <strong>Front-end engineer</strong> with a track record of
