@@ -268,7 +268,10 @@ export default function About() {
                         key={idx}
                         label={tech}
                         variant="outlined"
-                        color="primary"
+                        sx={{
+                          color: "var(--color-text-primary)",
+                          borderColor: "var(--color-text-primary)",
+                        }}
                       />
                     ))}
                   </Box>

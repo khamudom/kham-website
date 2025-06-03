@@ -13,6 +13,7 @@ import {
 import type { Project, Technology, Skill, Image } from "@/types/portfolio";
 import ImageGallery from "@/components/ImageGallery/ImageGallery";
 import ProjectImage from "@/components/ProjectImage/ProjectImage";
+import ProjectIframe from "@/components/ProjectIframe/ProjectIframe";
 import styles from "@/styles/pages/ProjectDetail.module.css";
 import {
   Typography,
@@ -30,6 +31,13 @@ type ProjectWithRelations = Project & {
   gallery?: Image[];
 };
 
+export async function generateStaticParams() {
+  const projects = projectsData.data;
+  return projects.map((project) => ({
+    slug: project.slug,
+  }));
+}
+
 export default function ProjectDetail({
   params,
 }: {
@@ -38,12 +46,14 @@ export default function ProjectDetail({
   const { slug } = params;
 
   if (!slug) {
+    console.error("No slug provided");
     return <div>Project not found</div>;
   }
 
-  const project = projectsData.data.find((p) => p.slug === slug) as Project;
+  const project = projectsData.data.find((p) => p.slug === slug);
 
   if (!project) {
+    console.error(`Project not found for slug: ${slug}`);
     return <div>Project not found</div>;
   }
 
@@ -202,13 +212,10 @@ export default function ProjectDetail({
                 >
                   {projectWithRelations.displayType === "iframe" &&
                   projectWithRelations.iframeUrl ? (
-                    <div className={styles.iframeWrapper}>
-                      <iframe
-                        src={projectWithRelations.iframeUrl}
-                        title={projectWithRelations.title}
-                        className={styles.projectIframe}
-                      />
-                    </div>
+                    <ProjectIframe
+                      src={projectWithRelations.iframeUrl}
+                      title={projectWithRelations.title}
+                    />
                   ) : (
                     <Box className={styles.imageWrapper}>
                       <ProjectImage

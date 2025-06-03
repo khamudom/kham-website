@@ -19,8 +19,8 @@ export const ThemeSelector: React.FC = () => {
           },
         }}
       >
-        <MenuItem value="default">Default Light</MenuItem>
-        <MenuItem value="defaultDark">Default Dark</MenuItem>
+        <MenuItem value="default">Light</MenuItem>
+        <MenuItem value="defaultDark">Dark</MenuItem>
         <MenuItem value="ninjaTurtles">Ninja Turtles</MenuItem>
         <MenuItem value="matrix">Matrix</MenuItem>
       </Select>

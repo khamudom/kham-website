@@ -28,13 +28,17 @@ const ProjectTile = ({
       className={styles.card}
       style={{ width: `${width}px`, height: `${height}px` }}
     >
+      <a
+        className={styles.anchor}
+        href={href}
+        target={target}
+        aria-label={title}
+      ></a>
       <img className={styles.image} src={imgSrc} alt={imgAlt} />
       <div className={styles.overlay}></div>
       <div className={styles.contentWrapper}>
         <div className={styles.content}>
-          <a className={styles.anchor} href={href} target={target}>
-            <span className={styles.title}>{title}</span>
-          </a>
+          <span className={styles.title}>{title}</span>
           <p className={styles.type}>{projectType}</p>
         </div>
       </div>

@@ -203,7 +203,19 @@ export default function Page() {
   };
 
   if (loading) {
-    return <LoadingSpinner size="large" />;
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+          width: "100%",
+        }}
+      >
+        <LoadingSpinner size="large" />
+      </div>
+    );
   }
 
   if (error) {
