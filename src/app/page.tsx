@@ -338,7 +338,6 @@ export default function Page() {
                   letterSpacing: { xs: "0.01em", sm: "0.02em" },
                   fontSize: { xs: "1rem", sm: "1.1rem" },
                   maxWidth: "65ch",
-                  margin: "0 auto",
                   marginBottom: "1rem",
                 }}
               >
@@ -366,7 +365,6 @@ export default function Page() {
                   letterSpacing: { xs: "0.01em", sm: "0.02em" },
                   fontSize: { xs: "1rem", sm: "1.1rem" },
                   maxWidth: "65ch",
-                  margin: "0 auto",
                 }}
               >
                 Currently, I work as a{" "}
@@ -454,7 +452,7 @@ export default function Page() {
                         {project.title}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
-                        {project.description}
+                        {project.summary}
                       </Typography>
                     </Box>
                   </CardContent>
