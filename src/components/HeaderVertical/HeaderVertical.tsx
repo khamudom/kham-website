@@ -10,8 +10,8 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import RotatingTitle from "../animations/RotatingTitle";
-import styles from "./styles/HeaderVertical.module.css";
+import RotatingTitle from "@/components/RotatingTitle";
+import styles from "./HeaderVertical.module.css";
 
 interface HeaderVerticalProps {
   activeSection: string;

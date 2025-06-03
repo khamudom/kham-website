@@ -11,8 +11,8 @@ import {
   Server,
 } from "lucide-react";
 import type { Project, Technology, Skill, Image } from "@/types/portfolio";
-import ImageGallery from "@/components/ui/ImageGallery";
-import ProjectImage from "@/components/ui/ProjectImage";
+import ImageGallery from "@/components/ImageGallery/ImageGallery";
+import ProjectImage from "@/components/ProjectImage/ProjectImage";
 import styles from "@/styles/pages/ProjectDetail.module.css";
 import {
   Typography,

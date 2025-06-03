@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./common.module.css";
+import styles from "./LoadingSpinner.module.css";
 
 interface LoadingSpinnerProps {
   size?: "small" | "medium" | "large";

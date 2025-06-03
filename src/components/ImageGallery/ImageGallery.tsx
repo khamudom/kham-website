@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import type { Image as GalleryImage } from "@/types/portfolio";
-import styles from "./styles/ImageGallery.module.css";
+import styles from "./ImageGallery.module.css";
 
 interface ImageGalleryProps {
   images: GalleryImage[];

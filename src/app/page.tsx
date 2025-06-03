@@ -14,8 +14,8 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { usePortfolioData } from "@/hooks/usePortfolioData";
-import { LoadingSpinner } from "@/components/common/LoadingSpinner";
-import { ErrorMessage } from "@/components/common/ErrorMessage";
+import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner";
+import { ErrorMessage } from "@/components/ErrorMessage/ErrorMessage";
 import styles from "@/styles/pages/Home.module.css";
 import {
   Typography,
@@ -31,10 +31,10 @@ import {
 } from "@mui/material";
 import { Button } from "@/design-system/components/Button";
 import { useThemeBackgrounds } from "@/hooks/useThemeBackgrounds";
-import HeaderVertical from "@/components/layout/HeaderVertical";
+import HeaderVertical from "@/components/HeaderVertical/HeaderVertical";
 import { ThemeSelector } from "@/components/ThemeSelector";
-import RotatingTitle from "@/components/animations/RotatingTitle";
-import { SocialLinks } from "@/components/common/SocialLinks";
+import RotatingTitle from "@/components/RotatingTitle";
+import { SocialLinks } from "@/components/SocialLinks/SocialLinks";
 import { Theme } from "@mui/material/styles";
 import { SkillsDisplay } from "@/components/SkillsDisplay";
 

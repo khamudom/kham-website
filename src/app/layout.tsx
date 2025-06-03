@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { ThemeProvider } from "@/design-system/ThemeProvider";
 import { AppProvider } from "@/context/AppContext";
-import { CursorEffect } from "@/components/CursorEffect";
+import { CursorEffect } from "@/components/CursorEffect/CursorEffect";
 import "@/styles/global.css";
 
 export const metadata: Metadata = {
@@ -22,9 +22,6 @@ export const metadata: Metadata = {
     description:
       "Portfolio of Kham Udom, a Frontend UX Engineer specializing in component libraries, design systems and enterprise applications",
     type: "website",
-    images: [
-      "https://images.unsplash.com/photo-1517134191118-9d595e4c8c2b?auto=format&fit=crop&q=80",
-    ],
   },
 };
 

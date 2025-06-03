@@ -322,11 +322,6 @@
   color: var(--color-primary-hover);
 }
 
-.socialIcon {
-  width: 1.35rem;
-  height: 1.35rem;
-}
-
 .mobileThemeSelector {
   display: none;
 }

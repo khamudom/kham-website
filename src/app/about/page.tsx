@@ -1,10 +1,10 @@
 "use client";
 
-import React, { JSX } from "react";
+import React from "react";
 import { useApi } from "@/hooks/useApi";
 import { fetchProfile, fetchSkills, fetchExperience } from "@/utils/api";
-import { LoadingSpinner } from "@/components/common/LoadingSpinner";
-import { ErrorMessage } from "@/components/common/ErrorMessage";
+import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner";
+import { ErrorMessage } from "@/components/ErrorMessage/ErrorMessage";
 import {
   Typography,
   Container,
@@ -76,7 +76,6 @@ export default function About() {
 
   return (
     <>
-      {/* Sticky Header */}
       <header className={styles.stickyHeader}>
         <div
           style={{
@@ -121,6 +120,12 @@ export default function About() {
                   mb: 2,
                   borderRadius: 2,
                   boxShadow: expanded === item.id ? 4 : 1,
+                  background: (theme) =>
+                    theme.palette.mode === "dark"
+                      ? "rgba(255,255,255,0.04)"
+                      : "#fff",
+                  color: (theme) => theme.palette.text.primary,
+                  transition: "background 0.3s",
                 }}
               >
                 <AccordionSummary
@@ -219,7 +224,15 @@ export default function About() {
                   </Box>
                 </AccordionSummary>
                 <AccordionDetails
-                  sx={{ background: "background.paper", borderRadius: 2 }}
+                  sx={{
+                    background: (theme) =>
+                      theme.palette.mode === "dark"
+                        ? "rgba(255,255,255,0.08)"
+                        : theme.palette.background.paper,
+                    borderRadius: 2,
+                    transition: "background 0.3s",
+                    padding: "0px 16px 16px 16px",
+                  }}
                 >
                   <Divider sx={{ mb: 2 }} />
                   <Typography
@@ -236,7 +249,7 @@ export default function About() {
                           marginBottom: 8,
                           textAlign: "left",
                           fontSize: 16,
-                          color: "var(--color-text-secondary)",
+                          color: "var(--color-text-primary)",
                         }}
                       >
                         {desc}

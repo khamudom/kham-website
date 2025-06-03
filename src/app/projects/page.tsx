@@ -2,27 +2,16 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { useApi } from "@/hooks/useApi";
 import { fetchProjects } from "@/utils/api";
 import type { Project } from "@/types/portfolio";
-import { LoadingSpinner } from "@/components/common/LoadingSpinner";
-import { ErrorMessage } from "@/components/common/ErrorMessage";
-import { PageHeader } from "@/components/common/PageHeader";
-import styles from "@/styles/pages/Projects.module.css";
-import {
-  Typography,
-  Container,
-  Card,
-  CardContent,
-  Box,
-  CardActionArea,
-  Breadcrumbs,
-} from "@mui/material";
-import ProjectTile from "@/components/ui/ProjectTile/ProjectTile";
+import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner";
+import { ErrorMessage } from "@/components/ErrorMessage/ErrorMessage";
+import { Typography, Container, Box, Breadcrumbs } from "@mui/material";
+import ProjectTile from "@/components/ProjectTile/ProjectTile";
 
 // Register ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
@@ -107,11 +96,15 @@ export default function Portfolio() {
             Projects
           </Typography>
         </Breadcrumbs>
-
-        <PageHeader
-          title="Projects"
-          description="A collection of my work, from enterprise applications to personal projects."
-        />
+        <div>
+          <Typography variant="h1" sx={{ fontSize: "3rem", lineHeight: 1 }}>
+            Projects
+          </Typography>
+          <Typography variant="body1" mb={8}>
+            A collection of my work, from enterprise applications to personal
+            projects.
+          </Typography>
+        </div>
 
         <div ref={projectCardsRef}>
           <ul style={{ display: "flex", gap: "1rem" }}>

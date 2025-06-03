@@ -2,7 +2,9 @@
 
 A modern, responsive portfolio website showcasing the work and skills of Kham Udom, a Senior Front-End Engineer specializing in enterprise applications and design systems.
 
-![Portfolio Preview](https://images.unsplash.com/photo-1517134191118-9d595e4c8c2b?auto=format&fit=crop&q=80)
+🌐 [Live Website](https://kham.website/)
+
+![Portfolio Preview](public/images/kham_website.webp)
 
 ## 🚀 Features
 

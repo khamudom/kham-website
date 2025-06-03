@@ -69,8 +69,8 @@ export const defaultThemeTokens = {
       dark: colors.secondary.dark,
     },
     background: {
-      default: colors.neutral.darkest,
-      paper: colors.neutral.darker,
+      default: colors.neutral.darker,
+      paper: colors.neutral.dark,
     },
     text: {
       primary: colors.neutral.lighter,
@@ -97,11 +97,11 @@ export const ninjaTurtlesTokens = {
     dark: "#CC5500",
   },
   background: {
-    default: "#E8F5E9", // Light green background
+    default: "#E8F5E9",
     paper: "#C8E6C9",
   },
   text: {
-    primary: "#1B5E20", // Dark green text
+    primary: "#1B5E20",
     secondary: "#FF0000", // Raphael's red as accent
   },
   backgrounds: themeBackgrounds.ninjaTurtles,

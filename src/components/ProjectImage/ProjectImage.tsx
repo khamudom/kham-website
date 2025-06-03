@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import styles from "./styles/ProjectImage.module.css";
+import styles from "./ProjectImage.module.css";
 
 interface ProjectImageProps {
   imagePath: string;
