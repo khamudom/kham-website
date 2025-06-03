@@ -4,7 +4,7 @@
       "id": "project-1",
       "slug": "camden-computers",
       "title": "Camden Computers LLC",
-      "summary": "A modern, responsive business website built with Astro.js, featuring smooth animations, dynamic content management, and a clean, professional design for an IT services company.",
+      "summary": "Camden Computers LLC is a trusted IT solutions provider established in 1992, delivering comprehensive enterprise IT services, security solutions, and web development.",
       "description": [""],
       "coverImage": "/images/projects/cc_website.webp",
       "displayType": "iframe",

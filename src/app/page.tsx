@@ -432,11 +432,11 @@ export default function Page() {
                     },
                   }}
                 >
-                  <CardContent sx={{ display: "flex", gap: 2 }}>
+                  <CardContent sx={{ display: "flex", gap: 2, padding: "12px", "&:last-child": { paddingBottom: "12px" } }}>
                     <Box className={styles.cardImage}>
                       <Image
                         width={200}
-                        height={80}
+                        height={120}
                         src={project.coverImage}
                         alt={project.title}
                         className={styles.image}
@@ -460,7 +460,7 @@ export default function Page() {
               </Link>
             ))}
           </Stack>
-          <Box sx={{ mt: 4 }}>
+          <Box sx={{ mt: 2 }}>
             <Button
               component={Link}
               href="/projects"
