@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import styles from "./ProjectTile.module.css";
+import { Chip } from "@mui/material";
 
 interface ProjectTileProps {
   width?: number;
@@ -39,7 +40,18 @@ const ProjectTile = ({
       <div className={styles.contentWrapper}>
         <div className={styles.content}>
           <span className={styles.title}>{title}</span>
-          <p className={styles.type}>{projectType}</p>
+          <div className={styles.type}>
+            <Chip
+              label={projectType}
+              variant="outlined"
+              sx={{
+                borderColor: "var(--color-neutral-white)",
+                "& .MuiChip-label": {
+                  color: "var(--color-neutral-white)",
+                },
+              }}
+            />
+          </div>
         </div>
       </div>
     </div>

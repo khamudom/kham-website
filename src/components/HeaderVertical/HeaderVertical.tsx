@@ -6,6 +6,7 @@ import { usePortfolioData } from "@/hooks/usePortfolioData";
 import {
   Box,
   List,
+  ListItem,
   ListItemButton,
   Typography,
   useMediaQuery,
@@ -57,74 +58,76 @@ const NavItem = memo(
     activeSection: string;
     theme: any;
   }) => (
-    <ListItemButton
-      onClick={(e) => {
-        e.preventDefault();
-        const element = document.getElementById(section.id);
-        if (element) {
-          element.scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-          });
-        }
-      }}
-      className={`${styles.navItem} ${
-        activeSection === section.id ? styles.active : ""
-      }`}
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        gap: 1.5,
-        borderRadius: "0 24px 24px 0",
-        transition: "all 0.3s ease",
-        marginBottom: 1,
-        paddingInlineStart: "0",
-        "&:hover": {
-          backgroundColor: "transparent",
-        },
-      }}
-    >
-      <Box
-        className={`${styles.indicator} ${styles.leftIndicator}`}
-        sx={{
-          width: activeSection === section.id ? "30px" : "8px",
-          height: "1px",
-          backgroundColor:
-            activeSection === section.id
-              ? theme.palette.primary.main
-              : theme.palette.text.secondary,
-          transition: "all 0.3s ease",
+    <ListItem>
+      <ListItemButton
+        onClick={(e) => {
+          e.preventDefault();
+          const element = document.getElementById(section.id);
+          if (element) {
+            element.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
         }}
-      />
-      <Typography
-        variant="body1"
+        className={`${styles.navItem} ${
+          activeSection === section.id ? styles.active : ""
+        }`}
         sx={{
-          color:
-            activeSection === section.id
-              ? theme.palette.primary.main
-              : theme.palette.text.secondary,
-          fontWeight: activeSection === section.id ? 600 : 400,
-          fontSize: "1rem",
-          letterSpacing: "0.5px",
+          display: "flex",
+          alignItems: "center",
+          gap: 1.5,
+          borderRadius: "0",
           transition: "all 0.3s ease",
+          marginBottom: 1,
+          paddingInlineStart: "0",
+          "&:hover": {
+            backgroundColor: "transparent",
+          },
         }}
       >
-        {section.label}
-      </Typography>
-      <Box
-        className={styles.indicator}
-        sx={{
-          width: activeSection === section.id ? "200px" : "0",
-          height: "1px",
-          backgroundColor:
-            activeSection === section.id
-              ? theme.palette.primary.main
-              : theme.palette.text.secondary,
-          transition: "all 0.3s ease",
-          transitionDelay: activeSection === section.id ? "0.15s" : "0s",
-        }}
-      />
-    </ListItemButton>
+        <Box
+          className={`${styles.indicator} ${styles.leftIndicator}`}
+          sx={{
+            width: activeSection === section.id ? "30px" : "8px",
+            height: "1px",
+            backgroundColor:
+              activeSection === section.id
+                ? theme.palette.primary.main
+                : theme.palette.text.secondary,
+            transition: "all 0.3s ease",
+          }}
+        />
+        <Typography
+          variant="body1"
+          sx={{
+            color:
+              activeSection === section.id
+                ? theme.palette.primary.main
+                : theme.palette.text.secondary,
+            fontWeight: activeSection === section.id ? 600 : 400,
+            fontSize: "1rem",
+            letterSpacing: "0.5px",
+            transition: "all 0.3s ease",
+          }}
+        >
+          {section.label}
+        </Typography>
+        <Box
+          className={styles.indicator}
+          sx={{
+            width: activeSection === section.id ? "200px" : "0",
+            height: "1px",
+            backgroundColor:
+              activeSection === section.id
+                ? theme.palette.primary.main
+                : theme.palette.text.secondary,
+            transition: "all 0.3s ease",
+            transitionDelay: activeSection === section.id ? "0.15s" : "0s",
+          }}
+        />
+      </ListItemButton>
+    </ListItem>
   )
 );
 

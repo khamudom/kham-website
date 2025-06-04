@@ -160,112 +160,6 @@
   margin-top: 1rem;
 }
 
-.button {
-  display: inline-flex;
-  align-items: center;
-  padding: 12px 22px;
-  background-color: var(--color-primary);
-  color: #fff;
-  border-radius: 0.25rem;
-  font-size: 17px;
-  line-height: 1.17648;
-  font-weight: 400;
-  letter-spacing: -0.022em;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.buttonOutline {
-  background-color: transparent;
-  border: 1px solid var(--color-primary);
-  color: var(--color-primary);
-}
-
-.buttonOutline:hover {
-  background-color: var(--color-primary);
-  color: #fff;
-}
-
-.buttonIcon {
-  margin-left: 0.5rem;
-  transition: transform 0.3s ease;
-}
-
-.button:hover .buttonIcon {
-  transform: translateX(4px);
-}
-
-.sectionTitle {
-  font-size: 1.875rem;
-  font-weight: bold;
-  margin-bottom: 3rem;
-  text-align: center;
-  color: var(--color-text);
-}
-
-.projectCard {
-  display: flex;
-  overflow: hidden;
-  height: 100%;
-}
-
-.imageWrapper {
-  position: relative;
-  overflow: hidden;
-}
-
-.overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.imageWrapper:hover .overlay {
-  opacity: 1;
-}
-
-.projectContent {
-  padding: 1.5rem;
-}
-
-.projectTitle {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  color: var(--color-text);
-}
-
-.projectDescription {
-  color: var(--color-text-secondary);
-  margin-bottom: 1rem;
-  line-height: 1.5;
-}
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.tag {
-  padding: 0.25rem 0.75rem;
-  font-size: 0.875rem;
-  background-color: rgba(0, 102, 204, 0.1);
-  border-radius: 0.25rem;
-  color: var(--color-primary);
-}
-
-.viewAllWrapper {
-  text-align: center;
-  margin-top: 3rem;
-}
-
 .mainContainer {
   display: flex;
   justify-content: center;
@@ -344,11 +238,13 @@
     flex-direction: column;
     column-gap: 0;
   }
+
   .mainNavContainer,
   .mainStickyNav,
   .stickyFooter {
     display: none !important;
   }
+
   .mobileSectionHeader {
     position: sticky;
     top: 0;
@@ -362,9 +258,11 @@
     border-bottom: 1px solid var(--color-border);
     color: var(--color-text);
   }
+
   .mobileHideBg {
     display: none !important;
   }
+
   .mobileThemeSelector {
     display: block;
     margin-top: 2rem;

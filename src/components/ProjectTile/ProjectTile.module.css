@@ -8,6 +8,7 @@
   position: relative;
   box-shadow: 0 10px 30px -15px var(--dark-one);
   overflow: hidden;
+  border: 1px solid var(--color-border);
 }
 
 .overlay {
@@ -58,7 +59,7 @@
   opacity: 0;
   pointer-events: none;
   font-size: 1em;
-  margin: 0;
+  margin: 1rem 0 0;
 }
 
 .anchor {

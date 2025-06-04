@@ -432,8 +432,25 @@ export default function Page() {
                     },
                   }}
                 >
-                  <CardContent sx={{ display: "flex", gap: 2, padding: "12px", "&:last-child": { paddingBottom: "12px" } }}>
-                    <Box className={styles.cardImage}>
+                  <CardContent
+                    sx={{
+                      display: "flex",
+                      flexDirection: { xs: "column", sm: "row" },
+                      gap: 2,
+                      padding: "12px",
+                      "&:last-child": { paddingBottom: "12px" },
+                    }}
+                  >
+                    <Box
+                      className={styles.cardImage}
+                      sx={{
+                        width: { xs: "100%", sm: "auto" },
+                        "& img": {
+                          height: { xs: "auto", sm: "120px" },
+                          objectFit: "cover",
+                        },
+                      }}
+                    >
                       <Image
                         width={200}
                         height={120}
@@ -731,10 +748,10 @@ export default function Page() {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                color: "var(--color-primary)",
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.25rem",
+                textDecoration: "underline",
               }}
             >
               GitHub

@@ -28,15 +28,15 @@ export type ThemeColors = {
 export const colors = {
   // Primary colors
   primary: {
-    main: "#06c",
-    light: "#007AFF",
-    dark: "#0050a0",
+    main: "#0050a0",
+    light: "#06c",
+    dark: "#003366",
   },
   // Secondary colors
   secondary: {
     main: "#86868b",
-    light: "#a1a1a6",
-    dark: "#6e6e73",
+    light: "#9e9ea3",
+    dark: "#424245",
   },
   // Neutral colors
   neutral: {
@@ -68,8 +68,8 @@ export const colors = {
   },
   info: {
     main: "#5ac8fa",
-    light: "#64d2ff",
-    dark: "#0071e3",
+    light: "#3399FF",
+    dark: "#0057AD",
   },
 };
 

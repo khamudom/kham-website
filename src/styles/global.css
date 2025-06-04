@@ -8,7 +8,7 @@
   --color-background-secondary: var(--color-background-secondary);
   --color-border: var(--color-border);
   --color-border-hover: var(--color-border-hover);
-  --color-link: var(--color-primary-main);
+  --color-link: var(--color-primary-light);
 
   /* Spacing */
   --spacing-xs: var(--spacing-2);

@@ -123,7 +123,7 @@ export default function About() {
                   background: (theme) =>
                     theme.palette.mode === "dark"
                       ? "rgba(255,255,255,0.04)"
-                      : "#fff",
+                      : "var(--color-neutral-light)",
                   color: (theme) => theme.palette.text.primary,
                   transition: "background 0.3s",
                 }}

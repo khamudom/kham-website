@@ -49,7 +49,7 @@ export const defaultThemeTokens = {
     },
     text: {
       primary: colors.neutral.darker,
-      secondary: colors.secondary.main,
+      secondary: colors.secondary.dark,
     },
     backgrounds: themeBackgrounds.default,
     colors: {
@@ -74,7 +74,7 @@ export const defaultThemeTokens = {
     },
     text: {
       primary: colors.neutral.lighter,
-      secondary: colors.secondary.main,
+      secondary: colors.secondary.light,
     },
     backgrounds: themeBackgrounds.defaultDark,
     colors: {
@@ -87,12 +87,12 @@ export const defaultThemeTokens = {
 // Ninja Turtles theme tokens
 export const ninjaTurtlesTokens = {
   primary: {
-    main: "#4CAF50", // Classic TMNT green
-    light: "#81C784",
+    main: "#4CAF50",
+    light: "#285828",
     dark: "#388E3C",
   },
   secondary: {
-    main: "#FF6B00", // Michelangelo's orange
+    main: "#FF6B00",
     light: "#FFA64D",
     dark: "#CC5500",
   },
@@ -102,12 +102,12 @@ export const ninjaTurtlesTokens = {
   },
   text: {
     primary: "#1B5E20",
-    secondary: "#FF0000", // Raphael's red as accent
+    secondary: "#990000",
   },
   backgrounds: themeBackgrounds.ninjaTurtles,
   colors: {
-    border: "#4B0082", // Donatello's purple as border
-    borderHover: "#0000FF", // Leonardo's blue as hover
+    border: "#4B0082",
+    borderHover: "#0000FF",
   },
 };
 
