@@ -10,7 +10,13 @@ import {
   Cpu,
   Server,
 } from "lucide-react";
-import type { Project, Technology, Skill, Image } from "@/types/portfolio";
+import type {
+  Project,
+  Technology,
+  Skill,
+  Image,
+  ProjectSection,
+} from "@/types/portfolio";
 import ImageGallery from "@/components/ImageGallery/ImageGallery";
 import ProjectImage from "@/components/ProjectImage/ProjectImage";
 import ProjectIframe from "@/components/ProjectIframe/ProjectIframe";
@@ -24,11 +30,16 @@ import {
   Breadcrumbs,
 } from "@mui/material";
 import projectsData from "@/data/projects.json";
+import dynamic from "next/dynamic";
+const YouTubeEmbed = dynamic(() => import("@/components/YouTubeEmbed"), {
+  ssr: false,
+});
 
 type ProjectWithRelations = Project & {
   technologyDetails: Technology[];
   skillDetails: Skill[];
   gallery?: Image[];
+  sections?: ProjectSection[];
 };
 
 export async function generateStaticParams() {
@@ -57,15 +68,12 @@ export default function ProjectDetail({
     return <div>Project not found</div>;
   }
 
-  // In a real application, you would fetch these from your database
-  // For now, we'll use mock data
+  // Using mock data
   const technologyDetails: Technology[] = project.technologies.map(
     (tech, index) => ({
       id: `tech-${index}`,
       name: tech,
       description: `${tech} technology`,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
     })
   );
 
@@ -77,8 +85,6 @@ export default function ProjectDetail({
     category: "development",
     proficiency: 80,
     yearsOfExperience: 2,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
   }));
 
   const projectWithRelations: ProjectWithRelations = {
@@ -110,7 +116,7 @@ export default function ProjectDetail({
 
   return (
     <div className={styles.projectDetailPage}>
-      <Box component="section" className={styles.section}>
+      <Box className={styles.section}>
         <Container
           maxWidth={false}
           sx={{ maxWidth: "1280px", margin: "0 auto" }}
@@ -148,24 +154,33 @@ export default function ProjectDetail({
                     fontSize: "var(--font-size-2xl)",
                     fontWeight: "bold",
                     marginBottom: "var(--spacing-md)",
-                    color: "var(--color-primary)",
+                    color: "var(--color-text-primary)",
                   }}
                 >
                   {projectWithRelations.title}
                 </Typography>
+                {/** Tags */}
                 <Box className={styles.tags} sx={{ mb: 4 }}>
                   {projectWithRelations.technologies.map((techId: string) => (
                     <Chip
                       key={techId}
                       label={techId}
-                      color="primary"
                       variant="outlined"
                       size="small"
-                      sx={{ mr: 1, mb: 1 }}
+                      sx={{
+                        mr: 1,
+                        mb: 1,
+                        borderColor: "var(--color-text)",
+                        "& .MuiChip-label": {
+                          color: "var(--color-text)",
+                        },
+                      }}
                     />
                   ))}
                 </Box>
               </div>
+
+              {/** Links */}
               {projectWithRelations.links && (
                 <Box
                   className={styles.buttons}
@@ -203,32 +218,7 @@ export default function ProjectDetail({
               )}
             </div>
 
-            <div className={styles.heroWrapper}>
-              <div className={styles.heroSection}>
-                <Container
-                  maxWidth={false}
-                  disableGutters
-                  sx={{ maxWidth: "1280px", margin: "0 auto" }}
-                >
-                  {projectWithRelations.displayType === "iframe" &&
-                  projectWithRelations.iframeUrl ? (
-                    <ProjectIframe
-                      src={projectWithRelations.iframeUrl}
-                      title={projectWithRelations.title}
-                    />
-                  ) : (
-                    <Box className={styles.imageWrapper}>
-                      <ProjectImage
-                        imagePath={projectWithRelations.coverImage}
-                        title={projectWithRelations.title}
-                        width={1920}
-                        height={1080}
-                      />
-                    </Box>
-                  )}
-                </Container>
-              </div>
-              {/* <Grid item xs={12} md={6}>
+            {/* <Grid item xs={12} md={6}>
                 <Box className={styles.details}>
                   <Box className={styles.description}>
                     <Typography variant="body1" paragraph>
@@ -246,72 +236,160 @@ export default function ProjectDetail({
                   </Box>
                 </Box>
               </Grid> */}
+
+            {/** IFrame Hero */}
+            <div className={styles.heroWrapper}>
+              <div className={styles.heroSection}>
+                <Container
+                  maxWidth={false}
+                  disableGutters
+                  sx={{ maxWidth: "1280px", margin: "0 auto" }}
+                >
+                  {projectWithRelations.iframeUrl && (
+                    <ProjectIframe
+                      src={projectWithRelations.iframeUrl}
+                      title={projectWithRelations.title}
+                    />
+                  )}
+                </Container>
+              </div>
+
+              {/** Sections */}
+              {projectWithRelations.sections &&
+                projectWithRelations.sections.length > 0 && (
+                  <Box component="section" sx={{ mt: 6 }}>
+                    {projectWithRelations.sections.map((section, idx) => (
+                      <Box key={idx} sx={{ mb: 6 }}>
+                        <Typography variant="h4" sx={{ mb: 2 }}>
+                          {section.header}
+                        </Typography>
+                        {section.content && (
+                          <Typography
+                            variant="body1"
+                            sx={{ mb: 4, whiteSpace: "pre-line" }}
+                          >
+                            {section.content}
+                          </Typography>
+                        )}
+                        {section.media && section.media.length > 0 && (
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexWrap: "wrap",
+                              gap: 2,
+                            }}
+                          >
+                            {section.media.map((media, mIdx) =>
+                              media.type === "image" ? (
+                                <Box key={mIdx} sx={{ mb: 2 }}>
+                                  <img
+                                    src={media.src}
+                                    alt={media.alt || ""}
+                                    width={
+                                      media.width
+                                        ? Number(media.width)
+                                        : undefined
+                                    }
+                                    height={
+                                      media.height
+                                        ? Number(media.height)
+                                        : undefined
+                                    }
+                                    style={{
+                                      maxWidth: "100%",
+                                      borderRadius: 4,
+                                      boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                                    }}
+                                  />
+                                  {media.caption && (
+                                    <Typography
+                                      variant="caption"
+                                      sx={{
+                                        display: "block",
+                                        color: "text.secondary",
+                                        textAlign: "left",
+                                      }}
+                                    >
+                                      {media.caption}
+                                    </Typography>
+                                  )}
+                                </Box>
+                              ) : media.type === "video" ? (
+                                <Box key={mIdx} sx={{ mb: 2 }}>
+                                  <video
+                                    src={media.src}
+                                    controls
+                                    width={
+                                      media.width
+                                        ? Number(media.width)
+                                        : undefined
+                                    }
+                                    height={
+                                      media.height
+                                        ? Number(media.height)
+                                        : undefined
+                                    }
+                                    style={{
+                                      maxWidth: "100%",
+                                      borderRadius: 4,
+                                      boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                                    }}
+                                  />
+                                  {media.caption && (
+                                    <Typography
+                                      variant="caption"
+                                      sx={{
+                                        display: "block",
+                                        color: "text.secondary",
+                                        textAlign: "left",
+                                      }}
+                                    >
+                                      {media.caption}
+                                    </Typography>
+                                  )}
+                                </Box>
+                              ) : media.type === "youtube" &&
+                                media.youtubeId ? (
+                                <Box key={mIdx} sx={{ mb: 2 }}>
+                                  <YouTubeEmbed
+                                    videoId={media.youtubeId}
+                                    opts={{
+                                      width: media.width
+                                        ? String(media.width)
+                                        : "100%",
+                                      height: media.height
+                                        ? String(media.height)
+                                        : "315",
+                                      playerVars: {
+                                        autoplay: 0,
+                                      },
+                                    }}
+                                  />
+                                  {media.caption && (
+                                    <Typography
+                                      variant="caption"
+                                      sx={{
+                                        display: "block",
+                                        color: "text.secondary",
+                                        textAlign: "left",
+                                      }}
+                                    >
+                                      {media.caption}
+                                    </Typography>
+                                  )}
+                                </Box>
+                              ) : null
+                            )}
+                          </Box>
+                        )}
+                      </Box>
+                    ))}
+                  </Box>
+                )}
             </div>
           </Box>
         </Container>
       </Box>
-
-      {projectWithRelations.gallery &&
-        projectWithRelations.gallery.length > 0 && (
-          <Box component="section" className={styles.gallerySection}>
-            <Container>
-              <Typography variant="h2" className={styles.sectionTitle}>
-                Project Gallery
-              </Typography>
-              <ImageGallery images={projectWithRelations.gallery} />
-            </Container>
-          </Box>
-        )}
-
-      {/* <Box component="section" className={styles.detailsSection}>
-        <Container>
-          <Grid container spacing={4} className={styles.detailsGrid}>
-            <Grid item xs={12} md={6}>
-              <Paper className={styles.detailsCard}>
-                <Typography variant="h5" className={styles.detailsTitle}>
-                  Technologies Used
-                </Typography>
-                <Divider sx={{ mb: 3 }} />
-                <Box className={styles.techGrid}>
-                  {projectWithRelations.technologyDetails.map(
-                    (tech: Technology) => (
-                      <Box key={tech.id} className={styles.techItem}>
-                        <Box className={styles.techIcon}>
-                          {getTechIcon(tech)}
-                        </Box>
-                        <Typography variant="body2" className={styles.techName}>
-                          {tech.name}
-                        </Typography>
-                      </Box>
-                    )
-                  )}
-                </Box>
-              </Paper>
-            </Grid>
-
-            <Grid item xs={12} md={6}>
-              <Paper className={styles.detailsCard}>
-                <Typography variant="h5" className={styles.detailsTitle}>
-                  Skills Applied
-                </Typography>
-                <Divider sx={{ mb: 3 }} />
-                <Box className={styles.techGrid}>
-                  {projectWithRelations.skillDetails.map((skill: Skill) => (
-                    <Box key={skill.id} className={styles.techItem}>
-                      <Box className={styles.techIcon}>
-                        <Code2 size={24} />
-                      </Box>
-                      <Typography variant="body2" className={styles.techName}>
-                        {skill.name}
-                      </Typography>
-                    </Box>
-                  ))}
-                </Box>
-              </Paper>
-            </Grid>
-          </Grid>
-        </Container>
-      </Box> */}
     </div>
   );
 }

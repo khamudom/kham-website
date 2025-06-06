@@ -45,9 +45,9 @@ const ProjectTile = ({
               label={projectType}
               variant="outlined"
               sx={{
-                borderColor: "var(--color-neutral-white)",
+                borderColor: "#FFFFFF",
                 "& .MuiChip-label": {
-                  color: "var(--color-neutral-white)",
+                  color: "#FFFFFF",
                 },
               }}
             />

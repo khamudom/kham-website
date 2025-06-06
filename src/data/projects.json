@@ -7,14 +7,13 @@
       "summary": "Camden Computers LLC is a trusted IT solutions provider established in 1992, delivering comprehensive enterprise IT services, security solutions, and web development.",
       "description": [""],
       "coverImage": "/images/projects/cc_website.webp",
-      "displayType": "iframe",
       "iframeUrl": "https://camdencomputers.netlify.app/",
       "technologies": [
         "Astro",
         "CSS",
         "GSAP",
         "HTML",
-        "Material UI",
+        "JavaScript",
         "TypeScript"
       ],
       "skills": [""],
@@ -23,9 +22,7 @@
         "live": "https://camdencomputers.netlify.app/",
         "github": ""
       },
-      "gallery": [],
-      "createdAt": "2024-01-01",
-      "updatedAt": "2024-03-20"
+      "gallery": []
     },
     {
       "id": "project-2",
@@ -34,13 +31,13 @@
       "summary": "DelVal Media is a regional magazine publisher and digital marketing agency serving the Delaware Valley with lifestyle content and comprehensive advertising solutions.",
       "description": [""],
       "coverImage": "/images/projects/delvalmedia_website.webp",
-      "displayType": "iframe",
       "iframeUrl": "https://delvalmedia.netlify.app/",
       "technologies": [
         "Astro",
         "CSS",
         "GSAP",
         "HTML",
+        "JavaScript",
         "React",
         "Sanity",
         "TypeScript"
@@ -51,9 +48,7 @@
         "live": "https://delvalmedia.netlify.app/",
         "github": ""
       },
-      "gallery": [],
-      "createdAt": "2024-01-01",
-      "updatedAt": "2024-03-20"
+      "gallery": []
     },
     {
       "id": "project-3",
@@ -62,7 +57,6 @@
       "summary": "This is the official website for the Woodlynne Police Department, serving the community of Woodlynne, New Jersey.",
       "description": [""],
       "coverImage": "/images/projects/wpd_website.webp",
-      "displayType": "iframe",
       "iframeUrl": "https://woodpd.vercel.app/",
       "technologies": ["AOS", "CSS", "HTML", "JavaScript", "Vite"],
       "skills": [""],
@@ -71,13 +65,207 @@
         "live": "https://woodpd.vercel.app/",
         "github": ""
       },
+      "gallery": []
+    },
+    {
+      "id": "project-4",
+      "slug": "xbox-one-dashboard",
+      "title": "Xbox One Dashboard",
+      "summary": "",
+      "description": [""],
+      "coverImage": "/images/projects/xdash.jpg",
+      "iframeUrl": "",
+      "technologies": [
+        "XAML",
+        "XAML data binding",
+        "MVVM Consumption",
+        "Compass"
+      ],
+      "skills": [""],
+      "category": ["Product Development"],
+      "links": {
+        "live": "",
+        "github": ""
+      },
       "gallery": [],
-      "createdAt": "2024-01-01",
-      "updatedAt": "2024-03-20"
+      "sections": [
+        {
+          "header": "2013 Dashboard release",
+          "content": "",
+          "media": [
+            {
+              "type": "image",
+              "src": "/images/xbox/dash2013.png",
+              "alt": "2013 Xbox One Dashboard",
+              "height": 300,
+              "caption": "Initial release of the Xbox One Dashboard"
+            },
+            {
+              "type": "image",
+              "src": "/images/xbox/dash2013game.png",
+              "alt": "2013 Xbox game store",
+              "height": 300,
+              "caption": "Initial release of the game store"
+            }
+          ]
+        },
+        {
+          "header": "2015 Dashboard update",
+          "content": "",
+          "media": [
+            {
+              "type": "image",
+              "src": "/images/xbox/D2015Home.png",
+              "alt": "2015 Dashboard Home",
+              "width": "",
+              "height": 300,
+              "caption": "Dashboard Home panel"
+            },
+            {
+              "type": "image",
+              "src": "/images/xbox/D2015Community.png",
+              "alt": "2015 Dashboard Community",
+              "width": "",
+              "height": 300,
+              "caption": "Dashboard Community panel"
+            },
+            {
+              "type": "image",
+              "src": "/images/xbox/D2015OneGuide.png",
+              "alt": "2015 Dashboard One Guide",
+              "width": "",
+              "height": 300,
+              "caption": "Dashboard One Guide panel"
+            },
+            {
+              "type": "image",
+              "src": "/images/xbox/D2015Store.png",
+              "alt": "2015 Dashboard Store",
+              "width": "",
+              "height": 300,
+              "caption": "Dashboard Store panel"
+            }
+          ]
+        },
+        {
+          "header": "2017 Dashboard release",
+          "content": "",
+          "media": [
+            {
+              "type": "youtube",
+              "youtubeId": "s946FOBDmDk",
+              "alt": "2017 update video",
+              "width": 889,
+              "height": 500,
+              "caption": "Official video of the 2017 Dashboard update"
+            }
+          ]
+        },
+        {
+          "header": "Collection and Detail pages",
+          "content": "In addition to the dashboard, I also worked on the Collection and Detail pages for games and apps.",
+          "media": [
+            {
+              "type": "image",
+              "src": "/images/xbox/GamesAndApps.png",
+              "alt": "Collection page",
+              "width": "",
+              "height": 400,
+              "caption": "Collection page"
+            },
+            {
+              "type": "image",
+              "src": "/images/xbox/Details01.png",
+              "alt": "Details page",
+              "width": "",
+              "height": 400,
+              "caption": "Games detail page"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "project-5",
+      "slug": "microsoft-edge",
+      "title": "Microsoft Edge",
+      "summary": "Microsoft Edge is a web browser developed by Microsoft. It is the default browser for Windows 10 and Windows 11.",
+      "description": [""],
+      "coverImage": "/images/projects/edge.jpg",
+      "iframeUrl": "",
+      "technologies": [
+        "CSS",
+        "FAST",
+        "HTML",
+        "JavaScript",
+        "React",
+        "TypeScript"
+      ],
+      "skills": [""],
+      "category": ["Product Development"],
+      "links": {
+        "live": "",
+        "github": ""
+      },
+      "gallery": [],
+      "sections": [
+        {
+          "header": "Microsoft Edge Shopping",
+          "content": "A feature to share multiple ways to help online shoppers save money.\nComponents built for this features are coupon, cashback and shopping-recommendation. The components are consumed and implemented by our developing partners.",
+          "media": [
+            {
+              "type": "image",
+              "src": "/images/edge/coupon.png",
+              "alt": "Edge coupon feature",
+              "height": 450,
+              "caption": "Shopping flyout component"
+            }
+          ]
+        },
+        {
+          "header": "News Feed",
+          "content": "The browser has a customizable news feed feature.\nI helped iterate on the article, info-pane-ad and native-ad components, which are the main components you see on the feed.",
+          "media": [
+            {
+              "type": "image",
+              "src": "/images/edge/feed.png",
+              "alt": "News feed feature",
+              "height": 400,
+              "caption": "News Feed 1.0"
+            }
+          ]
+        },
+        {
+          "header": "Vertical Tabs",
+          "content": "Vertical tabs allows the users to dock their tabs on the side of the browser window.\nI built a prototype to help the motion designer iterate on the slide out and in animation of the tab panel when it is in the collapsed state.",
+          "media": [
+            {
+              "type": "image",
+              "src": "/images/edge/verticaltab.gif",
+              "alt": "Vertical tab feature",
+              "height": 400,
+              "caption": "Vertical tabs"
+            }
+          ]
+        },
+        {
+          "header": "High Contrast for developer tools",
+          "content": "A big contribution to Edge and Chromium was making sure, when forced-colors mode, also known hasWindows high contrast mode, is enabled, the developer tools are visually accessible.\nConsulting with the Edge dev tools and the Chromium team, I applied forced colors solutions to each developer tool elements that were visually broken in high contrast.",
+          "media": [
+            {
+              "type": "image",
+              "src": "/images/edge/devtool-hc.png",
+              "alt": "Dev tools in high contrast mode",
+              "height": 400,
+              "caption": "High Contrast dark theme"
+            }
+          ]
+        }
+      ]
     }
   ],
   "metadata": {
-    "total": 3,
+    "total": 4,
     "page": 1,
     "limit": 10
   }

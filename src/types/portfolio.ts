@@ -1,8 +1,6 @@
 // Base Entity Type
 export interface BaseEntity {
   id: string;
-  createdAt: string;
-  updatedAt: string;
 }
 
 // Base API Response Type
@@ -61,6 +59,22 @@ export interface Profile {
 }
 
 // Project Types
+export interface ProjectMedia {
+  type: "image" | "video" | "youtube";
+  src: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+  caption?: string;
+  youtubeId?: string;
+}
+
+export interface ProjectSection {
+  header: string;
+  content?: string;
+  media?: ProjectMedia[];
+}
+
 export interface Project {
   id: string;
   slug: string;
@@ -68,17 +82,15 @@ export interface Project {
   summary: string;
   description: string[];
   coverImage: string;
-  displayType?: 'image' | 'iframe';
   iframeUrl?: string;
   technologies: string[];
-  skills: string[];
-  category: string[];
+  skills?: string[];
+  category?: string[];
   links: {
     live?: string;
     github?: string;
   };
-  createdAt: string;
-  updatedAt: string;
+  sections?: ProjectSection[];
 }
 
 // Experience Types

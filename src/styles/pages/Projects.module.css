@@ -1,19 +1,10 @@
-.description {
-  font-size: 1.25rem;
-  color: var(--color-text-secondary);
-}
-
-.tags {
+.projectList {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  gap: 1rem;
+  padding: 0;
 }
 
-.tag {
-  padding: 0.25rem 0.75rem;
-  font-size: 0.875rem;
-  background-color: rgba(0, 102, 204, 0.1);
-  border-radius: 0.25rem;
-  color: var(--color-primary);
+.projectItem {
+  list-style: none;
 }

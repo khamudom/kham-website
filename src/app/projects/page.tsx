@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
 import { useApi } from "@/hooks/useApi";
 import { fetchProjects } from "@/utils/api";
 import type { Project } from "@/types/portfolio";
@@ -12,9 +11,7 @@ import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner";
 import { ErrorMessage } from "@/components/ErrorMessage/ErrorMessage";
 import { Typography, Container, Box, Breadcrumbs } from "@mui/material";
 import ProjectTile from "@/components/ProjectTile/ProjectTile";
-
-// Register ScrollTrigger
-gsap.registerPlugin(ScrollTrigger);
+import styles from "@/styles/pages/Projects.module.css";
 
 export default function Portfolio() {
   const { data: projectsResponse, loading, error } = useApi(fetchProjects);
@@ -25,47 +22,45 @@ export default function Portfolio() {
   useEffect(() => {
     if (projectsResponse?.data?.data) {
       const projects = projectsResponse.data.data;
-      if (selectedCategory === "all") {
-        setFilteredProjects(projects);
-      } else {
-        setFilteredProjects(
-          projects.filter((project) =>
-            project.technologies.includes(selectedCategory)
-          )
-        );
-      }
+      setFilteredProjects(
+        selectedCategory === "all"
+          ? projects
+          : projects.filter((project) =>
+              project.technologies.includes(selectedCategory)
+            )
+      );
     }
   }, [selectedCategory, projectsResponse]);
 
   useGSAP(() => {
-    if (projectCardsRef.current) {
-      const cards = projectCardsRef.current.querySelectorAll(".project-card");
-      gsap.fromTo(
-        cards,
-        {
-          opacity: 0,
-          y: 50,
+    if (!projectCardsRef.current) return;
+
+    const cards = projectCardsRef.current.querySelectorAll(
+      `.${styles.projectItem}`
+    );
+
+    gsap.fromTo(
+      cards,
+      {
+        opacity: 0,
+        y: 30,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: projectCardsRef.current,
+          start: "top bottom-=100",
+          toggleActions: "play none none reverse",
         },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.2,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: projectCardsRef.current,
-            start: "top center+=100",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
-    }
+      }
+    );
   }, [filteredProjects]);
 
-  if (loading) {
-    return <LoadingSpinner size="large" />;
-  }
-
+  if (loading) return <LoadingSpinner size="large" />;
   if (error) {
     return (
       <ErrorMessage
@@ -74,10 +69,7 @@ export default function Portfolio() {
       />
     );
   }
-
-  if (!projectsResponse?.data?.data) {
-    return null;
-  }
+  if (!projectsResponse?.data?.data) return null;
 
   return (
     <Box component="section" sx={{ py: 9 }}>
@@ -107,9 +99,9 @@ export default function Portfolio() {
         </div>
 
         <div ref={projectCardsRef}>
-          <ul style={{ display: "flex", gap: "1rem" }}>
+          <ul className={styles.projectList}>
             {filteredProjects.map((item) => (
-              <li key={item.id} style={{ listStyle: "none" }}>
+              <li key={item.id} className={styles.projectItem}>
                 <ProjectTile
                   width={280}
                   height={180}
@@ -118,7 +110,7 @@ export default function Portfolio() {
                   title={item.title}
                   href={`/projects/${item.slug}`}
                   target={"_self"}
-                  projectType={item.category[0]}
+                  projectType={item.category?.[0]}
                 />
               </li>
             ))}
