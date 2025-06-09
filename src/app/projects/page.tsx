@@ -106,8 +106,8 @@ export default function Portfolio() {
                   width={280}
                   height={180}
                   imgSrc={item.coverImage}
-                  imgAlt={item.title}
-                  title={item.title}
+                  imgAlt={item.cardTitle}
+                  title={item.cardTitle}
                   href={`/projects/${item.slug}`}
                   target={"_self"}
                   projectType={item.category?.[0]}

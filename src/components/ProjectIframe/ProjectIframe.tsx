@@ -16,6 +16,7 @@ export default function ProjectIframe({ src, title }: ProjectIframeProps) {
     <div className={styles.iframeWrapper}>
       {isLoading && (
         <div className={styles.iframeLoading}>
+          <div className={styles.loadingSpinner} />
           <Typography variant="body1">Loading project preview...</Typography>
         </div>
       )}

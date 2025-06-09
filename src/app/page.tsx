@@ -466,7 +466,7 @@ export default function Page() {
                     </Box>
                     <Box sx={{ display: "flex", flexDirection: "column" }}>
                       <Typography variant="h5" component="h3">
-                        {project.title}
+                        {project.cardTitle}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
                         {project.summary}

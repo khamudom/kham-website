@@ -75,22 +75,29 @@ export interface ProjectSection {
   media?: ProjectMedia[];
 }
 
+export interface ExperienceSection {
+  overview?: string;
+  bullets?: string[];
+  footer?: string;
+}
+
 export interface Project {
   id: string;
   slug: string;
   title: string;
+  cardTitle: string;
   summary: string;
-  description: string[];
   coverImage: string;
   iframeUrl?: string;
   technologies: string[];
-  skills?: string[];
   category?: string[];
   links: {
     live?: string;
     github?: string;
   };
   sections?: ProjectSection[];
+  experienceSection?: ExperienceSection;
+  year: string;
 }
 
 // Experience Types

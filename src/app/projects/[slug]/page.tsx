@@ -9,6 +9,7 @@ import {
   Braces,
   Cpu,
   Server,
+  ExternalLink,
 } from "lucide-react";
 import type {
   Project,
@@ -17,8 +18,6 @@ import type {
   Image,
   ProjectSection,
 } from "@/types/portfolio";
-import ImageGallery from "@/components/ImageGallery/ImageGallery";
-import ProjectImage from "@/components/ProjectImage/ProjectImage";
 import ProjectIframe from "@/components/ProjectIframe/ProjectIframe";
 import styles from "@/styles/pages/ProjectDetail.module.css";
 import {
@@ -37,7 +36,6 @@ const YouTubeEmbed = dynamic(() => import("@/components/YouTubeEmbed"), {
 
 type ProjectWithRelations = Project & {
   technologyDetails: Technology[];
-  skillDetails: Skill[];
   gallery?: Image[];
   sections?: ProjectSection[];
 };
@@ -77,20 +75,9 @@ export default function ProjectDetail({
     })
   );
 
-  const skillDetails: Skill[] = project.technologies.map((tech, index) => ({
-    id: `skill-${index}`,
-    name: tech,
-    description: `Experience with ${tech}`,
-    iconName: "code",
-    category: "development",
-    proficiency: 80,
-    yearsOfExperience: 2,
-  }));
-
   const projectWithRelations: ProjectWithRelations = {
     ...(project as Project),
     technologyDetails,
-    skillDetails,
   };
 
   // Map of technology names to their corresponding icons
@@ -141,7 +128,7 @@ export default function ProjectDetail({
               </Typography>
             </Link>
             <Typography variant="body2" color="text.primary">
-              {projectWithRelations.title}
+              {projectWithRelations.cardTitle}
             </Typography>
           </Breadcrumbs>
 
@@ -192,12 +179,12 @@ export default function ProjectDetail({
                       target="_blank"
                       rel="noopener noreferrer"
                       variant="contained"
-                      startIcon={<Globe2 size={20} />}
+                      startIcon={<ExternalLink size={20} />}
                       sx={{
                         padding: "6px 20px",
                       }}
                     >
-                      View Live
+                      View Site
                     </Button>
                   )}
                   {projectWithRelations.links.github && (
@@ -218,175 +205,191 @@ export default function ProjectDetail({
               )}
             </div>
 
-            {/* <Grid item xs={12} md={6}>
-                <Box className={styles.details}>
-                  <Box className={styles.description}>
-                    <Typography variant="body1" paragraph>
-                      {projectWithRelations.summary}
-                    </Typography>
-                    <Box className={styles.longDescription}>
-                      {projectWithRelations.description.map(
-                        (paragraph: string, index: number) => (
-                          <Typography key={index} variant="body2" paragraph>
-                            {paragraph}
-                          </Typography>
-                        )
-                      )}
-                    </Box>
-                  </Box>
+            {/* Experience Section */}
+            {projectWithRelations.experienceSection && (
+              <Box>
+                <Typography
+                  variant="body1"
+                  sx={{ color: "#fff", mb: 4, whiteSpace: "pre-line" }}
+                >
+                  {projectWithRelations.experienceSection.overview}
+                </Typography>
+                <Box component="ul" sx={{ color: "#fff", pl: 3, mb: 2 }}>
+                  {projectWithRelations.experienceSection.bullets?.map(
+                    (item: string, idx: number) => (
+                      <li key={idx} style={{ marginBottom: 8, fontSize: 18 }}>
+                        <span dangerouslySetInnerHTML={{ __html: item }} />
+                      </li>
+                    )
+                  )}
                 </Box>
-              </Grid> */}
+                {projectWithRelations.experienceSection.footer && (
+                  <Typography
+                    variant="body2"
+                    sx={{ color: "#fff", opacity: 0.8 }}
+                  >
+                    {projectWithRelations.experienceSection.footer}
+                  </Typography>
+                )}
+              </Box>
+            )}
 
             {/** IFrame Hero */}
-            <div className={styles.heroWrapper}>
-              <div className={styles.heroSection}>
-                <Container
-                  maxWidth={false}
-                  disableGutters
-                  sx={{ maxWidth: "1280px", margin: "0 auto" }}
-                >
-                  {projectWithRelations.iframeUrl && (
-                    <ProjectIframe
-                      src={projectWithRelations.iframeUrl}
-                      title={projectWithRelations.title}
-                    />
-                  )}
-                </Container>
-              </div>
+            <Container
+              maxWidth={false}
+              disableGutters
+              sx={{ maxWidth: "1280px", margin: "0 auto", mt: 4 }}
+            >
+              {projectWithRelations.iframeUrl && (
+                <>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      mb: 2,
+                      color: "var(--color-text-primary)",
+                      fontWeight: "medium",
+                    }}
+                  >
+                    Live Preview
+                  </Typography>
+                  <ProjectIframe
+                    src={projectWithRelations.iframeUrl}
+                    title={projectWithRelations.title}
+                  />
+                </>
+              )}
+            </Container>
 
-              {/** Sections */}
-              {projectWithRelations.sections &&
-                projectWithRelations.sections.length > 0 && (
-                  <Box component="section" sx={{ mt: 6 }}>
-                    {projectWithRelations.sections.map((section, idx) => (
-                      <Box key={idx} sx={{ mb: 6 }}>
-                        <Typography variant="h4" sx={{ mb: 2 }}>
-                          {section.header}
-                        </Typography>
-                        {section.content && (
-                          <Typography
-                            variant="body1"
-                            sx={{ mb: 4, whiteSpace: "pre-line" }}
-                          >
-                            {section.content}
-                          </Typography>
-                        )}
-                        {section.media && section.media.length > 0 && (
-                          <Box
-                            sx={{
-                              display: "flex",
-                              flexWrap: "wrap",
-                              gap: 2,
-                            }}
-                          >
-                            {section.media.map((media, mIdx) =>
-                              media.type === "image" ? (
-                                <Box key={mIdx} sx={{ mb: 2 }}>
-                                  <img
-                                    src={media.src}
-                                    alt={media.alt || ""}
-                                    width={
-                                      media.width
-                                        ? Number(media.width)
-                                        : undefined
-                                    }
-                                    height={
-                                      media.height
-                                        ? Number(media.height)
-                                        : undefined
-                                    }
-                                    style={{
-                                      maxWidth: "100%",
-                                      borderRadius: 4,
-                                      boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+            {/** Sections */}
+            {projectWithRelations.sections &&
+              projectWithRelations.sections.length > 0 && (
+                <Box component="section" sx={{ mt: 6 }}>
+                  {projectWithRelations.sections.map((section, idx) => (
+                    <Box key={idx} sx={{ mb: 6 }}>
+                      <Typography variant="h4" sx={{ mb: 2 }}>
+                        {section.header}
+                      </Typography>
+                      {section.content && (
+                        <Typography
+                          variant="body1"
+                          sx={{ mb: 4, whiteSpace: "pre-line" }}
+                          dangerouslySetInnerHTML={{ __html: section.content }}
+                        />
+                      )}
+                      {section.media && section.media.length > 0 && (
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexWrap: "wrap",
+                            gap: 2,
+                          }}
+                        >
+                          {section.media.map((media, mIdx) =>
+                            media.type === "image" ? (
+                              <Box key={mIdx} sx={{ mb: 2 }}>
+                                <img
+                                  src={media.src}
+                                  alt={media.alt || ""}
+                                  width={
+                                    media.width
+                                      ? Number(media.width)
+                                      : undefined
+                                  }
+                                  height={
+                                    media.height
+                                      ? Number(media.height)
+                                      : undefined
+                                  }
+                                  style={{
+                                    maxWidth: "100%",
+                                    borderRadius: 4,
+                                    boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                                  }}
+                                />
+                                {media.caption && (
+                                  <Typography
+                                    variant="caption"
+                                    sx={{
+                                      display: "block",
+                                      color: "text.secondary",
+                                      textAlign: "left",
                                     }}
-                                  />
-                                  {media.caption && (
-                                    <Typography
-                                      variant="caption"
-                                      sx={{
-                                        display: "block",
-                                        color: "text.secondary",
-                                        textAlign: "left",
-                                      }}
-                                    >
-                                      {media.caption}
-                                    </Typography>
-                                  )}
-                                </Box>
-                              ) : media.type === "video" ? (
-                                <Box key={mIdx} sx={{ mb: 2 }}>
-                                  <video
-                                    src={media.src}
-                                    controls
-                                    width={
-                                      media.width
-                                        ? Number(media.width)
-                                        : undefined
-                                    }
-                                    height={
-                                      media.height
-                                        ? Number(media.height)
-                                        : undefined
-                                    }
-                                    style={{
-                                      maxWidth: "100%",
-                                      borderRadius: 4,
-                                      boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                                  >
+                                    {media.caption}
+                                  </Typography>
+                                )}
+                              </Box>
+                            ) : media.type === "video" ? (
+                              <Box key={mIdx} sx={{ mb: 2 }}>
+                                <video
+                                  src={media.src}
+                                  controls
+                                  width={
+                                    media.width
+                                      ? Number(media.width)
+                                      : undefined
+                                  }
+                                  height={
+                                    media.height
+                                      ? Number(media.height)
+                                      : undefined
+                                  }
+                                  style={{
+                                    maxWidth: "100%",
+                                    borderRadius: 4,
+                                    boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                                  }}
+                                />
+                                {media.caption && (
+                                  <Typography
+                                    variant="caption"
+                                    sx={{
+                                      display: "block",
+                                      color: "text.secondary",
+                                      textAlign: "left",
                                     }}
-                                  />
-                                  {media.caption && (
-                                    <Typography
-                                      variant="caption"
-                                      sx={{
-                                        display: "block",
-                                        color: "text.secondary",
-                                        textAlign: "left",
-                                      }}
-                                    >
-                                      {media.caption}
-                                    </Typography>
-                                  )}
-                                </Box>
-                              ) : media.type === "youtube" &&
-                                media.youtubeId ? (
-                                <Box key={mIdx} sx={{ mb: 2 }}>
-                                  <YouTubeEmbed
-                                    videoId={media.youtubeId}
-                                    opts={{
-                                      width: media.width
-                                        ? String(media.width)
-                                        : "100%",
-                                      height: media.height
-                                        ? String(media.height)
-                                        : "315",
-                                      playerVars: {
-                                        autoplay: 0,
-                                      },
+                                  >
+                                    {media.caption}
+                                  </Typography>
+                                )}
+                              </Box>
+                            ) : media.type === "youtube" && media.youtubeId ? (
+                              <Box key={mIdx} sx={{ mb: 2 }}>
+                                <YouTubeEmbed
+                                  videoId={media.youtubeId}
+                                  opts={{
+                                    width: media.width
+                                      ? String(media.width)
+                                      : "100%",
+                                    height: media.height
+                                      ? String(media.height)
+                                      : "315",
+                                    playerVars: {
+                                      autoplay: 0,
+                                    },
+                                  }}
+                                />
+                                {media.caption && (
+                                  <Typography
+                                    variant="caption"
+                                    sx={{
+                                      display: "block",
+                                      color: "text.secondary",
+                                      textAlign: "left",
                                     }}
-                                  />
-                                  {media.caption && (
-                                    <Typography
-                                      variant="caption"
-                                      sx={{
-                                        display: "block",
-                                        color: "text.secondary",
-                                        textAlign: "left",
-                                      }}
-                                    >
-                                      {media.caption}
-                                    </Typography>
-                                  )}
-                                </Box>
-                              ) : null
-                            )}
-                          </Box>
-                        )}
-                      </Box>
-                    ))}
-                  </Box>
-                )}
-            </div>
+                                  >
+                                    {media.caption}
+                                  </Typography>
+                                )}
+                              </Box>
+                            ) : null
+                          )}
+                        </Box>
+                      )}
+                    </Box>
+                  ))}
+                </Box>
+              )}
           </Box>
         </Container>
       </Box>
