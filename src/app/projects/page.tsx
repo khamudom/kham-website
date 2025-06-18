@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 import { useApi } from "@/hooks/useApi";
 import { fetchProjects } from "@/utils/api";
 import type { Project } from "@/types/portfolio";
@@ -19,14 +20,100 @@ import {
   FormControl,
   InputLabel,
   Grid,
+  TextField,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import ProjectTile from "@/components/ProjectTile/ProjectTile";
 import styles from "@/styles/pages/Projects.module.css";
+import CodeIcon from "@mui/icons-material/Code";
+import WebIcon from "@mui/icons-material/Web";
+import BusinessIcon from "@mui/icons-material/Business";
+import { Button } from "@/design-system/components/Button";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Portfolio() {
   const { data: projectsResponse, loading, error } = useApi(fetchProjects);
-  const [groupBy, setGroupBy] = useState<"year" | "category">("year");
+  const [groupBy, setGroupBy] = useState<"year" | "category">("category");
   const projectCardsRef = useRef<HTMLDivElement>(null);
+  const contactFormRef = useRef<HTMLDivElement>(null);
+  const serviceSectionRef = useRef<HTMLDivElement>(null);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success" as "success" | "error",
+  });
+
+  const textFieldStyles = {
+    "& .MuiOutlinedInput-root": {
+      "&:hover fieldset": {
+        borderColor: (theme: any) => theme.palette.primary.main,
+      },
+    },
+  };
+
+  const handleFormChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(
+        process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT!,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (response.ok) {
+        setSnackbar({
+          open: true,
+          message: "Message sent successfully!",
+          severity: "success",
+        });
+        setFormData({
+          name: "",
+          email: "",
+          message: "",
+        });
+      } else {
+        throw new Error("Failed to send message");
+      }
+    } catch (error) {
+      setSnackbar({
+        open: true,
+        message: "Failed to send message. Please try again later.",
+        severity: "error",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+  };
 
   // Get unique years and categories from projects
   const years = Array.from(
@@ -74,6 +161,7 @@ export default function Portfolio() {
     }
   }
 
+  // Project cards animation
   useGSAP(() => {
     if (!projectCardsRef.current) return;
 
@@ -166,15 +254,27 @@ export default function Portfolio() {
                       <Typography variant="h2" sx={{ fontSize: "2rem", mb: 3 }}>
                         {year}
                       </Typography>
-                      <Grid container spacing={3}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexWrap: "wrap",
+                          gap: "20px",
+                          justifyContent: "flex-start",
+                          alignItems: "flex-start",
+                        }}
+                      >
                         {groupedProjects[year].map((item) => (
-                          <Grid
-                            item
-                            xs={12}
-                            sm={6}
-                            md={4}
+                          <Box
                             key={item.id}
                             className={styles.projectItem}
+                            sx={{
+                              flex: {
+                                xs: "none",
+                                width: "100%",
+                                sm: "0 1 340px",
+                              },
+                              maxWidth: "100%",
+                            }}
                           >
                             <ProjectTile
                               width={280}
@@ -186,9 +286,9 @@ export default function Portfolio() {
                               target={"_self"}
                               projectType={item.category?.[0]}
                             />
-                          </Grid>
+                          </Box>
                         ))}
-                      </Grid>
+                      </Box>
                     </Box>
                   )
               )
@@ -197,18 +297,33 @@ export default function Portfolio() {
                   groupedProjects[category] &&
                   groupedProjects[category].length > 0 && (
                     <Box key={category} sx={{ mb: 6 }}>
-                      <Typography variant="h2" sx={{ fontSize: "2rem", mb: 3 }}>
+                      <Typography
+                        variant="h2"
+                        sx={{ fontSize: "1.5rem", mb: 3 }}
+                      >
                         {category}
                       </Typography>
-                      <Grid container spacing={3}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexWrap: "wrap",
+                          gap: "20px",
+                          justifyContent: "flex-start",
+                          alignItems: "flex-start",
+                        }}
+                      >
                         {groupedProjects[category].map((item) => (
-                          <Grid
-                            item
-                            xs={12}
-                            sm={6}
-                            md={4}
+                          <Box
                             key={item.id}
                             className={styles.projectItem}
+                            sx={{
+                              flex: {
+                                xs: "none",
+                                width: "100%",
+                                sm: "0 1 340px",
+                              },
+                              maxWidth: "100%",
+                            }}
                           >
                             <ProjectTile
                               width={280}
@@ -220,14 +335,240 @@ export default function Portfolio() {
                               target={"_self"}
                               projectType={item.category?.[0]}
                             />
-                          </Grid>
+                          </Box>
                         ))}
-                      </Grid>
+                      </Box>
                     </Box>
                   )
               )}
         </div>
+
+        <Box
+          ref={serviceSectionRef}
+          sx={{
+            mt: 12,
+            p: { xs: 4, md: 8 },
+            borderRadius: 2,
+            background:
+              "linear-gradient(145deg, rgba(25, 118, 210, 0.05) 0%, rgba(25, 118, 210, 0.1) 100%)",
+            textAlign: "center",
+          }}
+        >
+          <Typography
+            variant="h2"
+            sx={{
+              fontSize: { xs: "2rem", md: "2.5rem" },
+              mb: 3,
+              fontWeight: 600,
+              color: "text.primary",
+            }}
+          >
+            Transform Your Digital Vision Into Reality
+          </Typography>
+
+          <Typography
+            variant="body1"
+            sx={{
+              mb: 4,
+              maxWidth: "800px",
+              mx: "auto",
+              color: "text.secondary",
+              fontSize: "1.1rem",
+              lineHeight: 1.6,
+            }}
+          >
+            From establishing your online presence to building complex
+            enterprise solutions, I help businesses and individuals leverage
+            technology to achieve their goals. Let's create something
+            extraordinary together.
+          </Typography>
+
+          <Grid
+            container
+            spacing={{ xs: 0, md: 3 }}
+            sx={{ mb: 6, maxWidth: "900px", mx: "auto" }}
+          >
+            <Grid item xs={12} md={4}>
+              <Box
+                sx={{
+                  p: 3,
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <WebIcon
+                  sx={{
+                    fontSize: "3rem",
+                    color: "primary.main",
+                    mb: 2,
+                  }}
+                />
+                <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
+                  Web Development
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  align="center"
+                >
+                  Modern, responsive websites and web applications built with
+                  cutting-edge technologies
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Box
+                sx={{
+                  p: 3,
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <CodeIcon
+                  sx={{
+                    fontSize: "3rem",
+                    color: "primary.main",
+                    mb: 2,
+                  }}
+                />
+                <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
+                  Product Development
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  align="center"
+                >
+                  End-to-end product development from concept to deployment
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Box
+                sx={{
+                  p: 3,
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <BusinessIcon
+                  sx={{
+                    fontSize: "3rem",
+                    color: "primary.main",
+                    mb: 2,
+                  }}
+                />
+                <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
+                  Enterprise Solutions
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  align="center"
+                >
+                  Scalable systems and applications for growing businesses
+                </Typography>
+              </Box>
+            </Grid>
+          </Grid>
+
+          <Box
+            ref={contactFormRef}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              mt: 8,
+              mb: 4,
+            }}
+          >
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              sx={{
+                width: "100%",
+                maxWidth: "600px",
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+              }}
+            >
+              <TextField
+                required
+                fullWidth
+                label="Name"
+                name="name"
+                value={formData.name}
+                onChange={handleFormChange}
+                variant="outlined"
+                disabled={isSubmitting}
+                size="small"
+                sx={textFieldStyles}
+              />
+
+              <TextField
+                required
+                fullWidth
+                label="Email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleFormChange}
+                variant="outlined"
+                disabled={isSubmitting}
+                size="small"
+                sx={textFieldStyles}
+              />
+
+              <TextField
+                required
+                fullWidth
+                label="Message"
+                name="message"
+                multiline
+                rows={4}
+                value={formData.message}
+                onChange={handleFormChange}
+                variant="outlined"
+                disabled={isSubmitting}
+                size="small"
+                sx={textFieldStyles}
+              />
+
+              <Button
+                type="submit"
+                variant="contained"
+                size="small"
+                fullWidth
+                sx={{ mt: 2 }}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Sending..." : "Let's Talk About Your Project"}
+              </Button>
+            </Box>
+          </Box>
+        </Box>
       </Container>
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import styles from "./ProjectTile.module.css";
-import { Chip } from "@mui/material";
+import { Chip, useMediaQuery, useTheme } from "@mui/material";
+import { useIsMobile } from "../../design-system/hooks";
 
 interface ProjectTileProps {
   width?: number;
@@ -15,8 +16,8 @@ interface ProjectTileProps {
 }
 
 const ProjectTile = ({
-  width,
-  height,
+  width = 280,
+  height = 180,
   title,
   href,
   target,
@@ -24,10 +25,17 @@ const ProjectTile = ({
   imgAlt,
   projectType,
 }: ProjectTileProps) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  // Adjust dimensions for mobile
+  const adjustedWidth = isMobile ? "100%" : `${width}px`;
+  const adjustedHeight = isMobile ? "120px" : `${height}px`;
+
   return (
     <div
       className={styles.card}
-      style={{ width: `${width}px`, height: `${height}px` }}
+      style={{ width: adjustedWidth, height: adjustedHeight }}
     >
       <a
         className={styles.anchor}
@@ -37,21 +45,19 @@ const ProjectTile = ({
       ></a>
       <img className={styles.image} src={imgSrc} alt={imgAlt} />
       <div className={styles.overlay}></div>
-      <div className={styles.contentWrapper}>
-        <div className={styles.content}>
-          <span className={styles.title}>{title}</span>
-          <div className={styles.type}>
-            <Chip
-              label={projectType}
-              variant="outlined"
-              sx={{
-                borderColor: "#FFFFFF",
-                "& .MuiChip-label": {
-                  color: "#FFFFFF",
-                },
-              }}
-            />
-          </div>
+      <div className={styles.content}>
+        <span className={styles.title}>{title}</span>
+        <div className={styles.type}>
+          <Chip
+            label={projectType}
+            variant="outlined"
+            sx={{
+              borderColor: "#FFFFFF",
+              "& .MuiChip-label": {
+                color: "#FFFFFF",
+              },
+            }}
+          />
         </div>
       </div>
     </div>

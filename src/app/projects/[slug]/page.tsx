@@ -210,11 +210,11 @@ export default function ProjectDetail({
               <Box>
                 <Typography
                   variant="body1"
-                  sx={{ color: "#fff", mb: 4, whiteSpace: "pre-line" }}
+                  sx={{ mb: 4, whiteSpace: "pre-line" }}
                 >
                   {projectWithRelations.experienceSection.overview}
                 </Typography>
-                <Box component="ul" sx={{ color: "#fff", pl: 3, mb: 2 }}>
+                <Box component="ul" sx={{ pl: 3, mb: 2 }}>
                   {projectWithRelations.experienceSection.bullets?.map(
                     (item: string, idx: number) => (
                       <li key={idx} style={{ marginBottom: 8, fontSize: 18 }}>
@@ -224,10 +224,7 @@ export default function ProjectDetail({
                   )}
                 </Box>
                 {projectWithRelations.experienceSection.footer && (
-                  <Typography
-                    variant="body2"
-                    sx={{ color: "#fff", opacity: 0.8 }}
-                  >
+                  <Typography variant="body2" sx={{ opacity: 0.8 }}>
                     {projectWithRelations.experienceSection.footer}
                   </Typography>
                 )}
