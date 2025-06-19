@@ -2,7 +2,6 @@
 import React from "react";
 import styles from "./ProjectTile.module.css";
 import { Chip, useMediaQuery, useTheme } from "@mui/material";
-import { useIsMobile } from "../../design-system/hooks";
 
 interface ProjectTileProps {
   width?: number;

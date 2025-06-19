@@ -39,6 +39,7 @@
   position: absolute;
   inset: 0;
   height: 100%;
+  padding-inline: var(--spacing-sm);
 }
 
 .type {

@@ -215,7 +215,7 @@ export default function Portfolio() {
           </Typography>
         </Breadcrumbs>
         <div>
-          <Typography variant="h1" sx={{ fontSize: "3rem", lineHeight: 1 }}>
+          <Typography variant="h1" gutterBottom sx={{ fontSize: "3rem", lineHeight: 1 }}>
             Projects
           </Typography>
           <Typography variant="body1" mb={4}>
@@ -329,7 +329,7 @@ export default function Portfolio() {
                               title={item.cardTitle}
                               href={`/projects/${item.slug}`}
                               target={"_self"}
-                              projectType={item.category?.[0]}
+                              projectType={groupBy === "category" ? item.year : (item.category?.[0])}
                             />
                           </Box>
                         ))}
@@ -382,7 +382,14 @@ export default function Portfolio() {
           <Grid
             container
             spacing={{ xs: 0, md: 3 }}
-            sx={{ mb: 6, maxWidth: "900px", mx: "auto" }}
+            sx={{ 
+              mb: 6,
+              mx: "auto",
+              '@media (min-width: 900px)': {
+                width: '100%',
+                marginLeft: 'auto'
+              }
+            }}
           >
             <Grid item xs={12} md={4}>
               <Box
