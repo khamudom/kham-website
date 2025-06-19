@@ -205,11 +205,7 @@ export default function Portfolio() {
     <Box component="section" sx={{ py: 9 }}>
       <Container maxWidth={false} sx={{ maxWidth: "1280px", margin: "0 auto" }}>
         <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 4 }}>
-          <Link
-            href="/"
-            passHref
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
+          <Link href="/" passHref className={styles.breadcrumbLink}>
             <Typography variant="body2" color="text.secondary">
               Home
             </Typography>

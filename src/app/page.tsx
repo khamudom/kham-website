@@ -10,7 +10,6 @@ import {
   Linkedin,
   Mail,
   MapPin,
-  Clock,
   ExternalLink,
 } from "lucide-react";
 import { usePortfolioData } from "@/hooks/usePortfolioData";
@@ -78,7 +77,6 @@ export default function Page() {
   const mobileHeaderRef = useRef<HTMLDivElement>(null);
   const [activeSection, setActiveSection] = useState("about");
   const [isMobile, setIsMobile] = useState(false);
-  const [showStickyHeader, setShowStickyHeader] = useState(false);
 
   // Get featured projects (first 3)
   const featuredProjects = projects.slice(0, 3);
@@ -104,15 +102,16 @@ export default function Page() {
         { id: "contact", ref: contactSectionRef },
       ];
 
-      const scrollPosition = window.scrollY + window.innerHeight / 3;
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
 
-      for (const section of sections) {
+      // Find which section the user is currently in
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
         if (section.ref.current) {
-          const { top, bottom } = section.ref.current.getBoundingClientRect();
+          const { top } = section.ref.current.getBoundingClientRect();
           const offsetTop = top + window.scrollY;
-          const offsetBottom = bottom + window.scrollY;
 
-          if (scrollPosition >= offsetTop && scrollPosition <= offsetBottom) {
+          if (scrollPosition >= offsetTop) {
             setActiveSection(section.id);
             break;
           }
@@ -121,6 +120,8 @@ export default function Page() {
     };
 
     window.addEventListener("scroll", handleScroll);
+    // Call once on mount to set initial section
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -130,22 +131,6 @@ export default function Page() {
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
-
-  useEffect(() => {
-    if (!isMobile) {
-      setShowStickyHeader(false);
-      return;
-    }
-    const handleScroll = () => {
-      if (mobileHeaderRef.current) {
-        const rect = mobileHeaderRef.current.getBoundingClientRect();
-        setShowStickyHeader(rect.bottom <= 0);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isMobile]);
 
   const handleFormChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -312,13 +297,6 @@ export default function Page() {
             </div>
           </div>
         )}
-        {isMobile && showStickyHeader && (
-          <div className={styles.mobileSectionHeader}>
-            {activeSection === "about" && "About"}
-            {activeSection === "projects" && "Projects"}
-            {activeSection === "contact" && "Contact"}
-          </div>
-        )}
         <Box
           component="section"
           ref={aboutSectionRef}
@@ -328,6 +306,7 @@ export default function Page() {
           }}
         >
           <div>
+            {isMobile && <h2 className={styles.mobileSectionHeader}>About</h2>}
             <div ref={aboutContentRef}>
               <Typography
                 variant="body1"
@@ -410,6 +389,7 @@ export default function Page() {
             flexDirection: "column",
           }}
         >
+          {isMobile && <h2 className={styles.mobileSectionHeader}>Projects</h2>}
           <Stack spacing={2}>
             {featuredProjects.map((project) => (
               <Link
@@ -507,9 +487,11 @@ export default function Page() {
             backgroundColor: "background.default",
             display: "flex",
             alignItems: "center",
+            flexDirection: "column",
             scrollMarginTop: isMobile ? "3.5rem" : "2rem",
           }}
         >
+          {isMobile && <h2 className={styles.mobileSectionHeader}>Contact</h2>}
           <Container maxWidth={false} disableGutters>
             <Typography variant="h3" gutterBottom align="center">
               Let's Build Something That Drives Results

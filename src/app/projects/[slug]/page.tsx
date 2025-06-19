@@ -1,20 +1,9 @@
 import React from "react";
 import Link from "next/link";
-import {
-  Code2,
-  Blocks,
-  Globe2,
-  GitBranch,
-  Database,
-  Braces,
-  Cpu,
-  Server,
-  ExternalLink,
-} from "lucide-react";
+import { GitBranch, ExternalLink } from "lucide-react";
 import type {
   Project,
   Technology,
-  Skill,
   Image,
   ProjectSection,
 } from "@/types/portfolio";
@@ -80,27 +69,6 @@ export default function ProjectDetail({
     technologyDetails,
   };
 
-  // Map of technology names to their corresponding icons
-  const techIcons: { [key: string]: React.ElementType } = {
-    FAST: Blocks,
-    TypeScript: Braces,
-    JavaScript: Code2,
-    React: Code2,
-    "Web Component": Globe2,
-    Chromium: Globe2,
-    Gerrit: GitBranch,
-    HTML: Code2,
-    CSS: Code2,
-    SQL: Database,
-    "Node.js": Server,
-    API: Cpu,
-  };
-
-  const getTechIcon = (tech: Technology) => {
-    const Icon = techIcons[tech.name] || Code2;
-    return <Icon size={24} />;
-  };
-
   return (
     <div className={styles.projectDetailPage}>
       <Box className={styles.section}>
@@ -109,20 +77,12 @@ export default function ProjectDetail({
           sx={{ maxWidth: "1280px", margin: "0 auto" }}
         >
           <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 4 }}>
-            <Link
-              href="/"
-              passHref
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
+            <Link href="/" passHref className={styles.breadcrumbLink}>
               <Typography variant="body2" color="text.secondary">
                 Home
               </Typography>
             </Link>
-            <Link
-              href="/projects"
-              passHref
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
+            <Link href="/projects" className={styles.breadcrumbLink}>
               <Typography variant="body2" color="text.secondary">
                 Projects
               </Typography>
@@ -182,6 +142,7 @@ export default function ProjectDetail({
                       startIcon={<ExternalLink size={20} />}
                       sx={{
                         padding: "6px 20px",
+                        marginBottom: "var(--spacing-sm)",
                       }}
                     >
                       View Site
@@ -196,6 +157,7 @@ export default function ProjectDetail({
                       startIcon={<GitBranch size={20} />}
                       sx={{
                         padding: "6px 20px",
+                        marginBottom: "var(--spacing-sm)",
                       }}
                     >
                       View Source

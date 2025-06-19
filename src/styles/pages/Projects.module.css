@@ -1,10 +1,13 @@
-.projectList {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding: 0;
-}
-
 .projectItem {
   list-style: none;
+}
+
+.breadcrumbLink {
+  text-decoration: none;
+  transition: text-decoration var(--transition-fast);
+  color: inherit;
+}
+
+.breadcrumbLink:hover {
+  text-decoration: underline;
 }
