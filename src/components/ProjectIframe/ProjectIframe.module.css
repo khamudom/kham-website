@@ -47,3 +47,16 @@
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
   transition: opacity 0.3s ease-in-out;
 }
+
+/* Mobile responsive rules */
+@media (max-width: 768px) {
+  .iframeWrapper {
+    height: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .iframeWrapper {
+    height: 300px;
+  }
+}

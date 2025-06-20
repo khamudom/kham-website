@@ -242,6 +242,7 @@ export default function ProjectDetail({
                             display: "flex",
                             flexWrap: "wrap",
                             gap: 2,
+                            justifyContent: "center",
                           }}
                         >
                           {section.media.map((media, mIdx) =>
@@ -251,19 +252,28 @@ export default function ProjectDetail({
                                   src={media.src}
                                   alt={media.alt || ""}
                                   width={
-                                    media.width
+                                    media.width && media.width !== ""
                                       ? Number(media.width)
                                       : undefined
                                   }
                                   height={
-                                    media.height
+                                    media.height && media.height !== ""
                                       ? Number(media.height)
                                       : undefined
                                   }
                                   style={{
+                                    width:
+                                      media.width && media.width !== ""
+                                        ? `${media.width}px`
+                                        : "auto",
+                                    height:
+                                      media.height && media.height !== ""
+                                        ? `${media.height}px`
+                                        : "auto",
                                     maxWidth: "100%",
                                     borderRadius: 4,
                                     boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                                    display: "block",
                                   }}
                                 />
                                 {media.caption && (
@@ -285,19 +295,28 @@ export default function ProjectDetail({
                                   src={media.src}
                                   controls
                                   width={
-                                    media.width
+                                    media.width && media.width !== ""
                                       ? Number(media.width)
                                       : undefined
                                   }
                                   height={
-                                    media.height
+                                    media.height && media.height !== ""
                                       ? Number(media.height)
                                       : undefined
                                   }
                                   style={{
+                                    width:
+                                      media.width && media.width !== ""
+                                        ? `${media.width}px`
+                                        : "auto",
+                                    height:
+                                      media.height && media.height !== ""
+                                        ? `${media.height}px`
+                                        : "auto",
                                     maxWidth: "100%",
                                     borderRadius: 4,
                                     boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                                    display: "block",
                                   }}
                                 />
                                 {media.caption && (
@@ -318,12 +337,14 @@ export default function ProjectDetail({
                                 <YouTubeEmbed
                                   videoId={media.youtubeId}
                                   opts={{
-                                    width: media.width
-                                      ? String(media.width)
-                                      : "100%",
-                                    height: media.height
-                                      ? String(media.height)
-                                      : "315",
+                                    width:
+                                      media.width && media.width !== ""
+                                        ? String(media.width)
+                                        : "100%",
+                                    height:
+                                      media.height && media.height !== ""
+                                        ? String(media.height)
+                                        : "315",
                                     playerVars: {
                                       autoplay: 0,
                                     },

@@ -63,8 +63,8 @@ export interface ProjectMedia {
   type: "image" | "video" | "youtube";
   src: string;
   alt?: string;
-  width?: number;
-  height?: number;
+  width?: number | string;
+  height?: number | string;
   caption?: string;
   youtubeId?: string;
 }
