@@ -696,7 +696,7 @@ export default function Page() {
           }}
         >
           <p style={{ margin: 0, fontSize: "1rem" }}>
-            This website was designed and built using <strong>Next.js</strong>,{" "}
+            This website was built using <strong>Next.js</strong>,{" "}
             <strong>TypeScript</strong>, <strong>Material UI</strong>, and{" "}
             <strong>GSAP</strong>. <br /> View the source code on{" "}
             <a
