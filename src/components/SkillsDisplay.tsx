@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { Typography } from "@mui/material";
 import { Code2, Layout, Wrench } from "lucide-react";
-import styles from "@/styles/pages/Home.module.css";
+import styles from "../app/Home.module.css";
 import type { Skill } from "@/types/portfolio";
 
 interface SkillsDisplayProps {

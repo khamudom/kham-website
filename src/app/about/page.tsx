@@ -19,7 +19,7 @@ import {
 import { Download, Calendar, MapPin } from "lucide-react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import styles from "@/styles/pages/About.module.css";
+import styles from "./About.module.css";
 
 export default function About() {
   const {
@@ -182,25 +182,23 @@ export default function About() {
                             {typeof item.startDate === "string" &&
                             item.startDate === "Present"
                               ? "Present"
-                              : new Date(item.startDate).toLocaleDateString(
-                                  "en-US",
-                                  {
-                                    year: "numeric",
-                                    month: "long",
-                                  }
-                                )}{" "}
+                              : new Date(
+                                  item.startDate.replace(/-/g, "/")
+                                ).toLocaleDateString("en-US", {
+                                  year: "numeric",
+                                  month: "long",
+                                })}{" "}
                             -{" "}
                             {typeof item.endDate === "string" &&
                             item.endDate === "Present"
                               ? "Present"
                               : item.endDate
-                              ? new Date(item.endDate).toLocaleDateString(
-                                  "en-US",
-                                  {
-                                    year: "numeric",
-                                    month: "long",
-                                  }
-                                )
+                              ? new Date(
+                                  item.endDate.replace(/-/g, "/")
+                                ).toLocaleDateString("en-US", {
+                                  year: "numeric",
+                                  month: "long",
+                                })
                               : "Present"}
                           </Typography>
                         </Box>

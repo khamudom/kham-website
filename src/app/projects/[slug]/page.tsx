@@ -8,7 +8,7 @@ import type {
   ProjectSection,
 } from "@/types/portfolio";
 import ProjectIframe from "@/components/ProjectIframe/ProjectIframe";
-import styles from "@/styles/pages/ProjectDetail.module.css";
+import styles from "./ProjectDetail.module.css";
 import {
   Typography,
   Button,
@@ -19,6 +19,7 @@ import {
 } from "@mui/material";
 import projectsData from "@/data/projects.json";
 import dynamic from "next/dynamic";
+
 const YouTubeEmbed = dynamic(() => import("@/components/YouTubeEmbed"), {
   ssr: false,
 });
@@ -55,7 +56,7 @@ export default function ProjectDetail({
     return <div>Project not found</div>;
   }
 
-  // Using mock data
+  // Using local data
   const technologyDetails: Technology[] = project.technologies.map(
     (tech, index) => ({
       id: `tech-${index}`,

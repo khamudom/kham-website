@@ -13,9 +13,11 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { usePortfolioData } from "@/hooks/usePortfolioData";
+import { useApi } from "@/hooks/useApi";
+import { fetchAbout } from "@/utils/api";
 import { LoadingSpinner } from "@/components/LoadingSpinner/LoadingSpinner";
 import { ErrorMessage } from "@/components/ErrorMessage/ErrorMessage";
-import styles from "@/styles/pages/Home.module.css";
+import styles from "./Home.module.css";
 import {
   Typography,
   Container,
@@ -56,6 +58,11 @@ export default function Page() {
   };
 
   const { projects, profile, skills, loading, error } = usePortfolioData();
+  const {
+    data: aboutResponse,
+    loading: aboutLoading,
+    error: aboutError,
+  } = useApi(fetchAbout);
   const themeBackgrounds: { hero: string | null } = useThemeBackgrounds();
 
   const [formData, setFormData] = useState({
@@ -187,7 +194,7 @@ export default function Page() {
     setSnackbar((prev) => ({ ...prev, open: false }));
   };
 
-  if (loading) {
+  if (loading || aboutLoading) {
     return (
       <div
         style={{
@@ -203,7 +210,7 @@ export default function Page() {
     );
   }
 
-  if (error) {
+  if (error || aboutError) {
     return (
       <ErrorMessage
         message="Failed to load portfolio data. Please try again later."
@@ -212,7 +219,7 @@ export default function Page() {
     );
   }
 
-  if (!profile || !projects || !skills) {
+  if (!profile || !projects || !skills || !aboutResponse?.data) {
     return null;
   }
 
@@ -297,6 +304,7 @@ export default function Page() {
             </div>
           </div>
         )}
+        {/* About Section */}
         <Box
           component="section"
           ref={aboutSectionRef}
@@ -308,58 +316,22 @@ export default function Page() {
           <div>
             {isMobile && <h2 className={styles.mobileSectionHeader}>About</h2>}
             <div ref={aboutContentRef}>
-              <Typography
-                variant="body1"
-                color="text.primary"
-                paragraph
-                sx={{
-                  lineHeight: { xs: 1.8, sm: 1.9 },
-                  letterSpacing: { xs: "0.01em", sm: "0.02em" },
-                  fontSize: { xs: "1rem", sm: "1.1rem" },
-                  maxWidth: "65ch",
-                  marginBottom: "1rem",
-                }}
-              >
-                <strong>Front-end engineer</strong> with a track record of
-                creating <strong>intuitive</strong>, <strong>performant</strong>{" "}
-                user interfaces that drive <strong>content creation</strong>,{" "}
-                <strong>business outcomes</strong>, and streamlined development
-                workflows. Skilled in <strong>scaling design systems</strong>{" "}
-                and guiding <strong>technical design decisions</strong> across{" "}
-                <strong>enterprise-grade applications</strong>. Known for
-                working <strong>cross-functionally</strong> with designers,
-                product managers, and backend engineers to build{" "}
-                <strong>accessible</strong>, reliable, and{" "}
-                <strong>maintainable</strong> UI solutions. Brings a{" "}
-                <strong>collaborative</strong>,{" "}
-                <strong>flexible mindset</strong> and a strong sense of{" "}
-                <strong>accountability</strong> to every project.
-              </Typography>
-              <Typography
-                variant="body1"
-                color="text.primary"
-                paragraph
-                sx={{
-                  lineHeight: { xs: 1.8, sm: 1.9 },
-                  letterSpacing: { xs: "0.01em", sm: "0.02em" },
-                  fontSize: { xs: "1rem", sm: "1.1rem" },
-                  maxWidth: "65ch",
-                }}
-              >
-                Currently, I work as a{" "}
-                <strong>freelance front-end developer</strong>, partnering with
-                individual clients to design and build high-quality websites and{" "}
-                <strong>web applications</strong>. I specialize in delivering{" "}
-                <strong>tailored solutions</strong> that balance performance,{" "}
-                <strong>usability</strong>, and <strong>visual polish</strong>.
-                Whether it's a marketing site, an{" "}
-                <strong>interactive product</strong>, or a{" "}
-                <strong>scalable</strong> app, I bring a{" "}
-                <strong>client-focused approach</strong> rooted in{" "}
-                <strong>clear communication</strong>,{" "}
-                <strong>efficient development practices</strong>, and a
-                commitment to <strong>measurable results</strong>.
-              </Typography>
+              {aboutResponse.data.content.map((contentItem, index) => (
+                <Typography
+                  key={index}
+                  variant="body1"
+                  color="text.primary"
+                  paragraph
+                  sx={{
+                    lineHeight: { xs: 1.8, sm: 1.9 },
+                    letterSpacing: { xs: "0.01em", sm: "0.02em" },
+                    fontSize: { xs: "1rem", sm: "1.1rem" },
+                    maxWidth: "65ch",
+                    marginBottom: index === 0 ? "1rem" : "0",
+                  }}
+                  dangerouslySetInnerHTML={{ __html: contentItem.paragraph }}
+                />
+              ))}
               <div className={styles.skillsContainer}>
                 <SkillsDisplay skills={skills} />
               </div>
@@ -378,6 +350,7 @@ export default function Page() {
             </div>
           </div>
         </Box>
+        {/* Projects Section */}
         <Box
           component="section"
           ref={projectCardsRef}
@@ -478,6 +451,7 @@ export default function Page() {
             </Button>
           </Box>
         </Box>
+        {/* Contact Section */}
         <Box
           component="section"
           ref={contactSectionRef}

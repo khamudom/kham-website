@@ -25,7 +25,7 @@ import {
   Alert,
 } from "@mui/material";
 import ProjectTile from "@/components/ProjectTile/ProjectTile";
-import styles from "@/styles/pages/Projects.module.css";
+import styles from "./Projects.module.css";
 import CodeIcon from "@mui/icons-material/Code";
 import WebIcon from "@mui/icons-material/Web";
 import BusinessIcon from "@mui/icons-material/Business";
@@ -215,7 +215,11 @@ export default function Portfolio() {
           </Typography>
         </Breadcrumbs>
         <div>
-          <Typography variant="h1" gutterBottom sx={{ fontSize: "3rem", lineHeight: 1 }}>
+          <Typography
+            variant="h1"
+            gutterBottom
+            sx={{ fontSize: "3rem", lineHeight: 1 }}
+          >
             Projects
           </Typography>
           <Typography variant="body1" mb={4}>
@@ -329,7 +333,11 @@ export default function Portfolio() {
                               title={item.cardTitle}
                               href={`/projects/${item.slug}`}
                               target={"_self"}
-                              projectType={groupBy === "category" ? item.year : (item.category?.[0])}
+                              projectType={
+                                groupBy === "category"
+                                  ? item.year
+                                  : item.category?.[0]
+                              }
                             />
                           </Box>
                         ))}
@@ -382,13 +390,13 @@ export default function Portfolio() {
           <Grid
             container
             spacing={{ xs: 0, md: 3 }}
-            sx={{ 
+            sx={{
               mb: 6,
               mx: "auto",
-              '@media (min-width: 900px)': {
-                width: '100%',
-                marginLeft: 'auto'
-              }
+              "@media (min-width: 900px)": {
+                width: "100%",
+                marginLeft: "auto",
+              },
             }}
           >
             <Grid item xs={12} md={4}>

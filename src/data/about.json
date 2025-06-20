@@ -1,14 +1,12 @@
 {
   "title": "About Me",
   "description": "I'm a software engineer with a passion for creating beautiful and functional web experiences.",
-  "sections": [
+  "content": [
     {
-      "title": "Experience",
-      "content": "Over 10 years of experience in web development, focusing on user experience and performance optimization."
+      "paragraph": "<strong>Front-end engineer</strong> with a track record of creating <strong>intuitive</strong>, <strong>performant</strong> user interfaces that drive <strong>content creation</strong>, <strong>business outcomes</strong>, and streamlined development workflows. Skilled in <strong>scaling design systems</strong> and guiding <strong>technical design decisions</strong> across <strong>enterprise-grade applications</strong>. Known for working <strong>cross-functionally</strong> with designers, product managers, and backend engineers to build <strong>accessible</strong>, reliable, and <strong>maintainable</strong> UI solutions. Brings a <strong>collaborative</strong>, <strong>flexible mindset</strong> and a strong sense of <strong>accountability</strong> to every project."
     },
     {
-      "title": "Skills",
-      "content": "Expertise in modern web technologies, design systems, and accessibility standards."
+      "paragraph": "Currently, I work as a <strong>freelance developer</strong>, partnering with individual clients to design and build high-quality websites and <strong>web applications</strong>. I specialize in delivering <strong>tailored solutions</strong> that balance performance, <strong>usability</strong>, and <strong>visual polish</strong>. Whether it's a marketing site, an <strong>interactive product</strong>, or a <strong>scalable</strong> app, I bring a <strong>client-focused approach</strong> rooted in <strong>clear communication</strong>, <strong>efficient development practices</strong>, and a commitment to <strong>measurable results</strong>."
     }
   ]
 }

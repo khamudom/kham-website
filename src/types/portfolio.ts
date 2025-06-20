@@ -140,8 +140,7 @@ export interface Skill extends BaseEntity {
 export interface AboutContent {
   title: string;
   description: string;
-  sections: {
-    title: string;
-    content: string;
+  content: {
+    paragraph: string;
   }[];
 }
