@@ -331,6 +331,25 @@
           "content": "My biggest contribution was owning the high contrast work for both FAST and <a href=\"https://learn.microsoft.com/en-us/fluent-ui/web-components/\" target=\"_blank\">Fluent UI</a> libraries.\n\nMade sure the components meet accessibility standards, I tested in high contrast, keyboard navigation, and screen readers, like Voice Over, Narrator and JAWS. Making sure FAST components are built to follow best practices and patterns from the <a href=\"https://www.w3.org/WAI/ARIA/apg/\" target=\"_blank\">ARIA Authoring Practice Guide</a>\n\nI wrote up a document to help the open source community and internal partners, build accessible components with high contrast in mind."
         }
       ]
+    },
+    {
+      "id": "project-7",
+      "cardTitle": "The Recipe Room",
+      "title": "The Recipe Room – Recipe Management System",
+      "slug": "the-recipe-room",
+      "year": "2025",
+      "summary": "The Recipe Room is a recipe management system that allows you to manage your recipes and ingredients.",
+      "coverImage": "/images/projects/trr_website.webp",
+      "iframeUrl": "https://the-recipe-room-flame.vercel.app",
+      "technologies": ["Lucide", "Next.js", "Supabase", "TypeScript"],
+      "category": ["Lab Projects"],
+      "links": {
+        "live": "https://the-recipe-room-flame.vercel.app",
+        "github": "https://github.com/khamudom/the-recipe-room"
+      },
+      "experienceSection": {
+        "overview": "I love cooking, and I often find inspiration and new recipe ideas while browsing the web and social media. In the past, I would save these recipes by bookmarking pages or taking screenshots. However, when I wanted to cook the same meal again, Id end up scrolling through countless images and bookmarks to find it. I built this web app to keep all my favorite recipes in one place, making it easy to organize and quickly find them whenever I’m ready to cook.\n\nThis is an ongoing personal project with new features currently in progress."
+      }
     }
   ]
 }

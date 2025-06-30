@@ -35,7 +35,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Portfolio() {
   const { data: projectsResponse, loading, error } = useApi(fetchProjects);
-  const [groupBy, setGroupBy] = useState<"year" | "category">("category");
+  const [groupBy, setGroupBy] = useState<"year" | "category">("year");
   const projectCardsRef = useRef<HTMLDivElement>(null);
   const contactFormRef = useRef<HTMLDivElement>(null);
   const serviceSectionRef = useRef<HTMLDivElement>(null);
@@ -132,6 +132,7 @@ export default function Portfolio() {
     "Web Development",
     "Product Development",
     "Open Source",
+    "Lab Projects",
   ];
   const categories = Array.from(
     new Set(
