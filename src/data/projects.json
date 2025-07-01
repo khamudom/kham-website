@@ -349,7 +349,13 @@
       },
       "experienceSection": {
         "overview": "I love cooking, and I often find inspiration and new recipe ideas while browsing the web and social media. In the past, I would save these recipes by bookmarking pages or taking screenshots. However, when I wanted to cook the same meal again, Id end up scrolling through countless images and bookmarks to find it. I built this web app to keep all my favorite recipes in one place, making it easy to organize and quickly find them whenever I’m ready to cook.\n\nThis is an ongoing personal project with new features currently in progress."
-      }
+      },
+      "sections": [
+        {
+          "header": "Design",
+          "content": "I went with a vintage cookbook-style recipe collection app. This has a warm, nostalgic feel of an old-school cookbook with handwritten fonts, cream colors, and classic recipe card layout."
+        }
+      ]
     }
   ]
 }

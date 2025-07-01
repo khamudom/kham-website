@@ -85,8 +85,11 @@ export default function Page() {
   const [activeSection, setActiveSection] = useState("about");
   const [isMobile, setIsMobile] = useState(false);
 
-  // Get featured projects (first 3)
-  const featuredProjects = projects.slice(0, 3);
+  // Get featured projects by specific IDs
+  const featuredProjectIds = ["project-1", "project-2", "project-7"];
+  const featuredProjects = projects.filter((project) =>
+    featuredProjectIds.includes(project.id)
+  );
 
   const socialLinks = [
     {
