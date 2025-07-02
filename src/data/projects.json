@@ -340,11 +340,11 @@
       "year": "2025",
       "summary": "The Recipe Room is a recipe management system that allows you to manage your recipes and ingredients.",
       "coverImage": "/images/projects/trr_website.webp",
-      "iframeUrl": "https://the-recipe-room-flame.vercel.app",
+      "iframeUrl": "https://thereciperoom.vercel.app",
       "technologies": ["Lucide", "Next.js", "Supabase", "TypeScript"],
       "category": ["Lab Projects"],
       "links": {
-        "live": "https://the-recipe-room-flame.vercel.app",
+        "live": "https://thereciperoom.vercel.app",
         "github": "https://github.com/khamudom/the-recipe-room"
       },
       "experienceSection": {
