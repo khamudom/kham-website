@@ -342,7 +342,7 @@
       "coverImage": "/images/projects/trr_website.webp",
       "iframeUrl": "https://thereciperoom.vercel.app",
       "technologies": ["Lucide", "Next.js", "Supabase", "TypeScript"],
-      "category": ["Lab Projects"],
+      "category": ["Lab Project"],
       "links": {
         "live": "https://thereciperoom.vercel.app",
         "github": "https://github.com/khamudom/the-recipe-room"
