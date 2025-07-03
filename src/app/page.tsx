@@ -422,20 +422,28 @@ export default function Page() {
                       />
                     </Box>
                     <Box sx={{ display: "flex", flexDirection: "column" }}>
-                      <Typography variant="h5" component="h3">
-                        {project.cardTitle}
-                      </Typography>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Typography variant="h5" component="h3">
+                          {project.cardTitle}
+                        </Typography>
+                        <Chip
+                          label={project.category}
+                          variant="outlined"
+                          size="small"
+                          sx={{
+                            width: "fit-content",
+                          }}
+                        />
+                      </div>
                       <Typography variant="body2" color="text.secondary">
                         {project.summary}
                       </Typography>
-                      <Chip
-                        label={project.category}
-                        variant="outlined"
-                        sx={{
-                          width: "fit-content",
-                          marginTop: "12px",
-                        }}
-                      />
                     </Box>
                   </CardContent>
                 </Card>
