@@ -29,6 +29,7 @@ import {
   TextField,
   Snackbar,
   Alert,
+  Chip,
 } from "@mui/material";
 import { Button } from "@/design-system/components/Button";
 import { useThemeBackgrounds } from "@/hooks/useThemeBackgrounds";
@@ -427,6 +428,14 @@ export default function Page() {
                       <Typography variant="body2" color="text.secondary">
                         {project.summary}
                       </Typography>
+                      <Chip
+                        label={project.category}
+                        variant="outlined"
+                        sx={{
+                          width: "fit-content",
+                          marginTop: "12px",
+                        }}
+                      />
                     </Box>
                   </CardContent>
                 </Card>

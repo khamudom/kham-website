@@ -338,7 +338,7 @@
       "title": "The Recipe Room – Recipe Management System",
       "slug": "the-recipe-room",
       "year": "2025",
-      "summary": "The Recipe Room is a recipe management system that allows you to manage your recipes and ingredients.",
+      "summary": "The Recipe Room app is a recipe management system that allows you to manage your recipes and ingredients.",
       "coverImage": "/images/projects/trr_website.webp",
       "iframeUrl": "https://thereciperoom.vercel.app",
       "technologies": ["Lucide", "Next.js", "Supabase", "TypeScript"],
