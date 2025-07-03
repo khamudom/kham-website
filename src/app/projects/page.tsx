@@ -132,7 +132,7 @@ export default function Portfolio() {
     "Web Development",
     "Product Development",
     "Open Source",
-    "Lab Project",
+    "Personal Project",
   ];
   const categories = Array.from(
     new Set(
