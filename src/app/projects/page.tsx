@@ -252,14 +252,17 @@ export default function Portfolio() {
                   groupedProjects[year] &&
                   groupedProjects[year].length > 0 && (
                     <Box key={year} sx={{ mb: 6 }}>
-                      <Typography variant="h2" sx={{ fontSize: "2rem", mb: 3 }}>
+                      <Typography
+                        variant="h2"
+                        sx={{ fontSize: "1.5rem", mb: 3 }}
+                      >
                         {year}
                       </Typography>
                       <Box
                         sx={{
                           display: "flex",
                           flexWrap: "wrap",
-                          gap: "20px",
+                          rowGap: "20px",
                           justifyContent: "flex-start",
                           alignItems: "flex-start",
                         }}
