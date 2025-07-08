@@ -510,7 +510,7 @@ export default function Page() {
                   justifyContent: "center",
                 }}
               >
-                <div>
+                {/* <div>
                   <Typography
                     variant="body1"
                     sx={{
@@ -544,7 +544,7 @@ export default function Page() {
                     display: { xs: "none", md: "block" },
                     mx: 2,
                   }}
-                />
+                /> */}
                 <Box sx={{ minWidth: { md: "300px" } }}>
                   <Typography variant="h6" sx={{ mb: 2 }}>
                     What You Can Expect
