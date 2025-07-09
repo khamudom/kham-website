@@ -341,7 +341,7 @@
       "summary": "The Recipe Room app is a recipe management system that allows you to manage your recipes and ingredients.",
       "coverImage": "/images/projects/trr_website.webp",
       "iframeUrl": "https://thereciperoom.net",
-      "technologies": ["Lucide", "Next.js", "Supabase", "TypeScript"],
+      "technologies": ["Next.js", "Progressive Web App", "Supabase", "TypeScript"],
       "category": ["Personal Project"],
       "links": {
         "live": "https://thereciperoom.net",
