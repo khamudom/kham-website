@@ -21,6 +21,7 @@ import { Download, Calendar, MapPin } from "lucide-react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Link from "next/link";
 import styles from "./About.module.css";
+import { ThemeSelector } from "@/components/ThemeSelector";
 
 export default function About() {
   const {
@@ -288,6 +289,35 @@ export default function About() {
           </Box>
         </Container>
       </Box>
+      <footer
+        style={{
+          padding: "0 1rem 4rem 1rem",
+          textAlign: "center",
+          color: "var(--color-text-secondary)",
+        }}
+      >
+        <p style={{ margin: 0, fontSize: "1rem" }}>
+          This website was built using <strong>Next.js</strong>,{" "}
+          <strong>TypeScript</strong>, <strong>Material UI</strong>, and{" "}
+          <strong>GSAP</strong>. <br /> View the source code on{" "}
+          <a
+            href="https://github.com/khamudom/kham-website"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.25rem",
+              textDecoration: "underline",
+            }}
+          >
+            GitHub
+          </a>
+        </p>
+        <div style={{ marginTop: "1rem" }}>
+          <ThemeSelector />
+        </div>
+      </footer>
     </>
   );
 }

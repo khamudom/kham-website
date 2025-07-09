@@ -330,6 +330,7 @@ export default function Page() {
                     borderRadius: 2,
                     p: 3,
                     mb: 3,
+                    mt:3,
                     position: "relative",
                     "&::before": {
                       content: '"TL;DR"',

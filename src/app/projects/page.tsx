@@ -46,6 +46,7 @@ import CodeIcon from "@mui/icons-material/Code";
 import WebIcon from "@mui/icons-material/Web";
 import BusinessIcon from "@mui/icons-material/Business";
 import { Button } from "@/design-system/components/Button";
+import { ThemeSelector } from "@/components/ThemeSelector";
 
 // Register GSAP ScrollTrigger plugin for scroll-based animations
 gsap.registerPlugin(ScrollTrigger);
@@ -239,406 +240,437 @@ export default function Portfolio() {
   if (!projectsResponse?.data?.data) return null;
 
   return (
-    <Box component="section" sx={{ py: 9 }}>
-      <Container maxWidth={false} sx={{ maxWidth: "1280px", margin: "0 auto" }}>
-        {/* Breadcrumb navigation */}
-        <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 4 }}>
-          <Link href="/" passHref className={styles.breadcrumbLink}>
-            <Typography variant="body2" color="text.secondary">
-              Home
+    <>
+      <Box component="section" sx={{ py: 9 }}>
+        <Container maxWidth={false} sx={{ maxWidth: "1280px", margin: "0 auto" }}>
+          {/* Breadcrumb navigation */}
+          <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 4 }}>
+            <Link href="/" passHref className={styles.breadcrumbLink}>
+              <Typography variant="body2" color="text.secondary">
+                Home
+              </Typography>
+            </Link>
+            <Typography variant="body2" color="text.primary">
+              Projects
             </Typography>
-          </Link>
-          <Typography variant="body2" color="text.primary">
-            Projects
-          </Typography>
-        </Breadcrumbs>
-        
-        {/* Page header section */}
-        <div>
-          <Typography
-            variant="h1"
-            gutterBottom
-            sx={{ fontSize: "3rem", lineHeight: 1 }}
-          >
-            Projects
-          </Typography>
-          <Typography variant="body1" mb={4}>
-            A collection of my work, from enterprise applications to personal
-            projects.
-          </Typography>
+          </Breadcrumbs>
+          
+          {/* Page header section */}
+          <div>
+            <Typography
+              variant="h1"
+              gutterBottom
+              sx={{ fontSize: "3rem", lineHeight: 1 }}
+            >
+              Projects
+            </Typography>
+            <Typography variant="body1" mb={4}>
+              A collection of my work, from enterprise applications to personal
+              projects.
+            </Typography>
 
-          {/* Filter dropdown for grouping projects */}
-          <Box sx={{ mb: 6 }}>
-            <FormControl sx={{ minWidth: 200 }}>
-              <InputLabel>Filter by</InputLabel>
-              <Select
-                value={groupBy}
-                label="Filter by"
-                onChange={(e) =>
-                  setGroupBy(e.target.value as "year" | "category")
-                }
-              >
-                <MenuItem value="year">Year</MenuItem>
-                <MenuItem value="category">Category</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-        </div>
+            {/* Filter dropdown for grouping projects */}
+            <Box sx={{ mb: 6 }}>
+              <FormControl sx={{ minWidth: 200 }}>
+                <InputLabel>Filter by</InputLabel>
+                <Select
+                  value={groupBy}
+                  label="Filter by"
+                  onChange={(e) =>
+                    setGroupBy(e.target.value as "year" | "category")
+                  }
+                >
+                  <MenuItem value="year">Year</MenuItem>
+                  <MenuItem value="category">Category</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+          </div>
 
-        {/* Projects grid with animations */}
-        <div ref={projectCardsRef}>
-          {groupBy === "year"
-            ? years.map(
-                (year) =>
-                  groupedProjects[year] &&
-                  groupedProjects[year].length > 0 && (
-                    <Box key={year} sx={{ mb: 6 }}>
-                      <Typography
-                        variant="h2"
-                        sx={{ fontSize: "1.5rem", mb: 3 }}
-                      >
-                        {year}
-                      </Typography>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexWrap: "wrap",
-                          rowGap: "20px",
-                          justifyContent: "flex-start",
-                          alignItems: "flex-start",
-                        }}
-                      >
-                        {groupedProjects[year].map((item) => (
-                          <Box
-                            key={item.id}
-                            className={styles.projectItem}
-                            sx={{
-                              flex: {
-                                xs: "none",
-                                width: "100%",
-                                sm: "0 1 340px",
-                              },
-                              maxWidth: "100%",
-                            }}
-                          >
-                            <ProjectTile
-                              width={280}
-                              height={180}
-                              imgSrc={item.coverImage}
-                              imgAlt={item.cardTitle}
-                              title={item.cardTitle}
-                              href={`/projects/${item.slug}`}
-                              target={"_self"}
-                              projectType={item.category?.[0]}
-                            />
-                          </Box>
-                        ))}
+          {/* Projects grid with animations */}
+          <div ref={projectCardsRef}>
+            {groupBy === "year"
+              ? years.map(
+                  (year) =>
+                    groupedProjects[year] &&
+                    groupedProjects[year].length > 0 && (
+                      <Box key={year} sx={{ mb: 6 }}>
+                        <Typography
+                          variant="h2"
+                          sx={{ fontSize: "1.5rem", mb: 3 }}
+                        >
+                          {year}
+                        </Typography>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexWrap: "wrap",
+                            rowGap: "20px",
+                            justifyContent: "flex-start",
+                            alignItems: "flex-start",
+                          }}
+                        >
+                          {groupedProjects[year].map((item) => (
+                            <Box
+                              key={item.id}
+                              className={styles.projectItem}
+                              sx={{
+                                flex: {
+                                  xs: "none",
+                                  width: "100%",
+                                  sm: "0 1 340px",
+                                },
+                                maxWidth: "100%",
+                              }}
+                            >
+                              <ProjectTile
+                                width={280}
+                                height={180}
+                                imgSrc={item.coverImage}
+                                imgAlt={item.cardTitle}
+                                title={item.cardTitle}
+                                href={`/projects/${item.slug}`}
+                                target={"_self"}
+                                projectType={item.category?.[0]}
+                              />
+                            </Box>
+                          ))}
+                        </Box>
                       </Box>
-                    </Box>
-                  )
+                    )
               )
-            : categoryOrder.map(
-                (category) =>
-                  groupedProjects[category] &&
-                  groupedProjects[category].length > 0 && (
-                    <Box key={category} sx={{ mb: 6 }}>
-                      <Typography
-                        variant="h2"
-                        sx={{ fontSize: "1.5rem", mb: 3 }}
-                      >
-                        {category}
-                      </Typography>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexWrap: "wrap",
-                          gap: "20px",
-                          justifyContent: "flex-start",
-                          alignItems: "flex-start",
-                        }}
-                      >
-                        {groupedProjects[category].map((item) => (
-                          <Box
-                            key={item.id}
-                            className={styles.projectItem}
-                            sx={{
-                              flex: {
-                                xs: "none",
-                                width: "100%",
-                                sm: "0 1 340px",
-                              },
-                              maxWidth: "100%",
-                            }}
-                          >
-                            <ProjectTile
-                              width={280}
-                              height={180}
-                              imgSrc={item.coverImage}
-                              imgAlt={item.cardTitle}
-                              title={item.cardTitle}
-                              href={`/projects/${item.slug}`}
-                              target={"_self"}
-                              projectType={
-                                groupBy === "category"
-                                  ? item.year
-                                  : item.category?.[0]
-                              }
-                            />
-                          </Box>
-                        ))}
+              : categoryOrder.map(
+                  (category) =>
+                    groupedProjects[category] &&
+                    groupedProjects[category].length > 0 && (
+                      <Box key={category} sx={{ mb: 6 }}>
+                        <Typography
+                          variant="h2"
+                          sx={{ fontSize: "1.5rem", mb: 3 }}
+                        >
+                          {category}
+                        </Typography>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexWrap: "wrap",
+                            gap: "20px",
+                            justifyContent: "flex-start",
+                            alignItems: "flex-start",
+                          }}
+                        >
+                          {groupedProjects[category].map((item) => (
+                            <Box
+                              key={item.id}
+                              className={styles.projectItem}
+                              sx={{
+                                flex: {
+                                  xs: "none",
+                                  width: "100%",
+                                  sm: "0 1 340px",
+                                },
+                                maxWidth: "100%",
+                              }}
+                            >
+                              <ProjectTile
+                                width={280}
+                                height={180}
+                                imgSrc={item.coverImage}
+                                imgAlt={item.cardTitle}
+                                title={item.cardTitle}
+                                href={`/projects/${item.slug}`}
+                                target={"_self"}
+                                projectType={
+                                  groupBy === "category"
+                                    ? item.year
+                                    : item.category?.[0]
+                                }
+                              />
+                            </Box>
+                          ))}
+                        </Box>
                       </Box>
-                    </Box>
-                  )
+                    )
               )}
-        </div>
+          </div>
 
-        {/* Services section with contact form */}
-        <Box
-          ref={serviceSectionRef}
-          sx={{
-            mt: 12,
-            p: { xs: 4, md: 8 },
-            borderRadius: 2,
-            background:
-              "linear-gradient(145deg, rgba(25, 118, 210, 0.05) 0%, rgba(25, 118, 210, 0.1) 100%)",
-            textAlign: "center",
-          }}
-        >
-          <Typography
-            variant="h2"
-            sx={{
-              fontSize: { xs: "2rem", md: "2.5rem" },
-              mb: 3,
-              fontWeight: 600,
-              color: "text.primary",
-            }}
-          >
-            Transform Your Digital Vision Into Reality
-          </Typography>
-
-          <Typography
-            variant="body1"
-            sx={{
-              mb: 4,
-              maxWidth: "800px",
-              mx: "auto",
-              color: "text.secondary",
-              fontSize: "1.1rem",
-              lineHeight: 1.6,
-            }}
-          >
-            From establishing your online presence to building complex
-            enterprise solutions, I help businesses and individuals leverage
-            technology to achieve their goals. Let's create something
-            extraordinary together.
-          </Typography>
-
-          {/* Service offerings grid */}
-          <Grid
-            container
-            spacing={{ xs: 0, md: 3 }}
-            sx={{
-              mb: 6,
-              mx: "auto",
-              "@media (min-width: 900px)": {
-                width: "100%",
-                marginLeft: "auto",
-              },
-            }}
-          >
-            {/* Web Development service */}
-            <Grid item xs={12} md={4}>
-              <Box
-                sx={{
-                  p: 3,
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <WebIcon
-                  sx={{
-                    fontSize: "3rem",
-                    color: "primary.main",
-                    mb: 2,
-                  }}
-                />
-                <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
-                  Web Development
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  align="center"
-                >
-                  Modern, responsive websites and web applications built with
-                  cutting-edge technologies
-                </Typography>
-              </Box>
-            </Grid>
-            
-            {/* Product Development service */}
-            <Grid item xs={12} md={4}>
-              <Box
-                sx={{
-                  p: 3,
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <CodeIcon
-                  sx={{
-                    fontSize: "3rem",
-                    color: "primary.main",
-                    mb: 2,
-                  }}
-                />
-                <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
-                  Product Development
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  align="center"
-                >
-                  End-to-end product development from concept to deployment
-                </Typography>
-              </Box>
-            </Grid>
-            
-            {/* Enterprise Solutions service */}
-            <Grid item xs={12} md={4}>
-              <Box
-                sx={{
-                  p: 3,
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <BusinessIcon
-                  sx={{
-                    fontSize: "3rem",
-                    color: "primary.main",
-                    mb: 2,
-                  }}
-                />
-                <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
-                  Enterprise Solutions
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  align="center"
-                >
-                  Scalable systems and applications for growing businesses
-                </Typography>
-              </Box>
-            </Grid>
-          </Grid>
-
-          {/* Contact form section */}
+          {/* Services section with contact form */}
           <Box
-            ref={contactFormRef}
+            ref={serviceSectionRef}
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              mt: 8,
-              mb: 4,
+              mt: 12,
+              p: { xs: 4, md: 8 },
+              borderRadius: 2,
+              background:
+                "linear-gradient(145deg, rgba(25, 118, 210, 0.05) 0%, rgba(25, 118, 210, 0.1) 100%)",
+              textAlign: "center",
             }}
           >
-            <Box
-              component="form"
-              onSubmit={handleSubmit}
+            <Typography
+              variant="h2"
               sx={{
-                width: "100%",
-                maxWidth: "600px",
-                display: "flex",
-                flexDirection: "column",
-                gap: 2,
+                fontSize: { xs: "2rem", md: "2.5rem" },
+                mb: 3,
+                fontWeight: 600,
+                color: "text.primary",
               }}
             >
-              {/* Name input field */}
-              <TextField
-                required
-                fullWidth
-                label="Name"
-                name="name"
-                value={formData.name}
-                onChange={handleFormChange}
-                variant="outlined"
-                disabled={isSubmitting}
-                size="small"
-                sx={textFieldStyles}
-              />
+              Transform Your Digital Vision Into Reality
+            </Typography>
 
-              {/* Email input field */}
-              <TextField
-                required
-                fullWidth
-                label="Email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleFormChange}
-                variant="outlined"
-                disabled={isSubmitting}
-                size="small"
-                sx={textFieldStyles}
-              />
+            <Typography
+              variant="body1"
+              sx={{
+                mb: 4,
+                maxWidth: "800px",
+                mx: "auto",
+                color: "text.secondary",
+                fontSize: "1.1rem",
+                lineHeight: 1.6,
+              }}
+            >
+              From establishing your online presence to building complex
+              enterprise solutions, I help businesses and individuals leverage
+              technology to achieve their goals. Let's create something
+              extraordinary together.
+            </Typography>
 
-              {/* Message textarea */}
-              <TextField
-                required
-                fullWidth
-                label="Message"
-                name="message"
-                multiline
-                rows={4}
-                value={formData.message}
-                onChange={handleFormChange}
-                variant="outlined"
-                disabled={isSubmitting}
-                size="small"
-                sx={textFieldStyles}
-              />
+            {/* Service offerings grid */}
+            <Grid
+              container
+              spacing={{ xs: 0, md: 3 }}
+              sx={{
+                mb: 6,
+                mx: "auto",
+                "@media (min-width: 900px)": {
+                  width: "100%",
+                  marginLeft: "auto",
+                },
+              }}
+            >
+              {/* Web Development service */}
+              <Grid item xs={12} md={4}>
+                <Box
+                  sx={{
+                    p: 3,
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <WebIcon
+                    sx={{
+                      fontSize: "3rem",
+                      color: "primary.main",
+                      mb: 2,
+                    }}
+                  />
+                  <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
+                    Web Development
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    align="center"
+                  >
+                    Modern, responsive websites and web applications built with
+                    cutting-edge technologies
+                  </Typography>
+                </Box>
+              </Grid>
+              
+              {/* Product Development service */}
+              <Grid item xs={12} md={4}>
+                <Box
+                  sx={{
+                    p: 3,
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <CodeIcon
+                    sx={{
+                      fontSize: "3rem",
+                      color: "primary.main",
+                      mb: 2,
+                    }}
+                  />
+                  <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
+                    Product Development
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    align="center"
+                  >
+                    End-to-end product development from concept to deployment
+                  </Typography>
+                </Box>
+              </Grid>
+              
+              {/* Enterprise Solutions service */}
+              <Grid item xs={12} md={4}>
+                <Box
+                  sx={{
+                    p: 3,
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <BusinessIcon
+                    sx={{
+                      fontSize: "3rem",
+                      color: "primary.main",
+                      mb: 2,
+                    }}
+                  />
+                  <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
+                    Enterprise Solutions
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    align="center"
+                  >
+                    Scalable systems and applications for growing businesses
+                  </Typography>
+                </Box>
+              </Grid>
+            </Grid>
 
-              {/* Submit button */}
-              <Button
-                type="submit"
-                variant="contained"
-                size="small"
-                fullWidth
-                sx={{ mt: 2 }}
-                disabled={isSubmitting}
+            {/* Contact form section */}
+            <Box
+              ref={contactFormRef}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                mt: 8,
+                mb: 4,
+              }}
+            >
+              <Box
+                component="form"
+                onSubmit={handleSubmit}
+                sx={{
+                  width: "100%",
+                  maxWidth: "600px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 2,
+                }}
               >
-                {isSubmitting ? "Sending..." : "Let's Talk About Your Project"}
-              </Button>
+                {/* Name input field */}
+                <TextField
+                  required
+                  fullWidth
+                  label="Name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleFormChange}
+                  variant="outlined"
+                  disabled={isSubmitting}
+                  size="small"
+                  sx={textFieldStyles}
+                />
+
+                {/* Email input field */}
+                <TextField
+                  required
+                  fullWidth
+                  label="Email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleFormChange}
+                  variant="outlined"
+                  disabled={isSubmitting}
+                  size="small"
+                  sx={textFieldStyles}
+                />
+
+                {/* Message textarea */}
+                <TextField
+                  required
+                  fullWidth
+                  label="Message"
+                  name="message"
+                  multiline
+                  rows={4}
+                  value={formData.message}
+                  onChange={handleFormChange}
+                  variant="outlined"
+                  disabled={isSubmitting}
+                  size="small"
+                  sx={textFieldStyles}
+                />
+
+                {/* Submit button */}
+                <Button
+                  type="submit"
+                  variant="contained"
+                  size="small"
+                  fullWidth
+                  sx={{ mt: 2 }}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Sending..." : "Let's Talk About Your Project"}
+                </Button>
+              </Box>
             </Box>
           </Box>
-        </Box>
-      </Container>
-      
-      {/* Snackbar for form submission feedback */}
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={6000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      >
-        <Alert
+        </Container>
+        
+        {/* Snackbar for form submission feedback */}
+        <Snackbar
+          open={snackbar.open}
+          autoHideDuration={6000}
           onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          sx={{ width: "100%" }}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
-    </Box>
+          <Alert
+            onClose={handleCloseSnackbar}
+            severity={snackbar.severity}
+            sx={{ width: "100%" }}
+          >
+            {snackbar.message}
+          </Alert>
+        </Snackbar>
+      </Box>
+      <footer
+        style={{
+          padding: "0 1rem 4rem 1rem",
+          textAlign: "center",
+          color: "var(--color-text-secondary)",
+        }}
+      >
+        <p style={{ margin: 0, fontSize: "1rem" }}>
+          This website was built using <strong>Next.js</strong>,{" "}
+          <strong>TypeScript</strong>, <strong>Material UI</strong>, and{" "}
+          <strong>GSAP</strong>. <br /> View the source code on{" "}
+          <a
+            href="https://github.com/khamudom/kham-website"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.25rem",
+              textDecoration: "underline",
+            }}
+          >
+            GitHub
+          </a>
+        </p>
+        <div style={{ marginTop: "1rem" }}>
+          <ThemeSelector />
+        </div>
+      </footer>
+    </>
   );
 }
