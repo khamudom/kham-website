@@ -98,6 +98,7 @@ export interface Project {
   sections?: ProjectSection[];
   experienceSection?: ExperienceSection;
   year: string;
+  order?: number;
 }
 
 // Experience Types
@@ -140,6 +141,7 @@ export interface Skill extends BaseEntity {
 export interface AboutContent {
   title: string;
   description: string;
+  tldr?: string;
   content: {
     paragraph: string;
   }[];

@@ -320,6 +320,44 @@ export default function Page() {
           <div>
             {isMobile && <h2 className={styles.mobileSectionHeader}>About</h2>}
             <div ref={aboutContentRef}>
+              {/* TL;DR Section */}
+              {aboutResponse.data.tldr && (
+                <Box
+                  sx={{
+                    backgroundColor: "background.paper",
+                    border: "1px solid",
+                    borderColor: "divider",
+                    borderRadius: 2,
+                    p: 3,
+                    mb: 3,
+                    position: "relative",
+                    "&::before": {
+                      content: '"TL;DR"',
+                      position: "absolute",
+                      top: "-10px",
+                      left: "16px",
+                      backgroundColor: "background.default",
+                      px: 1,
+                      fontSize: "0.75rem",
+                      fontWeight: 600,
+                      color: "text.secondary",
+                      letterSpacing: "0.1em",
+                    },
+                  }}
+                >
+                  <Typography
+                    variant="body1"
+                    color="text.primary"
+                    sx={{
+                      lineHeight: 1.6,
+                      fontSize: { xs: "1rem", sm: "1.05rem" },
+                      fontWeight: 500,
+                    }}
+                  >
+                    {aboutResponse.data.tldr}
+                  </Typography>
+                </Box>
+              )}
               {aboutResponse.data.content.map((contentItem, index) => (
                 <Typography
                   key={index}

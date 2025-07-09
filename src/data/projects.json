@@ -24,7 +24,8 @@
       },
       "experienceSection": {
         "overview": "I designed and developed a modern, responsive website for Camden Computers LLC, a long-standing IT solutions provider offering enterprise services, security systems, and web development since 1992.\n\nBuilt using Astro for speed and static-site performance, the site leverages TypeScript, JavaScript, HTML, and CSS for maintainability and clean structure. I integrated GSAP to deliver subtle motion and engaging UI interactions that reflect the brand's professionalism and reliability.\n\nThe goal was to create a site that's both performant and easy to navigate, optimized for SEO, accessibility, and future scalability. The result is a clean, fast-loading site that communicates trust and technical expertise to potential clients.\n"
-      }
+      },
+      "order": 2
     },
     {
       "id": "project-2",
@@ -49,7 +50,8 @@
       "links": {
         "live": "https://delvalmedia.netlify.app/",
         "github": ""
-      }
+      },
+      "order": 3
     },
     {
       "id": "project-3",
@@ -341,7 +343,7 @@
       "summary": "The Recipe Room app is a recipe management system that allows you to manage your recipes and ingredients.",
       "coverImage": "/images/projects/trr_website.webp",
       "iframeUrl": "https://thereciperoom.net",
-      "technologies": ["Lucide", "Next.js", "Supabase", "TypeScript"],
+      "technologies": ["Next.js", "Progressive Web App", "Supabase", "TypeScript"],
       "category": ["Personal Project"],
       "links": {
         "live": "https://thereciperoom.net",
@@ -355,7 +357,8 @@
           "header": "Design",
           "content": "I went with a vintage cookbook-style recipe collection app. This has a warm, nostalgic feel of an old-school cookbook with handwritten fonts, cream colors, and classic recipe card layout."
         }
-      ]
+      ],
+      "order": 1
     }
   ]
 }

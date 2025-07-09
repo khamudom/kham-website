@@ -15,10 +15,11 @@ import {
   AccordionDetails,
   Chip,
   Divider,
+  Breadcrumbs,
 } from "@mui/material";
 import { Download, Calendar, MapPin } from "lucide-react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import Link from "next/link";
 import styles from "./About.module.css";
 
 export default function About() {
@@ -84,11 +85,19 @@ export default function About() {
             justifyContent: "space-between",
             width: "100%",
             maxWidth: "1280px",
+            padding: "0 24px",
           }}
         >
-          <Button startIcon={<ArrowBackIcon />} href="/" color="inherit">
-            Kham Udom
-          </Button>
+          <Breadcrumbs aria-label="breadcrumb">
+            <Link href="/" passHref className={styles.breadcrumbLink}>
+              <Typography variant="body2" color="text.secondary">
+                Home
+              </Typography>
+            </Link>
+            <Typography variant="body2" color="text.primary">
+              About
+            </Typography>
+          </Breadcrumbs>
           <Button
             variant="contained"
             color="primary"

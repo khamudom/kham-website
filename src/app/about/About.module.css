@@ -10,3 +10,13 @@
   justify-content: center;
   border-bottom: 1px solid var(--color-border);
 }
+
+.breadcrumbLink {
+  text-decoration: none;
+  transition: text-decoration var(--transition-fast);
+  color: inherit;
+}
+
+.breadcrumbLink:hover {
+  text-decoration: underline;
+}

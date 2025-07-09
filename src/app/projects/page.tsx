@@ -1,3 +1,19 @@
+/**
+ * Projects Page Component
+ * 
+ * This component displays a portfolio of projects with filtering capabilities.
+ * Features include:
+ * - Dynamic project loading from API
+ * - Grouping by year or category
+ * - GSAP animations for smooth transitions
+ * - Contact form for project inquiries
+ * - Responsive design with Material-UI components
+ * 
+ * The page fetches project data, allows users to filter projects by year or category,
+ * displays them in a grid layout with animations, and includes a service section
+ * with a contact form for potential clients.
+ */
+
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
@@ -31,27 +47,37 @@ import WebIcon from "@mui/icons-material/Web";
 import BusinessIcon from "@mui/icons-material/Business";
 import { Button } from "@/design-system/components/Button";
 
+// Register GSAP ScrollTrigger plugin for scroll-based animations
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Portfolio() {
+  // Fetch projects data using custom API hook
   const { data: projectsResponse, loading, error } = useApi(fetchProjects);
+  
+  // State for grouping projects (by year or category)
   const [groupBy, setGroupBy] = useState<"year" | "category">("year");
+  
+  // Refs for GSAP animations and scroll triggers
   const projectCardsRef = useRef<HTMLDivElement>(null);
   const contactFormRef = useRef<HTMLDivElement>(null);
   const serviceSectionRef = useRef<HTMLDivElement>(null);
 
+  // Contact form state management
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Snackbar state for form submission feedback
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
     severity: "success" as "success" | "error",
   });
 
+  // Material-UI TextField styling for consistent hover effects
   const textFieldStyles = {
     "& .MuiOutlinedInput-root": {
       "&:hover fieldset": {
@@ -60,6 +86,7 @@ export default function Portfolio() {
     },
   };
 
+  // Handle form input changes
   const handleFormChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -70,6 +97,7 @@ export default function Portfolio() {
     }));
   };
 
+  // Handle contact form submission via Formspree
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -92,6 +120,7 @@ export default function Portfolio() {
           message: "Message sent successfully!",
           severity: "success",
         });
+        // Reset form after successful submission
         setFormData({
           name: "",
           email: "",
@@ -111,11 +140,12 @@ export default function Portfolio() {
     }
   };
 
+  // Close snackbar notification
   const handleCloseSnackbar = () => {
     setSnackbar((prev) => ({ ...prev, open: false }));
   };
 
-  // Get unique years and categories from projects
+  // Extract and sort unique years from projects data
   const years = Array.from(
     new Set(projectsResponse?.data?.data?.map((project) => project.year) || [])
   ).sort((a, b) => {
@@ -128,12 +158,15 @@ export default function Portfolio() {
     return getSortYear(b) - getSortYear(a);
   });
 
+  // Define category order for consistent sorting
   const categoryOrder = [
     "Web Development",
     "Product Development",
     "Open Source",
     "Personal Project",
   ];
+  
+  // Extract and sort unique categories from projects data
   const categories = Array.from(
     new Set(
       projectsResponse?.data?.data?.flatMap((project) => project.category || [])
@@ -144,25 +177,27 @@ export default function Portfolio() {
     return indexA - indexB;
   });
 
-  // Group projects by year or category
+  // Group projects by year or category based on user selection
   let groupedProjects: Record<string, Project[]> = {};
   if (projectsResponse?.data?.data) {
     if (groupBy === "year") {
       groupedProjects = years.reduce((acc, year) => {
-        acc[year] = projectsResponse?.data?.data.filter((p) => p.year === year);
+        acc[year] = projectsResponse?.data?.data
+          .filter((p) => p.year === year)
+          .sort((a, b) => (a.order ?? 99) - (b.order ?? 99) || a.id.localeCompare(b.id)); // Sort by 'order' if present, then by ID
         return acc;
       }, {} as Record<string, Project[]>);
     } else {
       groupedProjects = categoryOrder.reduce((acc, category) => {
-        acc[category] = projectsResponse?.data?.data.filter((p) =>
-          p.category?.includes(category)
-        );
+        acc[category] = projectsResponse?.data?.data
+          .filter((p) => p.category?.includes(category))
+          .sort((a, b) => (a.order ?? 99) - (b.order ?? 99) || a.id.localeCompare(b.id)); // Sort by 'order' if present, then by ID
         return acc;
       }, {} as Record<string, Project[]>);
     }
   }
 
-  // Project cards animation
+  // GSAP animation for project cards - creates staggered fade-in effect
   useGSAP(() => {
     if (!projectCardsRef.current) return;
 
@@ -191,6 +226,7 @@ export default function Portfolio() {
     );
   }, [groupBy, projectsResponse]);
 
+  // Loading and error states
   if (loading) return <LoadingSpinner size="large" />;
   if (error) {
     return (
@@ -205,6 +241,7 @@ export default function Portfolio() {
   return (
     <Box component="section" sx={{ py: 9 }}>
       <Container maxWidth={false} sx={{ maxWidth: "1280px", margin: "0 auto" }}>
+        {/* Breadcrumb navigation */}
         <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 4 }}>
           <Link href="/" passHref className={styles.breadcrumbLink}>
             <Typography variant="body2" color="text.secondary">
@@ -215,6 +252,8 @@ export default function Portfolio() {
             Projects
           </Typography>
         </Breadcrumbs>
+        
+        {/* Page header section */}
         <div>
           <Typography
             variant="h1"
@@ -228,6 +267,7 @@ export default function Portfolio() {
             projects.
           </Typography>
 
+          {/* Filter dropdown for grouping projects */}
           <Box sx={{ mb: 6 }}>
             <FormControl sx={{ minWidth: 200 }}>
               <InputLabel>Filter by</InputLabel>
@@ -245,6 +285,7 @@ export default function Portfolio() {
           </Box>
         </div>
 
+        {/* Projects grid with animations */}
         <div ref={projectCardsRef}>
           {groupBy === "year"
             ? years.map(
@@ -351,6 +392,7 @@ export default function Portfolio() {
               )}
         </div>
 
+        {/* Services section with contact form */}
         <Box
           ref={serviceSectionRef}
           sx={{
@@ -391,6 +433,7 @@ export default function Portfolio() {
             extraordinary together.
           </Typography>
 
+          {/* Service offerings grid */}
           <Grid
             container
             spacing={{ xs: 0, md: 3 }}
@@ -403,6 +446,7 @@ export default function Portfolio() {
               },
             }}
           >
+            {/* Web Development service */}
             <Grid item xs={12} md={4}>
               <Box
                 sx={{
@@ -433,6 +477,8 @@ export default function Portfolio() {
                 </Typography>
               </Box>
             </Grid>
+            
+            {/* Product Development service */}
             <Grid item xs={12} md={4}>
               <Box
                 sx={{
@@ -462,6 +508,8 @@ export default function Portfolio() {
                 </Typography>
               </Box>
             </Grid>
+            
+            {/* Enterprise Solutions service */}
             <Grid item xs={12} md={4}>
               <Box
                 sx={{
@@ -493,6 +541,7 @@ export default function Portfolio() {
             </Grid>
           </Grid>
 
+          {/* Contact form section */}
           <Box
             ref={contactFormRef}
             sx={{
@@ -514,6 +563,7 @@ export default function Portfolio() {
                 gap: 2,
               }}
             >
+              {/* Name input field */}
               <TextField
                 required
                 fullWidth
@@ -527,6 +577,7 @@ export default function Portfolio() {
                 sx={textFieldStyles}
               />
 
+              {/* Email input field */}
               <TextField
                 required
                 fullWidth
@@ -541,6 +592,7 @@ export default function Portfolio() {
                 sx={textFieldStyles}
               />
 
+              {/* Message textarea */}
               <TextField
                 required
                 fullWidth
@@ -556,6 +608,7 @@ export default function Portfolio() {
                 sx={textFieldStyles}
               />
 
+              {/* Submit button */}
               <Button
                 type="submit"
                 variant="contained"
@@ -570,6 +623,8 @@ export default function Portfolio() {
           </Box>
         </Box>
       </Container>
+      
+      {/* Snackbar for form submission feedback */}
       <Snackbar
         open={snackbar.open}
         autoHideDuration={6000}
