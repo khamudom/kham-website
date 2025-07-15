@@ -87,10 +87,10 @@ export default function Page() {
   const [isMobile, setIsMobile] = useState(false);
 
   // Get featured projects by specific IDs
-  const featuredProjectIds = ["project-1", "project-2", "project-7"];
-  const featuredProjects = projects.filter((project) =>
-    featuredProjectIds.includes(project.id)
-  );
+  const featuredProjectIds = ["project-7", "project-1", "project-2"];
+  const featuredProjects = featuredProjectIds
+    .map(id => projects.find(project => project.id === id))
+    .filter((project): project is typeof projects[0] => project !== undefined);
 
   const socialLinks = [
     {

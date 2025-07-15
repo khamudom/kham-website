@@ -198,33 +198,26 @@ export default function Portfolio() {
     }
   }
 
-  // GSAP animation for project cards - creates staggered fade-in effect
+  // GSAP animation for project groups (header + cards)
   useGSAP(() => {
     if (!projectCardsRef.current) return;
-
-    const cards = projectCardsRef.current.querySelectorAll(
-      `.${styles.projectItem}`
-    );
-
-    gsap.fromTo(
-      cards,
-      {
-        opacity: 0,
-        y: 30,
+    
+    // Target the Box elements that contain both header and cards
+    const groups = projectCardsRef.current.querySelectorAll('div[class*="MuiBox-root"]');
+    
+    gsap.set(groups, { opacity: 0, y: 30 });
+    gsap.to(groups, {
+      opacity: 1,
+      y: 0,
+      duration: 0.7,
+      stagger: 0.1,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: projectCardsRef.current,
+        start: "top bottom-=100",
+        toggleActions: "play none none reverse",
       },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        stagger: 0.15,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: projectCardsRef.current,
-          start: "top bottom-=100",
-          toggleActions: "play none none reverse",
-        },
-      }
-    );
+    });
   }, [groupBy, projectsResponse]);
 
   // Loading and error states
@@ -241,10 +234,18 @@ export default function Portfolio() {
 
   return (
     <>
-      <Box component="section" sx={{ py: 9 }}>
-        <Container maxWidth={false} sx={{ maxWidth: "1280px", margin: "0 auto" }}>
-          {/* Breadcrumb navigation */}
-          <Breadcrumbs aria-label="breadcrumb" sx={{ mb: 4 }}>
+      <header className={styles.stickyHeader}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
+            maxWidth: "1280px",
+            padding: "0 24px",
+          }}
+        >
+          <Breadcrumbs aria-label="breadcrumb">
             <Link href="/" passHref className={styles.breadcrumbLink}>
               <Typography variant="body2" color="text.secondary">
                 Home
@@ -254,7 +255,11 @@ export default function Portfolio() {
               Projects
             </Typography>
           </Breadcrumbs>
-          
+        </div>
+      </header>
+      
+      <Box component="section" sx={{ py: 9 }}>
+        <Container maxWidth={false} sx={{ maxWidth: "1280px", margin: "0 auto" }}>
           {/* Page header section */}
           <div>
             <Typography
@@ -294,47 +299,49 @@ export default function Portfolio() {
                   (year) =>
                     groupedProjects[year] &&
                     groupedProjects[year].length > 0 && (
-                      <Box key={year} sx={{ mb: 6 }}>
-                        <Typography
-                          variant="h2"
-                          sx={{ fontSize: "1.5rem", mb: 3 }}
-                        >
-                          {year}
-                        </Typography>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexWrap: "wrap",
-                            rowGap: "20px",
-                            justifyContent: "flex-start",
-                            alignItems: "flex-start",
-                          }}
-                        >
-                          {groupedProjects[year].map((item) => (
-                            <Box
-                              key={item.id}
-                              className={styles.projectItem}
-                              sx={{
-                                flex: {
-                                  xs: "none",
-                                  width: "100%",
-                                  sm: "0 1 340px",
-                                },
-                                maxWidth: "100%",
-                              }}
-                            >
-                              <ProjectTile
-                                width={280}
-                                height={180}
-                                imgSrc={item.coverImage}
-                                imgAlt={item.cardTitle}
-                                title={item.cardTitle}
-                                href={`/projects/${item.slug}`}
-                                target={"_self"}
-                                projectType={item.category?.[0]}
-                              />
-                            </Box>
-                          ))}
+                                <Box key={year} sx={{ mb: 6 }}>
+            <Box>
+                          <Typography
+                            variant="h2"
+                            sx={{ fontSize: "1.5rem", mb: 3 }}
+                          >
+                            {year}
+                          </Typography>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexWrap: "wrap",
+                              rowGap: "20px",
+                              justifyContent: "flex-start",
+                              alignItems: "flex-start",
+                            }}
+                          >
+                            {groupedProjects[year].map((item) => (
+                              <Box
+                                key={item.id}
+                                className={styles.projectItem}
+                                sx={{
+                                  flex: {
+                                    xs: "none",
+                                    width: "100%",
+                                    sm: "0 1 340px",
+                                  },
+                                  maxWidth: "100%",
+                                }}
+                              >
+                                <ProjectTile
+                                  width={280}
+                                  height={180}
+                                  imgSrc={item.coverImage}
+                                  imgAlt={item.cardTitle}
+                                  title={item.cardTitle}
+                                  href={`/projects/${item.slug}`}
+                                  target={"_self"}
+                                  projectType={item.category?.[0]}
+                                />
+                              </Box>
+                            ))}
+                          </Box>
                         </Box>
                       </Box>
                     )
@@ -343,69 +350,72 @@ export default function Portfolio() {
                   (category) =>
                     groupedProjects[category] &&
                     groupedProjects[category].length > 0 && (
-                      <Box key={category} sx={{ mb: 6 }}>
-                        <Typography
-                          variant="h2"
-                          sx={{ fontSize: "1.5rem", mb: 3 }}
-                        >
-                          {category}
-                        </Typography>
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexWrap: "wrap",
-                            gap: "20px",
-                            justifyContent: "flex-start",
-                            alignItems: "flex-start",
-                          }}
-                        >
-                          {groupedProjects[category].map((item) => (
-                            <Box
-                              key={item.id}
-                              className={styles.projectItem}
-                              sx={{
-                                flex: {
-                                  xs: "none",
-                                  width: "100%",
-                                  sm: "0 1 340px",
-                                },
-                                maxWidth: "100%",
-                              }}
-                            >
-                              <ProjectTile
-                                width={280}
-                                height={180}
-                                imgSrc={item.coverImage}
-                                imgAlt={item.cardTitle}
-                                title={item.cardTitle}
-                                href={`/projects/${item.slug}`}
-                                target={"_self"}
-                                projectType={
-                                  groupBy === "category"
-                                    ? item.year
-                                    : item.category?.[0]
-                                }
-                              />
-                            </Box>
-                          ))}
+                                <Box key={category} sx={{ mb: 6 }}>
+            <Box>
+                          <Typography
+                            variant="h2"
+                            sx={{ fontSize: "1.5rem", mb: 3 }}
+                          >
+                            {category}
+                          </Typography>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexWrap: "wrap",
+                              gap: "20px",
+                              justifyContent: "flex-start",
+                              alignItems: "flex-start",
+                            }}
+                          >
+                            {groupedProjects[category].map((item) => (
+                              <Box
+                                key={item.id}
+                                className={styles.projectItem}
+                                sx={{
+                                  flex: {
+                                    xs: "none",
+                                    width: "100%",
+                                    sm: "0 1 340px",
+                                  },
+                                  maxWidth: "100%",
+                                }}
+                              >
+                                <ProjectTile
+                                  width={280}
+                                  height={180}
+                                  imgSrc={item.coverImage}
+                                  imgAlt={item.cardTitle}
+                                  title={item.cardTitle}
+                                  href={`/projects/${item.slug}`}
+                                  target={"_self"}
+                                  projectType={
+                                    groupBy === "category"
+                                      ? item.year
+                                      : item.category?.[0]
+                                  }
+                                />
+                              </Box>
+                            ))}
+                          </Box>
                         </Box>
                       </Box>
                     )
               )}
           </div>
-
-          {/* Services section with contact form */}
-          <Box
-            ref={serviceSectionRef}
-            sx={{
-              mt: 12,
-              p: { xs: 4, md: 8 },
-              borderRadius: 2,
-              background:
-                "linear-gradient(145deg, rgba(25, 118, 210, 0.05) 0%, rgba(25, 118, 210, 0.1) 100%)",
-              textAlign: "center",
-            }}
-          >
+        </Container>
+        
+        {/* Full-width services section */}
+        <Box
+          ref={serviceSectionRef}
+          sx={{
+            mt: 12,
+            p: { xs: 4, md: 8 },
+            background:
+              "linear-gradient(145deg, rgba(25, 118, 210, 0.05) 0%, rgba(25, 118, 210, 0.1) 100%)",
+            textAlign: "center",
+          }}
+        >
+          <Container maxWidth={false} sx={{ maxWidth: "1280px", margin: "0 auto" }}>
             <Typography
               variant="h2"
               sx={{
@@ -431,8 +441,10 @@ export default function Portfolio() {
             >
               From establishing your online presence to building complex
               enterprise solutions, I help businesses and individuals leverage
-              technology to achieve their goals. Let's create something
-              extraordinary together.
+              technology to achieve their goals. I specialize in creating robust
+              design systems and reusable components that ensure consistency,
+              scalability, and maintainability across your digital products.
+              Let's create something extraordinary together.
             </Typography>
 
             {/* Service offerings grid */}
@@ -470,43 +482,13 @@ export default function Portfolio() {
                     Web Development
                   </Typography>
                   <Typography
-                    variant="body2"
+                    variant="body1"
                     color="text.secondary"
                     align="center"
+                    sx={{ fontSize: { xs: "0.95rem", md: "1rem" } }}
                   >
                     Modern, responsive websites and web applications built with
                     cutting-edge technologies
-                  </Typography>
-                </Box>
-              </Grid>
-              
-              {/* Product Development service */}
-              <Grid item xs={12} md={4}>
-                <Box
-                  sx={{
-                    p: 3,
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <CodeIcon
-                    sx={{
-                      fontSize: "3rem",
-                      color: "primary.main",
-                      mb: 2,
-                    }}
-                  />
-                  <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
-                    Product Development
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    align="center"
-                  >
-                    End-to-end product development from concept to deployment
                   </Typography>
                 </Box>
               </Grid>
@@ -530,14 +512,49 @@ export default function Portfolio() {
                     }}
                   />
                   <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
-                    Enterprise Solutions
+                    Business Solutions
                   </Typography>
                   <Typography
-                    variant="body2"
+                    variant="body1"
                     color="text.secondary"
                     align="center"
+                    sx={{ fontSize: { xs: "0.95rem", md: "1rem" } }}
                   >
-                    Scalable systems and applications for growing businesses
+                    Scalable systems, internal tools, and custom applications
+                    to streamline operations and boost productivity
+                  </Typography>
+                </Box>
+              </Grid>
+
+              {/* Design System & Components service */}
+              <Grid item xs={12} md={4}>
+                <Box
+                  sx={{
+                    p: 3,
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <CodeIcon
+                    sx={{
+                      fontSize: "3rem",
+                      color: "primary.main",
+                      mb: 2,
+                    }}
+                  />
+                  <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
+                    Design System & Components
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    color="text.secondary"
+                    align="center"
+                    sx={{ fontSize: { xs: "0.95rem", md: "1rem" } }}
+                  >
+                    Contribute to existing design systems, build component libraries,
+                    and handle styling implementation to accelerate your development
                   </Typography>
                 </Box>
               </Grid>
@@ -623,8 +640,8 @@ export default function Portfolio() {
                 </Button>
               </Box>
             </Box>
-          </Box>
-        </Container>
+          </Container>
+        </Box>
         
         {/* Snackbar for form submission feedback */}
         <Snackbar
