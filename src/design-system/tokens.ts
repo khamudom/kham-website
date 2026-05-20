@@ -69,7 +69,7 @@ export const colors = {
   info: {
     main: "#5ac8fa",
     light: "#3399FF",
-    dark: "#0057AD",
+    dark: "#6BB5FF",
   },
 };
 

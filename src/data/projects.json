@@ -29,6 +29,7 @@
     },
     {
       "id": "project-2",
+      "hidden": true,
       "cardTitle": "Del Val Media",
       "title": "Del Val Media – Magazine Publisher & Digital Marketing Agency",
       "slug": "del-val-media",
@@ -55,6 +56,7 @@
     },
     {
       "id": "project-3",
+      "hidden": true,
       "cardTitle": "Woodlynne Police Department",
       "title": "Woodlynne Police Department",
       "slug": "woodlynne-police-department",
@@ -343,7 +345,12 @@
       "summary": "The Recipe Room app is a recipe management system that allows you to manage your recipes and ingredients.",
       "coverImage": "/images/projects/trr_website.webp",
       "iframeUrl": "https://thereciperoom.net",
-      "technologies": ["Next.js", "Progressive Web App", "Supabase", "TypeScript"],
+      "technologies": [
+        "Next.js",
+        "Progressive Web App",
+        "Supabase",
+        "TypeScript"
+      ],
       "category": ["Personal Project"],
       "links": {
         "live": "https://thereciperoom.net",
@@ -356,6 +363,39 @@
         {
           "header": "Design",
           "content": "I went with a vintage cookbook-style recipe collection app. This has a warm, nostalgic feel of an old-school cookbook with handwritten fonts, cream colors, and classic recipe card layout."
+        }
+      ],
+      "order": 1
+    },
+    {
+      "id": "project-8",
+      "cardTitle": "The Athletic Advertising",
+      "title": "The Athletic Advertising – Marketing & Media Kit Site",
+      "slug": "the-athletic-advertising",
+      "year": "2026",
+      "summary": "A marketing website that presents The Athletic’s ad products, formats, and case studies in one lightweight, static experience.",
+      "coverImage": "/images/projects/taa_website.webp",
+      "iframeUrl": "https://theathleticadvertising.com",
+      "technologies": [
+        "Astro",
+        "Content Collections",
+        "GSAP",
+        "Static Site Generation",
+        "TypeScript",
+        "Vercel"
+      ],
+      "category": ["Web Development"],
+      "links": {
+        "live": "https://theathleticadvertising.com",
+        "github": ""
+      },
+      "experienceSection": {
+        "overview": "Publishers need a fast, credible place for brands to learn formats, specs, and proof without the weight of a heavy SPA. This site is a production marketing front for The Athletic’s advertising platform: file-based routes for advertise, custom content, case studies, about, and contact, with Astro Content Collections powering case study pages from Markdown.\n\nBuilt for performance and accessibility: mostly static HTML, minimal client JS, component-scoped CSS, semantic markup and keyboard-friendly navigation (including mobile menu patterns). GSAP supports motion where it matters; astro check and a Vercel deployment story keep the build typed and shippable."
+      },
+      "sections": [
+        {
+          "header": "Design",
+          "content": "The visual language aligns with The Athletic’s brand: bold typography, deep backgrounds, and photography-forward layouts that read well on large hero surfaces and in case study grids. Motion is used sparingly (GSAP) so the site stays fast and distraction-free for buyers evaluating formats."
         }
       ],
       "order": 1

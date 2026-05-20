@@ -83,6 +83,7 @@ export interface ExperienceSection {
 
 export interface Project {
   id: string;
+  hidden?: boolean;
   slug: string;
   title: string;
   cardTitle: string;

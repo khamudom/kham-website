@@ -7,7 +7,7 @@ import type {
   Image,
   ProjectSection,
 } from "@/types/portfolio";
-import ProjectIframe from "@/components/ProjectIframe/ProjectIframe";
+// import ProjectIframe from "@/components/ProjectIframe/ProjectIframe";
 import styles from "./ProjectDetail.module.css";
 import {
   Typography,
@@ -31,7 +31,7 @@ type ProjectWithRelations = Project & {
 };
 
 export async function generateStaticParams() {
-  const projects = projectsData.data;
+  const projects = projectsData.data.filter((project) => !project.hidden);
   return projects.map((project) => ({
     slug: project.slug,
   }));
@@ -51,7 +51,7 @@ export default function ProjectDetail({
 
   const project = projectsData.data.find((p) => p.slug === slug);
 
-  if (!project) {
+  if (!project || project.hidden) {
     console.error(`Project not found for slug: ${slug}`);
     return <div>Project not found</div>;
   }
@@ -69,6 +69,45 @@ export default function ProjectDetail({
     ...(project as Project),
     technologyDetails,
   };
+
+  const links = projectWithRelations.links;
+  const linkButtons =
+    links &&
+    (links.live || links.github) ? (
+      <Box
+        className={styles.buttons}
+        sx={{ display: "flex", alignItems: "center", gap: 2, flexWrap: "wrap" }}
+      >
+        {links.live && (
+          <Button
+            href={links.live}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="contained"
+            startIcon={<ExternalLink size={20} />}
+            sx={{
+              padding: "6px 20px",
+            }}
+          >
+            View Site
+          </Button>
+        )}
+        {links.github && (
+          <Button
+            href={links.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="outlined"
+            startIcon={<GitBranch size={20} />}
+            sx={{
+              padding: "6px 20px",
+            }}
+          >
+            View Source
+          </Button>
+        )}
+      </Box>
+    ) : null;
 
   return (
     <div className={styles.projectDetailPage}>
@@ -128,44 +167,7 @@ export default function ProjectDetail({
                 </Box>
               </div>
 
-              {/** Links */}
-              {projectWithRelations.links && (
-                <Box
-                  className={styles.buttons}
-                  sx={{ display: "flex", alignItems: "flex-start", gap: 2 }}
-                >
-                  {projectWithRelations.links.live && (
-                    <Button
-                      href={projectWithRelations.links.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      variant="contained"
-                      startIcon={<ExternalLink size={20} />}
-                      sx={{
-                        padding: "6px 20px",
-                        marginBottom: "var(--spacing-sm)",
-                      }}
-                    >
-                      View Site
-                    </Button>
-                  )}
-                  {projectWithRelations.links.github && (
-                    <Button
-                      href={projectWithRelations.links.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      variant="outlined"
-                      startIcon={<GitBranch size={20} />}
-                      sx={{
-                        padding: "6px 20px",
-                        marginBottom: "var(--spacing-sm)",
-                      }}
-                    >
-                      View Source
-                    </Button>
-                  )}
-                </Box>
-              )}
+              {linkButtons}
             </div>
 
             {/* Experience Section */}
@@ -194,31 +196,42 @@ export default function ProjectDetail({
               </Box>
             )}
 
-            {/** IFrame Hero */}
-            <Container
-              maxWidth={false}
-              disableGutters
-              sx={{ maxWidth: "1280px", margin: "0 auto", mt: 4 }}
-            >
-              {projectWithRelations.iframeUrl && (
-                <>
+            {/* Live Preview temporarily disabled
+            {projectWithRelations.iframeUrl && (
+              <Container
+                maxWidth={false}
+                disableGutters
+                sx={{ maxWidth: "1280px", margin: "0 auto", mt: 4 }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: 2,
+                    mb: 2,
+                  }}
+                >
                   <Typography
                     variant="h4"
                     sx={{
-                      mb: 2,
+                      mb: 0,
                       color: "var(--color-text-primary)",
                       fontWeight: "medium",
                     }}
                   >
                     Live Preview
                   </Typography>
-                  <ProjectIframe
-                    src={projectWithRelations.iframeUrl}
-                    title={projectWithRelations.title}
-                  />
-                </>
-              )}
-            </Container>
+                  {linkButtons}
+                </Box>
+                <ProjectIframe
+                  src={projectWithRelations.iframeUrl}
+                  title={projectWithRelations.title}
+                />
+              </Container>
+            )}
+            */}
 
             {/** Sections */}
             {projectWithRelations.sections &&

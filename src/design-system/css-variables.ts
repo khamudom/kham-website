@@ -1,8 +1,7 @@
 import tokens from "./tokens";
 
-export const injectCSSVariables = (themeTokens: any) => {
-  // Build all CSS variables in a single object
-  const cssVars = {
+export const buildCSSVariables = (themeTokens: any) => {
+  return {
     // Base colors
     "--color-primary-main":
       themeTokens.primary?.main ?? tokens.colors.primary.main,
@@ -64,8 +63,11 @@ export const injectCSSVariables = (themeTokens: any) => {
       {}
     ),
   };
+};
 
-  // Apply all variables in a single style update
+export const injectCSSVariables = (themeTokens: any) => {
+  const cssVars = buildCSSVariables(themeTokens);
+
   Object.entries(cssVars).forEach(([key, value]) => {
     if (value !== undefined) {
       document.documentElement.style.setProperty(key, value as string);

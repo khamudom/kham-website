@@ -9,7 +9,6 @@ import {
   Typography,
   Container,
   Box,
-  Button,
   Accordion,
   AccordionSummary,
   AccordionDetails,
@@ -17,7 +16,7 @@ import {
   Divider,
   Breadcrumbs,
 } from "@mui/material";
-import { Download, Calendar, MapPin } from "lucide-react";
+import { Calendar, MapPin } from "lucide-react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Link from "next/link";
 import styles from "./About.module.css";
@@ -99,16 +98,6 @@ export default function About() {
               About
             </Typography>
           </Breadcrumbs>
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<Download size={20} />}
-            href="/khamudom_resume.pdf"
-            size="small"
-            download
-          >
-            Download Resume
-          </Button>
         </div>
       </header>
       {/* Main Content */}

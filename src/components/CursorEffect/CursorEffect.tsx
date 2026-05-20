@@ -12,9 +12,14 @@ interface Point {
 export const CursorEffect = () => {
   const { themeName } = useTheme();
   const [points, setPoints] = useState<Point[]>([]);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (themeName !== "matrix") {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted || themeName !== "matrix") {
       setPoints([]);
       return;
     }
@@ -37,9 +42,9 @@ export const CursorEffect = () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseout", handleMouseLeave);
     };
-  }, [themeName]);
+  }, [mounted, themeName]);
 
-  if (themeName !== "matrix") {
+  if (!mounted || themeName !== "matrix") {
     return null;
   }
 

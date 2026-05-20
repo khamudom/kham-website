@@ -87,10 +87,12 @@ export default function Page() {
   const [isMobile, setIsMobile] = useState(false);
 
   // Get featured projects by specific IDs
-  const featuredProjectIds = ["project-7", "project-1", "project-2"];
+  const featuredProjectIds = ["project-8", "project-7", "project-1"];
   const featuredProjects = featuredProjectIds
-    .map(id => projects.find(project => project.id === id))
-    .filter((project): project is typeof projects[0] => project !== undefined);
+    .map((id) => projects.find((project) => project.id === id))
+    .filter(
+      (project): project is (typeof projects)[0] => project !== undefined,
+    );
 
   const socialLinks = [
     {
@@ -144,7 +146,7 @@ export default function Page() {
   }, []);
 
   const handleFormChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -166,7 +168,7 @@ export default function Page() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
-        }
+        },
       );
 
       if (response.ok) {
@@ -320,45 +322,6 @@ export default function Page() {
           <div>
             {isMobile && <h2 className={styles.mobileSectionHeader}>About</h2>}
             <div ref={aboutContentRef}>
-              {/* TL;DR Section */}
-              {aboutResponse.data.tldr && (
-                <Box
-                  sx={{
-                    backgroundColor: "background.paper",
-                    border: "1px solid",
-                    borderColor: "divider",
-                    borderRadius: 2,
-                    p: 3,
-                    mb: 3,
-                    mt:3,
-                    position: "relative",
-                    "&::before": {
-                      content: '"TL;DR"',
-                      position: "absolute",
-                      top: "-10px",
-                      left: "16px",
-                      backgroundColor: "background.default",
-                      px: 1,
-                      fontSize: "0.75rem",
-                      fontWeight: 600,
-                      color: "text.secondary",
-                      letterSpacing: "0.1em",
-                    },
-                  }}
-                >
-                  <Typography
-                    variant="body1"
-                    color="text.primary"
-                    sx={{
-                      lineHeight: 1.6,
-                      fontSize: { xs: "1rem", sm: "1.05rem" },
-                      fontWeight: 500,
-                    }}
-                  >
-                    {aboutResponse.data.tldr}
-                  </Typography>
-                </Box>
-              )}
               {aboutResponse.data.content.map((contentItem, index) => (
                 <Typography
                   key={index}
@@ -370,7 +333,10 @@ export default function Page() {
                     letterSpacing: { xs: "0.01em", sm: "0.02em" },
                     fontSize: { xs: "1rem", sm: "1.1rem" },
                     maxWidth: "65ch",
-                    marginBottom: index === 0 ? "1rem" : "0",
+                    marginBottom:
+                      index === aboutResponse.data.content.length - 1
+                        ? "1rem"
+                        : "0.75rem",
                   }}
                   dangerouslySetInnerHTML={{ __html: contentItem.paragraph }}
                 />
@@ -526,13 +492,13 @@ export default function Page() {
         >
           {isMobile && <h2 className={styles.mobileSectionHeader}>Contact</h2>}
           <Container maxWidth={false} disableGutters>
-            <Typography variant="h3" gutterBottom align="center">
+            <Typography variant="h3" gutterBottom align="left">
               Let's Build Something That Drives Results
             </Typography>
             <Typography
               variant="body1"
               color="text.secondary"
-              align="center"
+              align="left"
               sx={{ mb: 4 }}
             >
               Whether you need to increase conversions, improve user experience,

@@ -16,7 +16,7 @@
  */
 
 import { ThemeOptions } from "@mui/material/styles";
-import { spacing, typography, transitions, borders } from "./tokens";
+import { colors, spacing, typography, transitions, borders } from "./tokens";
 import {
   defaultThemeTokens,
   ninjaTurtlesTokens,
@@ -123,7 +123,8 @@ export const defaultDarkTheme = {
     mode: "dark",
     primary: {
       ...defaultThemeTokens.dark.primary,
-      contrastText: "#fff",
+      // #6BB5FF (info.dark) needs dark text for readable contrast on contained buttons
+      contrastText: colors.neutral.darkest,
     },
     secondary: {
       ...defaultThemeTokens.dark.secondary,

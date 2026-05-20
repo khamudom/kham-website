@@ -4,7 +4,7 @@ import React, {
   createContext,
   useContext,
   useState,
-  useEffect,
+  useLayoutEffect,
   ReactNode,
   useCallback,
   useMemo,
@@ -14,11 +14,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme } from "@mui/material/styles";
 import { themes, ThemeName } from "./themes";
 import { injectCSSVariables } from "./css-variables";
-import {
-  defaultThemeTokens,
-  matrixTokens,
-  ninjaTurtlesTokens,
-} from "./theme-tokens";
+import { getThemeTokens } from "./get-theme-tokens";
+import { isValidThemeName, persistTheme } from "./theme-storage";
 
 interface ThemeContextType {
   themeName: ThemeName;
@@ -46,47 +43,35 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   defaultTheme = "default",
 }) => {
   const [themeName, setThemeName] = useState<ThemeName>(defaultTheme);
-  const [mounted, setMounted] = useState(false);
 
-  // Helper to get the correct theme tokens for each theme
-  const getThemeTokens = (themeName: ThemeName) => {
-    if (themeName === "defaultDark") return defaultThemeTokens.dark;
-    if (themeName === "matrix") return matrixTokens;
-    if (themeName === "ninjaTurtles") return ninjaTurtlesTokens;
-    return defaultThemeTokens.light;
-  };
-
-  // Memoize the theme mode to prevent unnecessary recalculations
   const isDark = useMemo(
     () => themeName === "defaultDark" || themeName === "matrix",
     [themeName]
   );
 
-  // Memoize the theme object to prevent unnecessary recreations
   const theme = useMemo(() => createTheme(themes[themeName]), [themeName]);
 
-  // Memoize the setTheme function to prevent unnecessary recreations
   const setTheme = useCallback((theme: ThemeName) => {
     setThemeName(theme);
-    localStorage.setItem("theme", theme);
+    persistTheme(theme);
     injectCSSVariables(getThemeTokens(theme));
   }, []);
 
-  // Load saved theme on mount
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") as ThemeName;
-    if (savedTheme && Object.keys(themes).includes(savedTheme)) {
-      setThemeName(savedTheme);
-    }
-    setMounted(true);
-  }, []);
+  useLayoutEffect(() => {
+    const storedTheme = localStorage.getItem("theme");
 
-  // Initial CSS variable injection
-  useEffect(() => {
-    if (mounted) {
-      injectCSSVariables(getThemeTokens(themeName));
+    if (isValidThemeName(storedTheme) && storedTheme !== defaultTheme) {
+      setThemeName(storedTheme);
+      persistTheme(storedTheme);
+      return;
     }
-  }, [mounted, themeName]);
+
+    persistTheme(defaultTheme);
+  }, [defaultTheme]);
+
+  useLayoutEffect(() => {
+    injectCSSVariables(getThemeTokens(themeName));
+  }, [themeName]);
 
   const contextValue = useMemo(
     () => ({
@@ -96,10 +81,6 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     }),
     [themeName, setTheme, isDark]
   );
-
-  if (!mounted) {
-    return null;
-  }
 
   return (
     <ThemeContext.Provider value={contextValue}>
